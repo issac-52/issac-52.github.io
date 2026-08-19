@@ -18,11 +18,25 @@
     from { transform: scale(0.94) translateY(10px); opacity: 0; }
     to { transform: scale(1) translateY(0); opacity: 1; }
   }
+  @keyframes swipe-in-left {
+    from { transform: translateX(-28px); opacity: 0; clip-path: inset(0 100% 0 0); }
+    to { transform: translateX(0); opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+  @keyframes swipe-in-right {
+    from { transform: translateX(28px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
   .animate-node-breathe {
     animation: node-breathe 4.5s ease-in-out infinite;
   }
   .animate-modal-in {
     animation: modal-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  .animate-swipe-in-left {
+    animation: swipe-in-left 0.5s cubic-bezier(0.16, 0.9, 0.25, 1) forwards;
+  }
+  .animate-swipe-in-right {
+    animation: swipe-in-right 0.5s cubic-bezier(0.16, 0.9, 0.25, 1) 0.12s both;
   }
 }
 

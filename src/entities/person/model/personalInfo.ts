@@ -6,20 +6,19 @@ export interface PersonalInfo {
   contact: Record<string, string>;
 }
 
-// TODO: 연락처/링크는 실제 정보로 교체해주세요.
 export const personalInfo: PersonalInfo = {
   name: '오이삭 (Issac Oh)',
-  role: '프론트엔드 개발자 · 4년차',
-  bio: 'PowerBuilder부터 Vue 3까지 — 오래된 사내 시스템을 실제 서비스로 리팩토링해온 프론트엔드 개발자입니다. FSD 아키텍처, 상태관리, 레거시 마이그레이션에 관심이 많습니다.',
+  role: 'Web Engineer',
+  bio: 'PowerBuilder -> Vue3 Java Spring, PHP -> NextJs React Java Spring 까지 — 오래된 사내 시스템을 최신 기술스택으로 리팩토링해온 웹 엔지니어입니다. 레거시 마이그레이션, CI/CD등 다양한 관심이 많습니다.',
   skills: {
-    FRONTEND: ['React', 'Next.js', 'TypeScript', 'Vue 3', 'Pinia', 'TanStack Query'],
-    BACKEND: ['Spring Boot', 'MyBatis'],
-    'DATA / INFRA': ['Sybase ASE', 'Docker', 'GitLab CI/CD'],
+    FRONTEND: ['React', 'Next.js', 'Vue 3'],
+    BACKEND: ['Spring Boot', 'Java', 'PHP'],
+    'DATA / INFRA': ['Supabase', 'Sybase ASE', 'Oracle', 'Docker', 'K8s', 'GitLab CI/CD'],
   },
   contact: {
-    이메일: 'you@example.com',
-    GitHub: 'github.com/username',
-    Velog: 'velog.io/@username',
-    연락처: '요청 시 이력서로 전달',
+    이메일: 'issac1162@gmail.com',
+    GitHub: 'https://github.com/Back4Sac2',
+    Velog: 'https://velog.io/@issac1162/posts',
+    연락처: '010-2988-1162',
   },
 };
