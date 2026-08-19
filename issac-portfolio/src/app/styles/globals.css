@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes mindmap-flow {
+    to { stroke-dashoffset: -40; }
+  }
+  @keyframes node-breathe {
+    0%, 100% {
+      box-shadow: 0 0 0 1px rgba(240, 184, 96, 0.15), 0 20px 50px -20px rgba(240, 184, 96, 0.35);
+    }
+    50% {
+      box-shadow: 0 0 0 1px rgba(240, 184, 96, 0.3), 0 26px 60px -18px rgba(240, 184, 96, 0.5);
+    }
+  }
+  @keyframes modal-in {
+    from { transform: scale(0.94) translateY(10px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .animate-node-breathe {
+    animation: node-breathe 4.5s ease-in-out infinite;
+  }
+  .animate-modal-in {
+    animation: modal-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+}
