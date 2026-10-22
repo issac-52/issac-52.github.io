@@ -14,7 +14,7 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
     name: 'Connectwave · Danawa Division',
     period: '2022 – Mar 2026',
     role: 'Back-office Development · Unified Administration Platform TF',
-    desc: 'Developed Java/Spring management APIs, database tables and PHP/Cron batch jobs for product and catalog operations. Extended an existing RabbitMQ consumer with failed-product lookup and compensation logic to address Elasticsearch–Altibase consistency errors.\n\nIn a four-person team, developed the Next.js frontend structure, GraphQL integration, permissions and menu interfaces, and reusable components for a unified Enuri–Danawa administration platform. Also worked on application delivery integration with GitLab CI/CD, Harbor and ArgoCD, and a shared Storybook environment.',
+    desc: 'Developed Java/Spring management APIs, database tables and PHP/Cron batch jobs for product and catalog operations. Extended an existing RabbitMQ consumer with failed-product lookup and compensation logic to address Elasticsearch–Altibase consistency errors.\n\nIn a four-person team, developed the Next.js frontend structure, GraphQL integration, permissions and menu interfaces, and reusable components for a unified Enuri–Danawa administration platform. Configured blue-green deployment for the New Office frontend using Docker Compose, shell scripts and Nginx. Also worked on application delivery integration with GitLab CI/CD, Harbor and ArgoCD, and a shared Storybook environment.',
   },
 };
 export const getExperiences = (language: Language) => language === 'en'

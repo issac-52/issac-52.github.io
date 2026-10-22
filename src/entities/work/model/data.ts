@@ -59,6 +59,18 @@ const works: Work[] = [
     tags: ['Next.js', 'React', 'TypeScript', 'GraphQL', 'Apollo Client', 'Zustand', 'FSD'],
   },
   {
+    id: 'blue-green',
+    title: { ko: '뉴오피스 프론트엔드 Blue-Green 배포 개선', en: 'Blue-green deployment for the New Office frontend' },
+    context: { ko: '기존 Next.js·React 기반 뉴오피스 프론트엔드는 Docker 컨테이너 재시작 방식으로 배포해 서비스 중단 가능성이 있었습니다. 기존 버전과 신규 버전을 분리해 실행하는 배포 구조가 필요했습니다.', en: 'The Next.js/React New Office frontend was deployed by restarting its Docker container, creating a risk of service interruption. The deployment process needed to run existing and new versions separately.' },
+    actions: [
+      { ko: 'Docker Compose로 Blue·Green 환경을 구성해 기존 운영 버전과 신규 버전을 별도 컨테이너로 실행하도록 구성했습니다.', en: 'Configured blue and green environments with Docker Compose so the live and new versions could run in separate containers.' },
+      { ko: '신규 버전 컨테이너를 배포하는 Shell Script를 직접 작성했습니다.', en: 'Wrote shell scripts to deploy the new-version container.' },
+      { ko: 'Nginx 리버스 프록시 설정을 변경해 Blue·Green 환경 간 트래픽 전환을 구현했습니다.', en: 'Implemented traffic switching between blue and green environments by updating the Nginx reverse proxy configuration.' },
+    ],
+    result: { ko: 'Docker 재시작 중심의 배포를 Blue-Green 방식으로 전환했습니다. 신규 버전을 별도로 실행한 뒤 트래픽을 전환해, 전환 전까지 기존 서비스를 유지할 수 있는 구조를 마련했습니다.', en: 'Replaced restart-based deployment with a blue-green approach. The new version runs separately before traffic is switched, allowing the existing service to remain available until cutover.' },
+    tags: ['Next.js', 'React', 'Docker', 'Docker Compose', 'Shell Script', 'Nginx'],
+  },
+  {
     id: 'delivery',
     title: { ko: 'GitLab–Harbor–ArgoCD 애플리케이션 배포 연동', en: 'Connecting application delivery with GitLab, Harbor & ArgoCD' },
     context: { ko: '사내에서 제공된 Kubernetes·Harbor·ArgoCD 기반에 신규 애플리케이션의 빌드와 배포 흐름을 연결해야 했습니다.', en: 'The new application needed a repeatable build and delivery flow connected to the existing Kubernetes, Harbor and ArgoCD infrastructure.' },

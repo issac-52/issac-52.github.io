@@ -13,7 +13,7 @@ export const personalInfo: PersonalInfo = {
     BACKEND: ['Java', 'Spring', 'REST API', 'SQL', 'PHP', 'Cron', 'RabbitMQ'],
     FRONTEND: ['React', 'Next.js', 'TypeScript', 'Vue.js', 'GraphQL', 'Apollo Client', 'Zustand'],
     DATA: ['Altibase', 'Elasticsearch', 'MySQL'],
-    'APPLICATION DELIVERY': ['GitLab CI/CD', 'Docker', 'Harbor', 'Kubernetes', 'ArgoCD', 'Nginx', 'Storybook'],
+    'APPLICATION DELIVERY': ['GitLab CI/CD', 'Docker', 'Docker Compose', 'Shell Script', 'Harbor', 'Kubernetes', 'ArgoCD', 'Nginx', 'Storybook'],
   },
   contact: {
     이메일: 'issac1162@gmail.com',
