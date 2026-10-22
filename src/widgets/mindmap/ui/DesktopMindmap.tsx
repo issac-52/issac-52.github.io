@@ -17,18 +17,15 @@ interface ChildNode {
 
 const CHILDREN: ChildNode[] = [
   { parent: 'connectwave', kind: 'experience', id: 'exp-1', label: '레거시 현대화 & 백오피스 유지보수', x: 9, y: 6 },
-  { parent: 'connectwave', kind: 'experience', id: 'exp-2', label: '에누리+다나와 통합 관리 툴 TF', x: 9, y: 20 },
-  { parent: 'connectwave', kind: 'experience', id: 'exp-3', label: '데이터/AI 관련 툴 UI 개발', x: 9, y: 34 },
   { parent: 'mgsinyong', kind: 'experience', id: 'exp-0', label: 'PowerBuilder→Vue3 마이그레이션', x: 91, y: 6, ongoing: true },
-  { parent: 'personal', kind: 'project', id: 'proj-0', label: 'LoL Match Analyzer', x: 19, y: 95, ongoing: true },
-  { parent: 'personal', kind: 'project', id: 'proj-1', label: 'meter-admin', x: 50, y: 97 },
-  { parent: 'personal', kind: 'project', id: 'proj-2', label: 'bandcast', x: 81, y: 95 },
+  { parent: 'personal', kind: 'project', id: 'meter-admin', label: '야장관리자 · 실서비스 운영', x: 30, y: 95 },
+  { parent: 'personal', kind: 'project', id: 'field-work', label: '수도관리자 · 설계 중', x: 70, y: 95, ongoing: true },
 ];
 
 const PRIMARY: { id: BranchId; label: string; sub: string; x: number; y: number }[] = [
   { id: 'connectwave', label: '커넥트웨이브', sub: '(구 다나와)', x: 18, y: 18 },
   { id: 'mgsinyong', label: 'MG신용정보', sub: '마이그레이션 TF', x: 82, y: 18 },
-  { id: 'personal', label: '개인 프로젝트', sub: 'Side Projects', x: 50, y: 84 },
+  { id: 'personal', label: '사이드 프로젝트', sub: 'Side Projects', x: 50, y: 84 },
 ];
 
 export function DesktopMindmap() {

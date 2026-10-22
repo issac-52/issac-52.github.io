@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export type DetailTarget =
   | { kind: 'experience'; id: string }
   | { kind: 'project'; id: string }
+  | { kind: 'work'; id: string }
   | { kind: 'person' }
   | null;
 
