@@ -58,7 +58,7 @@ export function ModernPage() {
           <a href="#about">{t.about}</a>
           <a className="nav-contact" href={`mailto:${siteConfig.email}`}>{t.contact} ↗</a>
           <div className="language-switch" role="group" aria-label={language === 'en' ? 'Language' : '언어'}>
-            <button type="button" lang="ko" aria-pressed={language === 'ko'} onClick={() => setLanguage('ko')}>한국어</button>
+            <button type="button" lang="ko" aria-pressed={language === 'ko'} onClick={() => setLanguage('ko')}>KR</button>
             <button type="button" lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
           </div>
         </nav>

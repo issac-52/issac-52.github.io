@@ -25,7 +25,7 @@ const englishProjects = {
     name: 'Field Survey Manager',
     period: 'Live in production · Maintenance',
     role: 'Side project · Client work',
-    desc: 'A management tool for water-meter field surveys, including photos and location data. Development is complete and the service is in production. I currently handle maintenance.',
+    desc: 'A management tool for water-meter field surveys, including photos and location data. Designed and developed throughout with Claude Code as the primary AI coding tool. Development is complete, and I operate the live production service and handle ongoing maintenance.',
   },
   'field-work': {
     name: 'Water Operations Manager',
