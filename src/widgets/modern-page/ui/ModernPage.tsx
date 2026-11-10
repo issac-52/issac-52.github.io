@@ -111,9 +111,11 @@ export function ModernPage() {
                   <p className="status project-status">{project.period}</p>
                   <p className="project-summary">{project.desc}</p>
                   <div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                  <button className="project-detail" onClick={() => open({ kind: 'project', id: project.id })}>
+                  {project.caseStudyHref ? <a className="project-detail" href={project.caseStudyHref}>
+                    {t.projectDetail}<span>↗</span>
+                  </a> : <button className="project-detail" onClick={() => open({ kind: 'project', id: project.id })}>
                     {project.videoUrl ? t.demo : t.projectDetail}<span>↗</span>
-                  </button>
+                  </button>}
                 </div>
               </article>
             ))}

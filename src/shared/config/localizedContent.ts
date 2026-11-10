@@ -29,9 +29,9 @@ const englishProjects = {
   },
   'field-work': {
     name: 'Water Operations Manager',
-    period: 'In design',
+    period: 'MVP implemented · Deployment connected · Performance work',
     role: 'Side project · Client work',
-    desc: 'A separate new project for field meter-reading and work management. Designing mobile workflows for location lookup, data entry, photo records and task completion. Currently in design and not yet in production.',
+    desc: 'A field operations system covering Excel imports, maps and geocoding, START/END readings, photos, settlement and HWPX exports for roughly 20,000 sites. Built and verified with Codex assistance, with EC2 and Cloudflare integration. Synthetic 20k-site benchmarks document query bottlenecks and before/after results.',
   },
 };
 export const getProjects = (language: Language) => language === 'en'

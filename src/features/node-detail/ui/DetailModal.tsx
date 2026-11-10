@@ -36,6 +36,7 @@ export function DetailModal() {
         <div className="text-sm text-dim mb-4 leading-7">{item.role} · {item.period}</div>
         {item.desc && <p className="text-sm leading-7 text-[#c3c8db] mb-5 whitespace-pre-line">{item.desc}</p>}
         <div className="flex flex-wrap gap-1.5">{item.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}</div>
+        {project?.caseStudyHref && <a className="primary-link mt-6" href={project.caseStudyHref} onClick={close}>{en ? 'Read the project case study' : '프로젝트 상세 기록 보기'} ↗</a>}
         {project?.videoUrl && <figure className="demo-video">
           <video key={project.id} src={project.videoUrl} controls playsInline preload="metadata" aria-label={en ? 'Field Survey Manager demonstration' : '야장관리자 시연 영상'}>
             <a href={project.videoUrl}>{en ? 'Open demonstration video' : '시연 영상 열기'}</a>

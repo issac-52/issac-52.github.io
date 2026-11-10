@@ -8,5 +8,6 @@ export interface Project {
   tags: string[];
   repo?: { owner: string; name: string };
   videoUrl?: string;
+  caseStudyHref?: string;
   posterUrl?: string;
 }
