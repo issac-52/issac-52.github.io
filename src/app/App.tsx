@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { HomePage } from '@/pages/home/ui/HomePage';
 import { FieldworkPage, type FieldworkSection } from '@/pages/fieldwork/ui/FieldworkPage';
+import { MeterAdminPage } from '@/pages/meter-admin/ui/MeterAdminPage';
 
-function readSection(): FieldworkSection | null {
+function readSection(): FieldworkSection | 'meter-admin' | null {
+  if (location.hash === '#/projects/meter-admin') return 'meter-admin';
   const base = '#/projects/field-work';
   if (!location.hash.startsWith(base)) return null;
   const part = location.hash.slice(base.length).replace(/^\//, '');
@@ -19,5 +21,5 @@ export function App() {
     if (section) window.scrollTo(0, 0);
     else if (location.hash === '#projects') requestAnimationFrame(() => document.getElementById('projects')?.scrollIntoView());
   }, [section]);
-  return section ? <FieldworkPage section={section} /> : <HomePage />;
+  return section === 'meter-admin' ? <MeterAdminPage /> : section ? <FieldworkPage section={section} /> : <HomePage />;
 }

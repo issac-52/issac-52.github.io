@@ -25,7 +25,7 @@ const englishProjects = {
     name: 'Field Survey Manager',
     period: 'Live in production · Maintenance',
     role: 'Side project · Client work',
-    desc: 'A management tool for water-meter field surveys, including photos and location data. Designed and developed throughout with Claude Code as the primary AI coding tool. Development is complete, and I operate the live production service and handle ongoing maintenance.',
+    desc: 'Connects Excel imports, field entry, photos, maps and exports for consumer and valve surveys. Consumer reimports preserve existing survey values, while exports fill the original Excel template. Designed and developed with Claude Code as the primary coding tool; I operate the production service and handle maintenance.',
   },
   'field-work': {
     name: 'Water Operations Manager',

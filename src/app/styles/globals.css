@@ -189,6 +189,7 @@ html[lang="en"] .hero h1 { letter-spacing: -2px; }
 
 /* Shareable Field Work Manager case study pages. */
 .study-page { min-height: 100vh; }
+.meter-study h1, .meter-study h2, .meter-study h3 { word-break: keep-all; overflow-wrap: anywhere; }
 .study-hero { padding: 74px 0 36px; }
 .study-hero h1 { font-size: clamp(32px, 5vw, 55px); font-weight: 800; letter-spacing: -1.7px; line-height: 1.35; white-space: pre-line; margin: 0 0 24px; }
 .study-hero > p:last-child { color: #aab9c9; line-height: 1.9; font-size: 14px; }

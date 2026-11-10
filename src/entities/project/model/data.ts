@@ -5,9 +5,11 @@ export const projects: Project[] = [
     name: '야장관리자',
     period: '실서비스 운영 중 · 유지보수',
     role: '사이드 프로젝트 · 외주',
-    desc: '수도 계량기 현장 조사 업무를 위한 관리 도구입니다. 프로젝트 전반을 Claude Code 중심으로 설계·개발한 AI 위주의 개발 프로젝트입니다. 개발을 완료해 프로덕션에서 실서비스를 운영 중이며, 현재 유지보수를 담당합니다. 현장 사진과 위치 정보를 함께 관리합니다.',
+    desc: '수용가·밸브 조사의 Excel 등록부터 현장 입력·사진·지도·결과 추출까지 연결한 관리 도구입니다. 재업로드 시 기존 수용가 조사값을 보존하고 원본 Excel 양식에 결과를 채웁니다. Claude Code 중심으로 설계·개발했으며, 현재 실서비스 운영과 유지보수를 담당합니다.',
     tags: ['Claude Code', 'Next.js', 'Supabase', 'Cloudflare R2', 'Naver Maps'],
     videoUrl: 'https://pub-049d78b7bcb44f5b9437538adca968a2.r2.dev/meter-admin.mp4',
+    repo: { owner: 'issac-52', name: 'meter-admin' },
+    caseStudyHref: '#/projects/meter-admin',
   },
   {
     id: 'field-work',
