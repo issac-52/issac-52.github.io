@@ -27,6 +27,12 @@ const englishProjects = {
     role: 'Side project · Client work',
     desc: 'Connects Excel imports, field entry, photos, maps and exports for consumer and valve surveys. Consumer reimports preserve existing survey values, while exports fill the original Excel template. Designed and developed with Claude Code as the primary coding tool; I operate the production service and handle maintenance.',
   },
+  'weekly-blog': {
+    name: 'Browinfo · Weekly Magazine',
+    period: 'Privately deployed · Editorial review in use',
+    role: 'Side project',
+    desc: 'A weekly magazine where incoming drafts are checked against sources and published after administrator approval. Migrated weekly-blog to Next.js and Supabase, with duplicate-submission protection, source checks and an approval history.',
+  },
   'field-work': {
     name: 'Water Operations Manager',
     period: 'MVP implemented · Deployment connected · Performance work',
