@@ -11,6 +11,18 @@ interface Work {
 }
 const works: Work[] = [
   {
+    id: 'mysql-query-tuning',
+    title: { ko: '레거시 SQL 공통 병목 분석 및 인덱스 개선', en: 'Analyzing shared SQL bottlenecks during legacy migration' },
+    context: { ko: 'PowerBuilder 업무 시스템 이관 중 동일한 대용량 테이블을 조회하는 유사 SQL 3개가 병렬 실행됐습니다. 단일 쿼리의 개선 전 실행 시간은 약 55초였습니다.', en: 'During a PowerBuilder system migration, three similar SQL queries ran in parallel against the same large tables. One query took approximately 55 seconds when measured individually before changes.' },
+    actions: [
+      { ko: 'MySQL 5.7 EXPLAIN에서 약 240만·890만 행의 추정 검사 대상이 있는 두 테이블의 Full Table Scan을 확인했습니다.', en: 'Used MySQL 5.7 EXPLAIN to identify full table scans on two tables with estimated scan counts of approximately 2.4M and 8.9M rows.' },
+      { ko: '실제 데이터와 업무 조건을 대조해 한 테이블은 기존 복합 인덱스의 선두 컬럼 조건을 보완하는 방향으로 결정했습니다.', en: 'Validated actual data and business constraints, then chose to add a predicate matching the leading column of an existing composite index for one table.' },
+      { ko: '다른 테이블은 날짜 조회 패턴에 맞는 신규 인덱스 추가를 결정했습니다. 두 조치로 세 쿼리의 공통 병목을 개선할 계획입니다.', en: 'Planned an additional index aligned with the other table’s date filtering pattern, targeting the shared bottleneck across all three queries.' },
+    ],
+    result: { ko: '개선 전 단일 쿼리 55초. 인덱스 적용 및 개선 후 실측은 예정되어 있으며, 3~5초는 목표 예상치로 확정 성과가 아닙니다.', en: 'Baseline: 55 seconds for one query. Index deployment and post-change measurements are pending; 3–5 seconds is a preliminary estimate, not a verified result.' },
+    tags: ['MySQL 5.7', 'EXPLAIN', 'Composite Index', 'SQL Tuning', 'Legacy Migration'],
+  },
+  {
     id: 'consistency',
     title: { ko: '상품 링크·미링크 데이터 정합성 복구', en: 'Recovering product data consistency' },
     context: { ko: '멀티 노드 API와 배치가 상품 링크·미링크를 처리하는 환경에서 Elasticsearch와 Altibase 간 생성·삭제의 부분 실패와 중복 데이터가 반복됐습니다.', en: 'In a multi-node API and batch environment, product linking and unlinking caused recurring partial writes, failed deletions and duplicate data across Elasticsearch and Altibase.' },

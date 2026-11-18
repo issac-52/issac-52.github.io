@@ -8,7 +8,7 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
     name: 'MG Credit Information · NCS Modernization TF',
     period: 'Jul 2026 – Present',
     role: 'Java API & Vue Application Development',
-    desc: 'Joined a team migrating a PowerBuilder business system to a Java/Vue web application. Analyze existing source code and workflows, and translate requirements from the project manager and business users into APIs and screens.\n\nDevelop and integrate assigned Java APIs and Vue screens using the established project environment and existing database schema.',
+    desc: 'Joined a team migrating a PowerBuilder business system to a Java/Vue web application. Analyze existing source code and workflows, and translate requirements from the project manager and business users into APIs and screens.\n\nDevelop and integrate assigned Java APIs and Vue screens using the established project environment and existing database schema.\n\nAnalyzed a shared SQL bottleneck across three parallel queries using EXPLAIN. Identified full table scans on tables with approximately 2.4M and 8.9M estimated rows, and planned a predicate adjustment to use an existing composite index plus a new index for the other table. The individual-query baseline was 55 seconds; post-change measurements are pending.',
   },
   'exp-1': {
     name: 'Connectwave · Danawa Division',
