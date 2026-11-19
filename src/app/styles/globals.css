@@ -316,3 +316,12 @@ html[lang="en"] .hero h1 { letter-spacing: -2px; }
 @media(max-width:800px){.portfolio-v2 .site-header,.portfolio-v2 .site-footer,.portfolio-v2 .page-shell{width:calc(100% - 44px)}.portfolio-v2 .site-header nav{gap:12px}.portfolio-v2 .hero-index{margin-bottom:60px}.portfolio-v2 .hero h1{letter-spacing:-2px}.portfolio-v2 .work-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.portfolio-v2 .site-header{height:auto;min-height:72px}.portfolio-v2 .brand{font-size:30px}.portfolio-v2 .site-header nav a:not(.nav-contact){font-size:11px}.portfolio-v2 .site-header nav a[href="#about"]{display:none}.portfolio-v2 .hero{min-height:0}.portfolio-v2 .hero-index{margin-bottom:62px;flex-direction:column;gap:8px}.portfolio-v2 .hero h1{font-size:clamp(36px,9vw,55px);letter-spacing:-1.7px}.portfolio-v2 .hero-description{font-size:14px}.portfolio-v2 .hero-focus{margin-top:65px}.portfolio-v2 .content-section{padding-top:78px}.portfolio-v2 .about-section{margin-top:80px}.portfolio-v2 .project-grid{grid-template-columns:1fr}.portfolio-v2 .work-card{min-height:230px}}
 @media(prefers-reduced-motion:reduce){.portfolio-v2 *{animation:none!important;transition:none!important}}
+
+/* Compact, keyboard-accessible social icon row */
+.portfolio-v2 .social-icons{display:flex;align-items:center;gap:9px;margin-left:6px}
+.portfolio-v2 .social-icon{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--sac-line);border-radius:50%;background:var(--sac-paper);color:var(--sac-ink);transition:background .2s,color .2s,transform .2s}
+.portfolio-v2 .social-icon:hover{background:var(--sac-accent);color:white;transform:translateY(-2px)}
+.portfolio-v2 .social-icon:focus-visible{outline:2px solid var(--sac-accent);outline-offset:3px}
+.portfolio-v2 .hero-actions{flex-wrap:wrap}
+.portfolio-v2 .language-switch{gap:1px}
+@media(max-width:560px){.portfolio-v2 .hero-actions{align-items:center;gap:12px}.portfolio-v2 .social-icons{margin-left:0}.portfolio-v2 .social-icon{width:40px;height:40px}.portfolio-v2 .site-header nav{gap:6px}.portfolio-v2 .language-switch button{padding:5px 6px}}
