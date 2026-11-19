@@ -110,10 +110,10 @@ const works: Work[] = [
 export function getWorks(language: Language) {
   return works.map(work => ({
     id: work.id,
-    title: work.title[language],
-    context: work.context[language],
-    actions: work.actions.map(action => action[language]),
-    result: work.result[language],
+    title: work.title[language === 'ja' ? 'en' : language],
+    context: work.context[language === 'ja' ? 'en' : language],
+    actions: work.actions.map(action => action[language === 'ja' ? 'en' : language]),
+    result: work.result[language === 'ja' ? 'en' : language],
     tags: work.tags,
   }));
 }
