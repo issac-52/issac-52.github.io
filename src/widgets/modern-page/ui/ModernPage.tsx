@@ -70,7 +70,9 @@ export function ModernPage() {
           <p className="hero-description">{t.intro}<br className="desktop-break" /> {t.introEnd}</p>
           <div className="hero-actions">
             <a className="primary-link" href="#projects">{t.explore} <span>↓</span></a>
-            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a className="text-link" href={`mailto:${siteConfig.email}`}>Email ↗</a>
+            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a className="text-link" href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a className="text-link" href={`mailto:${siteConfig.email}`}>Email ↗</a>
           </div>
           <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p></div>
         </section>
@@ -126,7 +128,7 @@ export function ModernPage() {
           <div className="skills-list">{Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group}><h3>{group}</h3><p>{skills.join(' · ')}</p></div>)}<p className="skills-note">{t.deliveryNote}</p></div>
         </section>
       </main>
-      <footer className="site-footer"><span>© {new Date().getFullYear()} SAC · Built with care</span><div><a href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a href="#">{t.top} ↑</a></div></footer>
+      <footer className="site-footer"><span>© {new Date().getFullYear()} SAC · Built with care</span><div><a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="#">{t.top} ↑</a></div></footer>
     </div>
   );
 }
