@@ -48,10 +48,10 @@ export function ModernPage() {
   }, [language]);
 
   return (
-    <div className="portfolio min-h-screen bg-bg text-ink font-body">
+    <div className="portfolio portfolio-v2 min-h-screen bg-bg text-ink font-body">
       <a className="skip-link" href="#main">{t.skip}</a>
       <header className="site-header">
-        <a className="brand" href="#">Issac<span>.dev</span></a>
+        <a className="brand" href="#" aria-label="SAC portfolio home">SAC<span>.</span></a>
         <nav aria-label={t.nav}>
           <a href="#experience">{t.experience}</a>
           <a href="#projects">{t.projects}</a>
@@ -64,18 +64,18 @@ export function ModernPage() {
         </nav>
       </header>
       <main id="main" className="page-shell">
-        <section className="hero" aria-labelledby="hero-title">
-          <p className="section-kicker">{t.name}</p>
+        <section className="hero" aria-labelledby="hero-title"><div className="hero-index"><span>PORTFOLIO / 2026</span><span>BACKEND ENGINEERING · SEOUL, KR</span></div>
+          <p className="section-kicker">HELLO, I’M SAC <span aria-hidden="true">✳</span></p>
           <h1 id="hero-title">{t.headline}<br /><span>{t.headlineEnd}</span></h1>
           <p className="hero-description">{t.intro}<br className="desktop-break" /> {t.introEnd}</p>
           <div className="hero-actions">
             <a className="primary-link" href="#projects">{t.explore} <span>↓</span></a>
-            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a className="text-link" href={`mailto:${siteConfig.email}`}>Email ↗</a>
           </div>
           <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p></div>
         </section>
         <section id="experience" className="content-section" aria-labelledby="experience-title">
-          <div className="section-heading"><div><p className="section-kicker">EXPERIENCE</p><h2 id="experience-title">{t.experienceTitle}</h2></div><p>{t.experienceCaption}</p></div>
+          <div className="section-heading"><div><p className="section-kicker">01 / EXPERIENCE</p><h2 id="experience-title">{t.experienceTitle}</h2></div><p>{t.experienceCaption}</p></div>
           <div className="experience-list">
             {experiences.map((item, index) => (
               <button className="experience-row" key={item.id} onClick={() => open({ kind: 'experience', id: item.id })}>
@@ -87,7 +87,7 @@ export function ModernPage() {
           </div>
         </section>
         <section id="work" className="content-section" aria-labelledby="work-title">
-          <div className="section-heading"><div><p className="section-kicker">ENGINEERING WORK</p><h2 id="work-title">{t.workTitle}</h2></div><p>{t.workCaption}</p></div>
+          <div className="section-heading"><div><p className="section-kicker">02 / ENGINEERING WORK</p><h2 id="work-title">{t.workTitle}</h2></div><p>{t.workCaption}</p></div>
           <div className="work-grid">
             {works.map((work, index) => (
               <button className="work-card" key={work.id} onClick={() => open({ kind: 'work', id: work.id })}>
@@ -101,7 +101,7 @@ export function ModernPage() {
           </div>
         </section>
         <section id="projects" className="content-section" aria-labelledby="projects-title">
-          <div className="section-heading"><div><p className="section-kicker">SIDE PROJECTS</p><h2 id="projects-title">{t.projectsTitle}</h2></div></div>
+          <div className="section-heading"><div><p className="section-kicker">03 / SELECTED PROJECTS</p><h2 id="projects-title">{t.projectsTitle}</h2></div></div>
           <div className="project-grid">
             {projects.map(project => (
               <article className="project-card side-project" key={project.id}>
@@ -122,11 +122,11 @@ export function ModernPage() {
           </div>
         </section>
         <section id="about" className="content-section about-section" aria-labelledby="about-title">
-          <div><p className="section-kicker">ABOUT ME</p><h2 id="about-title">{t.aboutTitle}<br />{t.aboutTitleEnd}</h2><p className="about-copy">{t.aboutCopy}</p><a className="text-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a></div>
+          <div><p className="section-kicker">04 / ABOUT ME</p><h2 id="about-title">{t.aboutTitle}<br />{t.aboutTitleEnd}</h2><p className="about-copy">{t.aboutCopy}</p><a className="text-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a></div>
           <div className="skills-list">{Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group}><h3>{group}</h3><p>{skills.join(' · ')}</p></div>)}<p className="skills-note">{t.deliveryNote}</p></div>
         </section>
       </main>
-      <footer className="site-footer"><span>© {new Date().getFullYear()} Issac Oh</span><div><a href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a href="#">{t.top} ↑</a></div></footer>
+      <footer className="site-footer"><span>© {new Date().getFullYear()} SAC · Built with care</span><div><a href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a href="#">{t.top} ↑</a></div></footer>
     </div>
   );
 }
