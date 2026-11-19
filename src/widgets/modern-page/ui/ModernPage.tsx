@@ -1,3 +1,4 @@
+import { SocialIcon } from './SocialIcon';
 import { useEffect } from 'react';
 import { getWorks } from '@/entities/work/model/data';
 import { personalInfo } from '@/entities/person/model/personalInfo';
@@ -17,6 +18,17 @@ const copy = {
     aboutTitle: '기술보다 먼저,', aboutTitleEnd: '문제의 맥락을 봅니다.',
     aboutCopy: '약 4년간 기업 업무 시스템의 API·DB·배치와 관리자 화면을 개발했습니다. 상품 데이터 정합성 오류를 복구하고 반복 업무를 자동화했으며, 현재 Java/Vue 기반 시스템 전환에 참여하고 있습니다.', deliveryNote: 'Kubernetes·ArgoCD는 기존 인프라에 애플리케이션 배포를 연동한 경험입니다.', workTitle: '문제를 해결한 경험', workCaption: '커넥트웨이브 · 다나와사업부', demo: '시연 영상 보기', projectDetail: '프로젝트 상세',
     top: '맨 위로',
+  },
+  ja: {
+    skip: '本文へ移動', nav: 'メインメニュー', experience: '経歴', projects: 'プロジェクト', about: '自己紹介', contact: 'お問い合わせ',
+    name: 'SAC · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: '業務を理解し、', headlineEnd: 'より良いシステムをつくる。',
+    intro: 'Java / Springを中心に、React・Next.js・Vueも活用。',
+    introEnd: 'データ整合性、業務自動化、レガシーシステムのモダナイゼーションに取り組むバックエンド中心のフルスタックエンジニアです。',
+    explore: 'プロジェクトを見る', experienceTitle: '職務経歴', experienceCaption: '移行・運用・デリバリーの経験',
+    current: '現在', detail: '詳しく見る', projectsTitle: '個人・受託プロジェクト',
+    aboutTitle: '技術の前に、', aboutTitleEnd: '課題の背景を理解する。',
+    aboutCopy: '約4年間、企業向け業務システムのAPI、データベース、バッチ処理、管理画面を開発してきました。データ不整合の改善や定型業務の自動化に取り組み、現在はJava / Vueによる既存システムのWeb移行に参画しています。',
+    deliveryNote: 'Kubernetes・ArgoCDは既存基盤へのアプリケーションデプロイ連携の経験です。', workTitle: 'エンジニアリング事例', workCaption: '課題・設計・実装の記録', demo: 'デモを見る', projectDetail: '詳細を見る', top: 'ページ上部へ',
   },
   en: {
     skip: 'Skip to content', nav: 'Main navigation', experience: 'Experience', projects: 'Projects', about: 'About', contact: 'Get in touch',
@@ -41,8 +53,8 @@ export function ModernPage() {
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = language === 'en' ? 'Issac Oh | Backend-focused Full-stack Developer' : '오이삭 | 백엔드 중심 풀스택 개발자';
-    document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'en'
+    document.title = language === 'ja' ? 'SAC | バックエンドエンジニア' : language === 'en' ? 'SAC | Backend-focused Full-stack Developer' : 'SAC | 백엔드 중심 풀스택 개발자';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'ja' ? 'Java / Springを中心としたバックエンドエンジニアSACの職務経歴と開発事例。' : language === 'en'
       ? 'Java/Spring backend-focused full-stack developer. Enterprise systems, data consistency, workflow automation and legacy modernization.'
       : 'Java/Spring 백엔드 중심 풀스택 개발자 오이삭. 데이터 정합성, 업무 자동화, 관리자 플랫폼과 레거시 현대화 경험을 소개합니다.');
   }, [language]);
@@ -57,9 +69,10 @@ export function ModernPage() {
           <a href="#projects">{t.projects}</a>
           <a href="#about">{t.about}</a>
           <a className="nav-contact" href={`mailto:${siteConfig.email}`}>{t.contact} ↗</a>
-          <div className="language-switch" role="group" aria-label={language === 'en' ? 'Language' : '언어'}>
+          <div className="language-switch" role="group" aria-label="Language">
             <button type="button" lang="ko" aria-pressed={language === 'ko'} onClick={() => setLanguage('ko')}>KR</button>
             <button type="button" lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
+            <button type="button" lang="ja" aria-pressed={language === 'ja'} onClick={() => setLanguage('ja')}>JP</button>
           </div>
         </nav>
       </header>
@@ -70,9 +83,11 @@ export function ModernPage() {
           <p className="hero-description">{t.intro}<br className="desktop-break" /> {t.introEnd}</p>
           <div className="hero-actions">
             <a className="primary-link" href="#projects">{t.explore} <span>↓</span></a>
-            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-            <a className="text-link" href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-            <a className="text-link" href={`mailto:${siteConfig.email}`}>Email ↗</a>
+            <div className="social-icons" aria-label="Social profiles">
+              <a className="social-icon" href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><SocialIcon kind="github" /></a>
+              <a className="social-icon" href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><SocialIcon kind="linkedin" /></a>
+              <a className="social-icon" href={`mailto:${siteConfig.email}`} aria-label="Email" title="Email"><SocialIcon kind="email" /></a>
+            </div>
           </div>
           <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p></div>
         </section>
