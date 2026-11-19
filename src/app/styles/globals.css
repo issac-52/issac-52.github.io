@@ -253,3 +253,26 @@ html[lang="en"] .hero h1 { letter-spacing: -2px; }
   .study-chart { padding: 8px; }
   .study-hero .section-kicker { font-size: 10px; line-height: 1.8; }
 }
+
+/* Case studies share the portfolio's graphite surface, type scale and metal studies. */
+.study-page { background: #151517; color: #f1eff1; font-family: Inter,system-ui,sans-serif; }
+.study-page :is(.site-header,.site-footer,.page-shell) { width: min(1240px,89%); }
+.study-page .brand { color: #f1eff1; font: 750 1rem Inter,sans-serif; letter-spacing: -.06em; }
+.study-page .study-hero { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: clamp(270px,31vw,430px); padding: 40px 32% 40px 0; }
+.study-hero .metal-study { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 31%; max-height: 100%; }
+.study-page .study-hero h1 { font-weight: 550; letter-spacing: -.065em; font-size: clamp(2.5rem,5vw,5.2rem); }
+.study-page :is(.section-kicker,.study-diagram b,.study-metrics strong,.study-grid h3,.study-steps h3,.study-code span,.study-callout b,.text-teal,.study-flow li::before) { color: #d6bdff; }
+.study-page :is(.study-section p,.study-section li,.study-table tbody,.study-hero > p:last-child,.study-diagram span,.study-diagram figcaption,.site-footer,.site-header nav a) { color: #c1bbc5; }
+.study-page :is(.study-grid article,.study-steps li,.study-metrics article,.study-code,.study-diagram,.study-flow li,.study-links a,.study-tabs a,.study-table,.study-callout) { border-radius: 2px; border-color: #444147; }
+.study-page :is(.study-grid article,.study-metrics article,.study-code,.study-diagram > div:not(.study-storage),.study-storage span,.study-table thead,.study-callout) { background: #242327; color: #e5d8f4; }
+.study-page :is(.study-tabs a[aria-current="page"],.language-switch button[aria-pressed="true"]) { background: #dac9ee; color: #201b27; border-color: #dac9ee; }
+.study-page .study-links a { color: #dbc7ed; }
+.study-page .study-section { padding-block: clamp(28px,4vw,54px); border-color: #3a393e; }
+.study-section > p { max-width: 78ch; }
+.study-page .site-header,.study-page .site-footer,.study-page .study-tabs { border-color: #3a393e; }
+@media(max-width:680px) {
+ .study-page :is(.site-header,.site-footer,.page-shell) { width: calc(100% - 36px); }
+ .study-page .study-hero { min-height: 230px; padding-right: 0; }
+ .study-hero .metal-study { width: 24%; top: 34%; }
+ .study-page .study-hero h1 { max-width: 74%; font-size: 2.35rem; }
+}

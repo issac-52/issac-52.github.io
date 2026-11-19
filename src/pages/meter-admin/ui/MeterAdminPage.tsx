@@ -1,3 +1,4 @@
+import { MetalStudy } from '@/shared/ui/MetalStudy';
 import { useEffect, type ReactNode } from 'react';
 import { projects } from '@/entities/project/model/data';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
@@ -41,9 +42,9 @@ export function MeterAdminPage() {
       document.getElementById('meter-study-main')?.scrollIntoView();
     }}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
     <header className="site-header">
-      <a className="brand" href="#projects">Issac<span>.dev</span></a>
+      <a className="brand" href="#projects">ISSAC OH</a>
       <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}>
-        <a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗</a>
+        <a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
         <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
           <button lang="ko" aria-pressed={!en} onClick={() => setLanguage('ko')}>KR</button>
           <button lang="en" aria-pressed={en} onClick={() => setLanguage('en')}>EN</button>
@@ -51,13 +52,13 @@ export function MeterAdminPage() {
       </nav>
     </header>
     <main id="meter-study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero">
+      <div className="study-hero"><MetalStudy shape="ring"/>
         <p className="section-kicker">METER ADMIN / FIELD SURVEY MANAGER</p>
-        <h1>{en ? 'Keep field evidence.\nDeliver it in the required format.' : '현장의 기록을 지키고,\n필요한 양식으로 전달합니다.'}</h1>
+        <h1>{en ? 'Field Survey Manager' : '야장관리자'}</h1>
         <p>{en ? 'Client work · Live in production · Ongoing maintenance' : '외주 프로젝트 · 실서비스 운영 · 유지보수 중'}<br />Next.js 16 · React 19 · Supabase · Cloudflare R2 · NAVER Maps</p>
       </div>
       <nav className="study-tabs" aria-label={en ? 'Related project' : '연관 프로젝트'}>
-        <a href="#/projects/field-work">{en ? 'Field Work Manager case study' : '수도관리자 사례도 보기'} ↗</a>
+        <a href="#/projects/field-work">{en ? 'Field Work Manager case study' : '수도관리자 사례도 보기'} ↗︎</a>
       </nav>
       <Section title={en ? 'From spreadsheet to field survey to delivery' : 'Excel에서 시작해 현장 조사와 제출까지'}>
         <p>{en ? 'Office users register consumer and valve lists, field users add readings, photos and location information, and administrators review progress and export results. The application connects these steps for water-meter, gate-valve, air-valve and hydrant surveys.' : '사무실에서 수용가·밸브 목록을 등록하고, 현장에서 지침·사진·위치를 기록한 뒤, 관리자가 진행상태와 결과물을 확인합니다. 수도 계량기와 제수밸브·공기밸브·소화전 조사의 등록부터 결과 추출까지 연결한 도구입니다.'}</p>
@@ -87,7 +88,7 @@ export function MeterAdminPage() {
       <Section title={en ? 'Product demonstration' : '서비스 시연'}>
         <figure className="demo-video">
           <video src={videoUrl} controls playsInline preload="none" aria-label={en ? 'Field Survey Manager demonstration' : '야장관리자 시연 영상'} />
-          <figcaption><a className="text-teal underline" href={videoUrl} target="_blank" rel="noreferrer">{en ? 'Open the existing demonstration video' : '기존 시연 영상 직접 열기'} ↗</a></figcaption>
+          <figcaption><a className="text-teal underline" href={videoUrl} target="_blank" rel="noreferrer">{en ? 'Open the existing demonstration video' : '기존 시연 영상 직접 열기'} ↗︎</a></figcaption>
         </figure>
       </Section>
       <div className="study-callout">
@@ -102,7 +103,7 @@ export function MeterAdminPage() {
           [`${revision}/features/excel-manager/api/template-fill.ts`, en ? 'Template export' : '원본 양식 채우기'],
           [`${revision}/ARCHITECTURE.md`, en ? 'Architecture & limitations' : '구조와 검토 과제'],
           [`${revision}/CLAUDE.md`, en ? 'AI collaboration rules' : 'AI 협업 규칙'],
-        ].map(([href, label]) => <a key={href} href={href} target="_blank" rel="noreferrer">{label} ↗</a>)}</div>
+        ].map(([href, label]) => <a key={href} href={href} target="_blank" rel="noreferrer">{label} ↗︎</a>)}</div>
       </section>
     </main>
     <footer className="site-footer"><span>© {new Date().getFullYear()} Issac Oh</span><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↑</a></footer>

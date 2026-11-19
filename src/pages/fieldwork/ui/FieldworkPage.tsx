@@ -1,3 +1,4 @@
+import { MetalStudy } from '@/shared/ui/MetalStudy';
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
@@ -34,8 +35,8 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
   const scope = en ? 'Synthetic 20,000 sites · Java 21 / PostgreSQL 17 · Development benchmark, not production HTTP latency.' : '가상 수용가 20,000건 · Java 21 / PostgreSQL 17 · 운영 HTTP 응답시간이 아닌 개발 환경 측정';
   return <div className="portfolio study-page text-ink font-body">
     <a className="skip-link" href="#study-main" onClick={event => {event.preventDefault(); document.getElementById('study-main')?.focus(); document.getElementById('study-main')?.scrollIntoView();}}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
-    <header className="site-header"><a className="brand" href="#projects">Issac<span>.dev</span></a>
-      <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗</a>
+    <header className="site-header"><a className="brand" href="#projects">ISSAC OH</a>
+      <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
         <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
           <button lang="ko" aria-pressed={!en} onClick={() => setLanguage('ko')}>KR</button>
           <button lang="en" aria-pressed={en} onClick={() => setLanguage('en')}>EN</button>
@@ -43,12 +44,12 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
       </nav>
     </header>
     <main id="study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero"><p className="section-kicker">FIELD WORK MANAGER / ENGINEERING JOURNAL</p>
-        <h1>{section === 'overview' ? (en ? 'From field records to a connected workflow.' : '현장의 기록을,\n하나의 업무 흐름으로.') : section === 'performance' ? (en ? 'Measure first. Reduce the actual cost.' : '먼저 측정하고,\n실제 비용을 줄였습니다.') : (en ? 'Building with Codex. Verifying with evidence.' : 'Codex와 구현하고,\n실행 결과로 검증합니다.')}</h1>
+      <div className="study-hero"><MetalStudy shape="coil"/><p className="section-kicker">FIELD WORK MANAGER / ENGINEERING JOURNAL</p>
+        <h1>{section === 'overview' ? (en ? 'Water Operations Manager' : '수도관리자') : section === 'performance' ? (en ? 'Query performance' : '조회 성능 측정') : (en ? 'Development with Codex' : 'Codex 개발 기록')}</h1>
         <p>{en ? 'Client work · MVP implemented, deployment connected · Ongoing improvements' : '외주 프로젝트 · MVP 구현 및 배포 연결 · 지속 개선 중'}<br />{en ? 'Last documented: 10 November 2026' : '기록 기준: 2026년 11월 10일'}</p>
       </div>
       <nav className="study-tabs" aria-label={en ? 'Case study sections' : '상세 기록'}>
-        {tabs.map(([key, label]) => <a key={key} href={`${base}${key === 'overview' ? '' : `/${key}`}`} aria-current={section === key ? 'page' : undefined}>{label}<span>↗</span></a>)}
+        {tabs.map(([key, label]) => <a key={key} href={`${base}${key === 'overview' ? '' : `/${key}`}`} aria-current={section === key ? 'page' : undefined}>{label}<span>↗︎</span></a>)}
       </nav>
       {section === 'overview' && <>
         <Section title={en ? 'The workflow, not just the screens' : '화면보다 먼저 연결한 업무 흐름'}>
@@ -92,7 +93,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
           <ul>{(en ? ['Re-measured the latest develop revision before changing code; retained both raw JSON files.', 'Observed three failing query-budget cases, then verified a constant four-query budget for page sizes 1, 20 and 100.', 'Compared list records to detail records for both roles; tested filters, order, page clamping, missing numbers and empty pages.', 'Ran the complete PostgreSQL regression suite and built the JAR.'] : ['최신 develop에서 개선 전을 다시 측정하고 전후 원시 JSON을 보관했습니다.', '쿼리 상한 테스트 3개가 실패하는 것을 먼저 확인하고 1·20·100건 요청에서 4회 이하를 검증했습니다.', '관리자·작업자 각각 목록과 상세를 비교하고 필터·정렬·페이지 보정·번호 미등록·빈 목록을 검증했습니다.', '전체 PostgreSQL 회귀 테스트와 실행 JAR 빌드를 통과했습니다.']).map(x=><li key={x}>{x}</li>)}</ul>
           <p>{en ? 'Conditions: CPU allocation 2, environment memory cap 8 GiB, JVM heap 768 MiB, connection pool 10, Java 21, PostgreSQL 17, 10k START and 5k END records. Service/controller + JSON serialization; no HTTP/auth filters, browser, Cloudflare or real R2. No production change was made in this experiment.' : '조건: CPU 할당 2개, 환경 메모리 한도 8GiB, JVM 힙 768MiB, 커넥션 풀 10개, Java 21·PostgreSQL 17, START 1만·END 5천 건. 서비스/컨트롤러와 JSON 직렬화를 측정했으며 HTTP·인증 필터·브라우저·Cloudflare·실제 R2는 제외했습니다. 이번 개선의 운영 적용은 별도입니다.'}</p>
           <p>{en ? 'Timing is one paired run with small warm sample sets, not a long-running load test or a confidence interval. SQL-call reduction is the primary confirmed result. Unchanged map/document scenarios serve as context, not evidence of improvements to those paths.' : '예열 후 소표본으로 전후 한 쌍을 측정한 결과이며 장시간 부하나 신뢰구간을 제시한 실험은 아닙니다. SQL 횟수 감소를 핵심 검증 결과로 삼았습니다. 수정하지 않은 지도·문서의 시간 차이를 해당 기능의 개선 성과로 주장하지 않습니다.'}</p>
-          <div className="study-links"><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Download report PDF' : '개선 결과 PDF'} ↗</a><a href="/fieldwork/before.json" target="_blank" rel="noreferrer">Before JSON ↗</a><a href="/fieldwork/after.json" target="_blank" rel="noreferrer">After JSON ↗</a></div>
+          <div className="study-links"><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Download report PDF' : '개선 결과 PDF'} ↗︎</a><a href="/fieldwork/before.json" target="_blank" rel="noreferrer">Before JSON ↗︎</a><a href="/fieldwork/after.json" target="_blank" rel="noreferrer">After JSON ↗︎</a></div>
         </Section>
         <Section title={en ? 'What remains' : '다음 개선 대상으로 남긴 것'}><p>{en ? 'Photo-heavy HWPX rendering, ZIP reuse, search and spatial indexes need their own experiments. The earlier document-cache comparison was first generation versus cache reuse, not a code optimization result. Redis and SQS remain options to evaluate against measured needs.' : '사진 포함 HWPX 생성기, ZIP 재사용, 검색·좌표 인덱스는 별도 실험이 필요합니다. 앞선 문서 측정의 최초 생성/캐시 재사용 차이는 코드 개선 전후 성과가 아닙니다. Redis·SQS도 필요가 관측될 때 검토할 후보로 남겼습니다.'}</p></Section>
       </>}
@@ -114,7 +115,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
         ]).map(([h,p])=><li key={h}><h3>{h}</h3><p>{p}</p></li>)}</ol></Section>
         <Section title={en ? 'Evidence over generated confidence' : '생성된 설명보다 실행 근거를 우선합니다'}><p>{en ? 'Repository rules are kept in AGENTS.md. Customer workbooks/photos and credentials stay out of commits. Existing Flyway migrations are preserved. Successful synthetic tests do not establish production R2 behavior or real-user latency; unrun checks are identified explicitly.' : 'AGENTS.md에 작업 지침을 두고 개인정보 Excel·사진·자격 증명은 커밋하지 않습니다. 기존 Flyway 이력을 유지하고 새 마이그레이션을 추가합니다. 합성 테스트 통과를 실제 R2나 운영 사용자 응답시간의 검증으로 바꾸어 표현하지 않고, 실행하지 않은 검증은 명시합니다.'}</p><p>{en ? 'The portfolio separates the original Field Survey Manager, built primarily with Claude Code, from this Spring Boot project, developed with Codex assistance.' : '기존 야장관리자(Claude Code 중심 개발)와 이번 Spring Boot 기반 수도관리자(Codex 활용)는 서로 다른 프로젝트로 구분합니다.'}</p></Section>
       </>}
-      <section className="study-resources"><h2>{en ? 'Source & evidence' : '소스와 검증 근거'}</h2><div className="study-links"><a href={sources} target="_blank" rel="noreferrer">GitHub / field-worker ↗</a><a href={results.pullRequestUrl || sources} target="_blank" rel="noreferrer">{en ? 'Performance pull request' : '성능 개선 PR'} ↗</a><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Measurement report' : '측정 리포트'} ↗</a></div><p>{en ? 'All published charts use fictional data. No customer records, locations or photos are included.' : '공개 그래프는 가상 데이터만 사용했습니다. 고객 정보·실제 좌표·사진은 포함하지 않았습니다.'}</p></section>
+      <section className="study-resources"><h2>{en ? 'Source & evidence' : '소스와 검증 근거'}</h2><div className="study-links"><a href={sources} target="_blank" rel="noreferrer">GitHub / field-worker ↗︎</a><a href={results.pullRequestUrl || sources} target="_blank" rel="noreferrer">{en ? 'Performance pull request' : '성능 개선 PR'} ↗︎</a><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Measurement report' : '측정 리포트'} ↗︎</a></div><p>{en ? 'All published charts use fictional data. No customer records, locations or photos are included.' : '공개 그래프는 가상 데이터만 사용했습니다. 고객 정보·실제 좌표·사진은 포함하지 않았습니다.'}</p></section>
     </main>
     <footer className="site-footer"><span>FIELD WORK MANAGER · 2026.11.10</span><a href="#projects">{en ? 'Back to projects' : '프로젝트 목록으로'} ↑</a></footer>
   </div>;
