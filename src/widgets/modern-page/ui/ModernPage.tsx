@@ -5,128 +5,53 @@ import { useDetailModalStore } from '@/features/node-detail/model/useDetailModal
 import { siteConfig } from '@/shared/config/site';
 import { getExperiences, getProjects } from '@/shared/config/localizedContent';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
-
-const copy = {
-  ko: {
-    skip: '본문으로 바로가기', nav: '주요 메뉴', experience: '경력', projects: '프로젝트', about: '소개', contact: '연락하기',
-    name: '오이삭 · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: '업무의 맥락을 읽고,', headlineEnd: '시스템을 개선합니다.',
-    intro: 'Java/Spring API부터 React·Next.js·Vue 관리자 화면까지.',
-    introEnd: '데이터 정합성과 업무 자동화, 레거시 현대화를 경험한 백엔드 중심 풀스택 개발자입니다.',
-    explore: '프로젝트 살펴보기', experienceTitle: '실무에서 쌓은 경험', experienceCaption: '시스템 전환부터 운영과 배포까지',
-    current: '현재 참여 중', detail: '자세히 보기', projectsTitle: '사이드 프로젝트',
-    aboutTitle: '기술보다 먼저,', aboutTitleEnd: '문제의 맥락을 봅니다.',
-    aboutCopy: '약 4년간 기업 업무 시스템의 API·DB·배치와 관리자 화면을 개발했습니다. 상품 데이터 정합성 오류를 복구하고 반복 업무를 자동화했으며, 현재 Java/Vue 기반 시스템 전환에 참여하고 있습니다.', deliveryNote: 'Kubernetes·ArgoCD는 기존 인프라에 애플리케이션 배포를 연동한 경험입니다.', workTitle: '문제를 해결한 경험', workCaption: '커넥트웨이브 · 다나와사업부', demo: '시연 영상 보기', projectDetail: '프로젝트 상세',
-    top: '맨 위로',
-  },
-  en: {
-    skip: 'Skip to content', nav: 'Main navigation', experience: 'Experience', projects: 'Projects', about: 'About', contact: 'Get in touch',
-    name: 'ISSAC OH · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: 'Understand the workflow.', headlineEnd: 'Improve the system.',
-    intro: 'Java/Spring APIs. React, Next.js and Vue administration interfaces.',
-    introEnd: 'I’m a backend-focused full-stack developer with experience in data consistency, workflow automation and legacy modernization.',
-    explore: 'Explore my work', experienceTitle: 'Professional experience', experienceCaption: 'From migration to operations and delivery',
-    current: 'Current', detail: 'View details', projectsTitle: 'Side projects',
-    aboutTitle: 'Understand the problem.', aboutTitleEnd: 'Then choose the technology.',
-    aboutCopy: 'Over approximately four years, I have developed enterprise APIs, database features, batch jobs and administration interfaces. My work includes recovering inconsistent product data, automating operational workflows and contributing to Java/Vue system modernization.', deliveryNote: 'My Kubernetes and ArgoCD experience focuses on application delivery integration with existing infrastructure.', workTitle: 'Selected engineering work', workCaption: 'Connectwave · Danawa Division', demo: 'Watch demo', projectDetail: 'Project details',
-    top: 'Back to top',
-  },
-};
+import results from '@/pages/fieldwork/model/performance.json';
+import { SignalSculpture } from './SignalSculpture';
+import './editorial.css';
 
 export function ModernPage() {
-  const open = useDetailModalStore((s) => s.open);
+  const open = useDetailModalStore(s => s.open);
   const { language, setLanguage } = useLanguageStore();
-  const t = copy[language];
-  const experiences = getExperiences(language);
-  const projects = getProjects(language);
-  const works = getWorks(language);
-
+  const en = language === 'en';
+  const pick = (ko: string, english: string) => en ? english : ko;
+  const intro = pick('Java와 Spring으로 업무 시스템을 만드는 오이삭입니다. 상품 데이터 복구부터 현장 검침 자동화까지, 운영자가 매일 쓰는 도구를 개발합니다.', 'I’m Issac Oh, a backend-focused developer building Java and Spring systems for the people who run commerce platforms and field operations.');
+  const projectList = getProjects(language);
+  const benchmark = results.comparisons.find(row => row.name === 'list_100_first_page')!;
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = language === 'en' ? 'Issac Oh | Backend-focused Full-stack Developer' : '오이삭 | 백엔드 중심 풀스택 개발자';
-    document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'en'
-      ? 'Java/Spring backend-focused full-stack developer. Enterprise systems, data consistency, workflow automation and legacy modernization.'
-      : 'Java/Spring 백엔드 중심 풀스택 개발자 오이삭. 데이터 정합성, 업무 자동화, 관리자 플랫폼과 레거시 현대화 경험을 소개합니다.');
-  }, [language]);
-
-  return (
-    <div className="portfolio min-h-screen bg-bg text-ink font-body">
-      <a className="skip-link" href="#main">{t.skip}</a>
-      <header className="site-header">
-        <a className="brand" href="#">Issac<span>.dev</span></a>
-        <nav aria-label={t.nav}>
-          <a href="#experience">{t.experience}</a>
-          <a href="#projects">{t.projects}</a>
-          <a href="#about">{t.about}</a>
-          <a className="nav-contact" href={`mailto:${siteConfig.email}`}>{t.contact} ↗</a>
-          <div className="language-switch" role="group" aria-label={language === 'en' ? 'Language' : '언어'}>
-            <button type="button" lang="ko" aria-pressed={language === 'ko'} onClick={() => setLanguage('ko')}>KR</button>
-            <button type="button" lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
-          </div>
-        </nav>
-      </header>
-      <main id="main" className="page-shell">
-        <section className="hero" aria-labelledby="hero-title">
-          <p className="section-kicker">{t.name}</p>
-          <h1 id="hero-title">{t.headline}<br /><span>{t.headlineEnd}</span></h1>
-          <p className="hero-description">{t.intro}<br className="desktop-break" /> {t.introEnd}</p>
-          <div className="hero-actions">
-            <a className="primary-link" href="#projects">{t.explore} <span>↓</span></a>
-            <a className="text-link" href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
-          </div>
-          <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p></div>
-        </section>
-        <section id="experience" className="content-section" aria-labelledby="experience-title">
-          <div className="section-heading"><div><p className="section-kicker">EXPERIENCE</p><h2 id="experience-title">{t.experienceTitle}</h2></div><p>{t.experienceCaption}</p></div>
-          <div className="experience-list">
-            {experiences.map((item, index) => (
-              <button className="experience-row" key={item.id} onClick={() => open({ kind: 'experience', id: item.id })}>
-                <span className="item-number">0{index + 1}</span>
-                <span className="experience-info"><span className="item-title">{item.name}</span><span className="item-role">{item.role}</span><span className="inline-tags">{item.tags.slice(0, 4).join(' / ')}</span></span>
-                <span className="experience-meta"><span>{item.period}</span>{item.ongoing && <span className="status">{t.current}</span>}<span className="detail-hint">{t.detail} ↗</span></span>
-              </button>
-            ))}
-          </div>
-        </section>
-        <section id="work" className="content-section" aria-labelledby="work-title">
-          <div className="section-heading"><div><p className="section-kicker">ENGINEERING WORK</p><h2 id="work-title">{t.workTitle}</h2></div><p>{t.workCaption}</p></div>
-          <div className="work-grid">
-            {works.map((work, index) => (
-              <button className="work-card" key={work.id} onClick={() => open({ kind: 'work', id: work.id })}>
-                <span className="section-kicker">0{index + 1}</span>
-                <h3>{work.title}</h3>
-                <p>{work.context}</p>
-                <span className="inline-tags">{work.tags.slice(0, 4).join(' · ')}</span>
-                <span className="work-link">{t.detail} ↗</span>
-              </button>
-            ))}
-          </div>
-        </section>
-        <section id="projects" className="content-section" aria-labelledby="projects-title">
-          <div className="section-heading"><div><p className="section-kicker">SIDE PROJECTS</p><h2 id="projects-title">{t.projectsTitle}</h2></div></div>
-          <div className="project-grid">
-            {projects.map(project => (
-              <article className="project-card side-project" key={project.id}>
-                <div className="project-content">
-                  <p className="project-period">{project.role}</p>
-                  <h3>{project.name}</h3>
-                  <p className="status project-status">{project.period}</p>
-                  <p className="project-summary">{project.desc}</p>
-                  <div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                  {project.caseStudyHref ? <a className="project-detail" href={project.caseStudyHref}>
-                    {t.projectDetail}<span>↗</span>
-                  </a> : <button className="project-detail" onClick={() => open({ kind: 'project', id: project.id })}>
-                    {project.videoUrl ? t.demo : t.projectDetail}<span>↗</span>
-                  </button>}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section id="about" className="content-section about-section" aria-labelledby="about-title">
-          <div><p className="section-kicker">ABOUT ME</p><h2 id="about-title">{t.aboutTitle}<br />{t.aboutTitleEnd}</h2><p className="about-copy">{t.aboutCopy}</p><a className="text-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a></div>
-          <div className="skills-list">{Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group}><h3>{group}</h3><p>{skills.join(' · ')}</p></div>)}<p className="skills-note">{t.deliveryNote}</p></div>
-        </section>
-      </main>
-      <footer className="site-footer"><span>© {new Date().getFullYear()} Issac Oh</span><div><a href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a><a href="#">{t.top} ↑</a></div></footer>
-    </div>
-  );
+    document.title = en ? 'Issac Oh | Backend-focused Full-stack Developer' : '오이삭 | 백엔드 중심 풀스택 개발자';
+    document.querySelector('meta[name="description"]')?.setAttribute('content', intro);
+  }, [language, en, intro]);
+  return <div className="io-page" id="top">
+    <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content')}</a>
+    <header className="io-nav"><a href="#top" className="io-brand" aria-label="Issac Oh"><i aria-hidden="true">io</i> Issac Oh</a>
+      <nav aria-label={pick('주요 메뉴','Navigation')}><a href="#projects">{pick('프로젝트','Projects')}</a><a href="#experience">{pick('경력','Experience')}</a><a href="#contact">{pick('연락','Contact')}</a></nav>
+      <div className="io-lang">{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
+    </header>
+    <main id="main" tabIndex={-1}>
+      <section className="io-hero">
+        <div className="io-intro"><p className="io-label">Backend / Full-stack Developer</p><h1>Issac <em>Oh.</em></h1><p className="io-bio">{intro}</p><a className="io-cta" href="#projects">{pick('대표 프로젝트 보기','View selected projects')}</a></div>
+        <SignalSculpture />
+      </section>
+      <section id="projects" className="io-section"><header><h2>Selected <em>work.</em></h2><span>{pick('외주 프로젝트','Client projects')}</span></header>
+        <div className="io-projects">{projectList.map(p => {
+          const field = p.id === 'field-work';
+          return <a className="io-project" key={p.id} href={p.caseStudyHref}>
+            <div className={'io-cover '+(field ? 'io-benchmark':'io-survey')} aria-hidden="true">{field ? <><small>SQL / FIRST 100 ROWS</small><strong>{benchmark.beforeSql}<i> → </i>{benchmark.afterSql}</strong><div className="io-bars"><b/><b style={{width:100*benchmark.afterSql/benchmark.beforeSql+'%'}}/></div></> :
+              <><small>FIELD SURVEY / WORKBOOK</small><div className="io-sheets"><i/><i/><i><b>野帳</b><span>FIELD SURVEY</span></i></div></>}</div>
+            <div className="io-project-meta">{p.period}</div><h3>{p.name}</h3><p>{field ? pick('가상 수용가 2만 건으로 조회 병목을 측정하고, 첫 100건에 필요한 SQL을 302회에서 4회로 줄였습니다.','Benchmarked 20,000 synthetic sites and cut SQL queries for the first 100 records from 302 to 4.') : pick('Excel을 다시 올려도 조사값과 사진을 보존하고, 완료한 현장 기록을 발주처의 원본 양식에 출력합니다.','Preserves survey values and photos across Excel reimports, then exports field records into the client’s original workbook.')}</p>
+            <span className="io-link">{pick('구현 기록 읽기','Read case study')}</span>
+          </a>;
+        })}</div>
+      </section>
+      <section id="experience" className="io-section"><header><h2>Experience<em>.</em></h2><span>{pick('경력과 담당 업무','Roles & responsibilities')}</span></header>
+        {getExperiences(language).map(item => <button className="io-row" key={item.id} onClick={() => open({kind:'experience',id:item.id})}><small>{item.period}</small><span><strong>{item.name}</strong><span>{item.role}</span></span><i aria-hidden="true">＋</i></button>)}
+      </section>
+      <section className="io-section"><header><h2>Engineering <em>notes.</em></h2><span>{pick('다나와사업부 실무 기록','Danawa engineering work')}</span></header>
+        {getWorks(language).map(work => <button className="io-row io-note" key={work.id} onClick={() => open({kind:'work',id:work.id})}><small>{work.tags[0]}</small><strong>{work.title}</strong><i aria-hidden="true">＋</i></button>)}
+      </section>
+      <section id="about" className="io-section"><header><h2>Toolkit<em>.</em></h2><span>{pick('실무에서 사용한 기술','Technologies used at work')}</span></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
+    </main>
+    <footer id="contact"><p className="io-label">{pick('채용 및 협업 문의','Hiring & collaboration')}</p><a className="io-email" href={'mailto:'+siteConfig.email}>{siteConfig.email}</a><div><span>© {new Date().getFullYear()} Issac Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
+  </div>;
 }
