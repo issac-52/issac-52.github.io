@@ -1,3 +1,4 @@
+import './editorial.css';
 import { SocialIcon } from './SocialIcon';
 import { useEffect } from 'react';
 import { getWorks } from '@/entities/work/model/data';
