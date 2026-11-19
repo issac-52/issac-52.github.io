@@ -17,7 +17,7 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
     desc: 'Developed Java/Spring management APIs, database tables and PHP/Cron batch jobs for product and catalog operations. Extended an existing RabbitMQ consumer with failed-product lookup and compensation logic to address Elasticsearch–Altibase consistency errors.\n\nIn a four-person team, developed the Next.js frontend structure, GraphQL integration, permissions and menu interfaces, and reusable components for a unified Enuri–Danawa administration platform. Configured blue-green deployment for the New Office frontend using Docker Compose, shell scripts and Nginx. Also worked on application delivery integration with GitLab CI/CD, Harbor and ArgoCD, and a shared Storybook environment.',
   },
 };
-export const getExperiences = (language: Language) => language === 'en'
+export const getExperiences = (language: Language) => language !== 'ko'
   ? experiences.map(item => ({ ...item, ...englishExperience[item.id] })) : experiences;
 
 const englishProjects = {
@@ -40,5 +40,5 @@ const englishProjects = {
     desc: 'A field operations system covering Excel imports, maps and geocoding, START/END readings, photos, settlement and HWPX exports for roughly 20,000 sites. Built and verified with Codex assistance, with EC2 and Cloudflare integration. Synthetic 20k-site benchmarks document query bottlenecks and before/after results.',
   },
 };
-export const getProjects = (language: Language) => language === 'en'
+export const getProjects = (language: Language) => language !== 'ko'
   ? projects.map(item => ({ ...item, ...englishProjects[item.id as keyof typeof englishProjects] })) : projects;
