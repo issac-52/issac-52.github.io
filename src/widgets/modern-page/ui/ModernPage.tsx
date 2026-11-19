@@ -10,7 +10,7 @@ import { useLanguageStore } from '@/shared/model/useLanguageStore';
 const copy = {
   ko: {
     skip: '본문으로 바로가기', nav: '주요 메뉴', experience: '경력', projects: '프로젝트', about: '소개', contact: '연락하기',
-    name: '오이삭 · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: '업무의 맥락을 읽고,', headlineEnd: '시스템을 개선합니다.',
+    name: 'SAC · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: '업무의 맥락을 읽고,', headlineEnd: '시스템을 개선합니다.',
     intro: 'Java/Spring API부터 React·Next.js·Vue 관리자 화면까지.',
     introEnd: '데이터 정합성과 업무 자동화, 레거시 현대화를 경험한 백엔드 중심 풀스택 개발자입니다.',
     explore: '프로젝트 살펴보기', experienceTitle: '실무에서 쌓은 경험', experienceCaption: '시스템 전환부터 운영과 배포까지',
@@ -32,7 +32,7 @@ const copy = {
   },
   en: {
     skip: 'Skip to content', nav: 'Main navigation', experience: 'Experience', projects: 'Projects', about: 'About', contact: 'Get in touch',
-    name: 'ISSAC OH · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: 'Understand the workflow.', headlineEnd: 'Improve the system.',
+    name: 'SAC · BACKEND-FOCUSED FULL-STACK DEVELOPER', headline: 'Understand the workflow.', headlineEnd: 'Improve the system.',
     intro: 'Java/Spring APIs. React, Next.js and Vue administration interfaces.',
     introEnd: 'I’m a backend-focused full-stack developer with experience in data consistency, workflow automation and legacy modernization.',
     explore: 'Explore my work', experienceTitle: 'Professional experience', experienceCaption: 'From migration to operations and delivery',
@@ -77,8 +77,9 @@ export function ModernPage() {
         </nav>
       </header>
       <main id="main" className="page-shell">
+        <div className="editorial-side-note" aria-hidden="true">SAC / ENGINEERING PORTFOLIO — EST. 2022</div>
         <section className="hero" aria-labelledby="hero-title"><div className="hero-index"><span>PORTFOLIO / 2026</span><span>BACKEND ENGINEERING · SEOUL, KR</span></div>
-          <p className="section-kicker">HELLO, I’M SAC <span aria-hidden="true">✳</span></p>
+          <div className="hero-identity"><span className="hero-identity-mark" aria-hidden="true">S/</span><p className="section-kicker">HELLO, I’M SAC <span aria-hidden="true">✳</span></p><span className="hero-identity-index">INDEPENDENT ENGINEER<br />SEOUL · SOUTH KOREA</span></div>
           <h1 id="hero-title">{t.headline}<br /><span>{t.headlineEnd}</span></h1>
           <p className="hero-description">{t.intro}<br className="desktop-break" /> {t.introEnd}</p>
           <div className="hero-actions">
@@ -89,7 +90,7 @@ export function ModernPage() {
               <a className="social-icon" href={`mailto:${siteConfig.email}`} aria-label="Email" title="Email"><SocialIcon kind="email" /></a>
             </div>
           </div>
-          <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p></div>
+          <div className="hero-focus"><span>LEGACY → MODERN</span><p>PowerBuilder · PHP · JSP <span>→</span> Java / Spring · Next.js · Vue.js</p><span className="focus-symbol" aria-hidden="true">↗</span></div>
         </section>
         <section id="experience" className="content-section" aria-labelledby="experience-title">
           <div className="section-heading"><div><p className="section-kicker">01 / EXPERIENCE</p><h2 id="experience-title">{t.experienceTitle}</h2></div><p>{t.experienceCaption}</p></div>
@@ -108,7 +109,7 @@ export function ModernPage() {
           <div className="work-grid">
             {works.map((work, index) => (
               <button className="work-card" key={work.id} onClick={() => open({ kind: 'work', id: work.id })}>
-                <span className="section-kicker">0{index + 1}</span>
+                <div className="work-card-top"><span className="section-kicker">CASE / 0{index + 1}</span><span className="work-card-arrow" aria-hidden="true">↗</span></div>
                 <h3>{work.title}</h3>
                 <p>{work.context}</p>
                 <span className="inline-tags">{work.tags.slice(0, 4).join(' · ')}</span>
@@ -121,7 +122,8 @@ export function ModernPage() {
           <div className="section-heading"><div><p className="section-kicker">03 / SELECTED PROJECTS</p><h2 id="projects-title">{t.projectsTitle}</h2></div></div>
           <div className="project-grid">
             {projects.map(project => (
-              <article className="project-card side-project" key={project.id}>
+              <article className={`project-card side-project project-${project.id}`} key={project.id}>
+                <div className="project-art" aria-hidden="true"><span className="project-art-label">SELECTED PROJECT / {String(projects.indexOf(project) + 1).padStart(2, '0')}</span><span className="project-art-symbol">{project.id === 'weekly-blog' ? 'B/' : project.id === 'meter-admin' ? 'M.' : 'F↗'}</span><span className="project-art-footer">SAC — INDEPENDENT WORK <span>2026</span></span></div>
                 <div className="project-content">
                   <p className="project-period">{project.role}</p>
                   <h3>{project.name}</h3>
@@ -139,7 +141,7 @@ export function ModernPage() {
           </div>
         </section>
         <section id="about" className="content-section about-section" aria-labelledby="about-title">
-          <div><p className="section-kicker">04 / ABOUT ME</p><h2 id="about-title">{t.aboutTitle}<br />{t.aboutTitleEnd}</h2><p className="about-copy">{t.aboutCopy}</p><a className="text-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a></div>
+          <div><div className="about-monogram" aria-hidden="true">SAC<span>✳</span></div><p className="section-kicker">04 / ABOUT ME</p><h2 id="about-title">{t.aboutTitle}<br />{t.aboutTitleEnd}</h2><p className="about-copy">{t.aboutCopy}</p><a className="text-link" href={`mailto:${siteConfig.email}`}>{siteConfig.email} ↗</a></div>
           <div className="skills-list">{Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group}><h3>{group}</h3><p>{skills.join(' · ')}</p></div>)}<p className="skills-note">{t.deliveryNote}</p></div>
         </section>
       </main>
