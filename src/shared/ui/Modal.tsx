@@ -36,9 +36,9 @@ export function Modal({ open, onClose, children, maxWidthClassName = 'max-w-[480
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={en ? 'Details' : '상세 정보'} tabIndex={-1} className={`relative w-full ${maxWidthClassName} max-h-[86vh] overflow-y-auto bg-card border border-cardline rounded-2xl p-5 sm:p-7 text-ink animate-modal-in`}>
-        <button onClick={onClose} className="absolute top-4 right-4 z-10 rounded-md bg-card p-2 text-sm text-ink hover:text-teal" aria-label={en ? 'Close details' : '상세 정보 닫기'}>✕ {en ? 'Close' : '닫기'}</button>
+    <div className="fixed inset-0 z-[90] flex items-center justify-center detail-scrim p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={en ? 'Details' : '상세 정보'} tabIndex={-1} className={`relative w-full ${maxWidthClassName} max-h-[86vh] overflow-y-auto detail-panel animate-modal-in`}>
+        <button onClick={onClose} className="detail-close" aria-label={en ? 'Close details' : '상세 정보 닫기'}>×</button>
         {children}
       </div>
     </div>

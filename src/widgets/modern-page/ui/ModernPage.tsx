@@ -5,7 +5,7 @@ import { useDetailModalStore } from '@/features/node-detail/model/useDetailModal
 import { siteConfig } from '@/shared/config/site';
 import { getExperiences, getProjects } from '@/shared/config/localizedContent';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
-import { MetalStudy } from '@/shared/ui/MetalStudy';
+import { RibbonStudy } from './RibbonStudy';
 import { SocialLinks } from './SocialLinks';
 import './editorial.css';
 
@@ -25,7 +25,7 @@ export function ModernPage() {
     <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content')}</a>
     <header className="io-nav">
       <a href="#top" className="io-brand" aria-label="Issac Oh">ISSAC OH<span aria-hidden="true">✳︎</span></a>
-      <nav aria-label={pick('주요 메뉴','Navigation')}><a href="#projects">{pick('작업','Work')}</a><a href="#experience">{pick('경력','Experience')}</a><a href="#contact">{pick('연락','Contact')}</a></nav>
+      <nav aria-label={pick('주요 메뉴','Navigation')}><a href="#projects">{pick('작업','Work')}</a><a href="#experience">{pick('경력','Experience')}</a></nav>
       <div className="io-lang" aria-label={pick('언어 선택','Language')}>{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
     </header>
     <main id="main" tabIndex={-1}>
@@ -37,7 +37,7 @@ export function ModernPage() {
           <p className="io-bio">{intro}</p>
           <SocialLinks />
         </div>
-        <MetalStudy />
+        <RibbonStudy />
       </section>
       <section id="projects" className="io-section"><header><h2>{pick('프로젝트','Selected work')}</h2><span>Selected work</span></header>
         {projectList.map(p => <a className="io-project" key={p.id} href={p.caseStudyHref}>
@@ -57,6 +57,6 @@ export function ModernPage() {
       </section>
       <section id="about" className="io-section"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>
-    <footer id="contact"><p className="io-label">{pick('채용 및 협업 문의','Hiring & collaboration')}</p><a className="io-email" href={'mailto:'+siteConfig.email}>{siteConfig.email}</a><div><span>© {new Date().getFullYear()} Issac Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
+    <footer><div><span>© {new Date().getFullYear()} Issac Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
   </div>;
 }
