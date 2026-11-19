@@ -10,7 +10,8 @@ import { useLanguageStore } from '@/shared/model/useLanguageStore';
 export function DetailModal() {
   const { target, close } = useDetailModalStore();
   const language = useLanguageStore(s => s.language);
-  const en = language === 'en';
+  const en = language !== 'ko';
+  const ja = language === 'ja';
   const item = target?.kind === 'experience'
     ? getExperiences(language).find(item => item.id === target.id)
     : target?.kind === 'project' ? getProjects(language).find(item => item.id === target.id) : undefined;
@@ -26,9 +27,9 @@ export function DetailModal() {
       </> : work ? <>
         <Eyebrow>ENGINEERING WORK · CONNECTWAVE</Eyebrow>
         <h2 className="font-display text-xl mb-5 pr-16">{work.title}</h2>
-        <div className="case-section"><h3>{en ? 'Context' : '배경과 문제'}</h3><p>{work.context}</p></div>
-        <div className="case-section"><h3>{en ? 'My contribution' : '담당한 일'}</h3><ul>{work.actions.map(action => <li key={action}>{action}</li>)}</ul></div>
-        <div className="case-section"><h3>{en ? 'Outcome & scope' : '결과와 담당 범위'}</h3><p>{work.result}</p></div>
+        <div className="case-section"><h3>{ja ? '背景・課題' : en ? 'Context' : '배경과 문제'}</h3><p>{work.context}</p></div>
+        <div className="case-section"><h3>{ja ? '担当したこと' : en ? 'My contribution' : '담당한 일'}</h3><ul>{work.actions.map(action => <li key={action}>{action}</li>)}</ul></div>
+        <div className="case-section"><h3>{ja ? '成果・担当範囲' : en ? 'Outcome & scope' : '결과와 담당 범위'}</h3><p>{work.result}</p></div>
         <div className="flex flex-wrap gap-1.5">{work.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}</div>
       </> : item && <>
         <Eyebrow>{target?.kind === 'experience' ? 'WORK EXPERIENCE' : 'SIDE PROJECT'}</Eyebrow>
@@ -36,7 +37,7 @@ export function DetailModal() {
         <div className="text-sm text-dim mb-4 leading-7">{item.role} · {item.period}</div>
         {item.desc && <p className="text-sm leading-7 text-[#c3c8db] mb-5 whitespace-pre-line">{item.desc}</p>}
         <div className="flex flex-wrap gap-1.5">{item.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}</div>
-        {project?.caseStudyHref && <a className="primary-link mt-6" href={project.caseStudyHref} onClick={close}>{en ? 'Read the project case study' : '프로젝트 상세 기록 보기'} ↗</a>}
+        {project?.caseStudyHref && <a className="primary-link mt-6" href={project.caseStudyHref} onClick={close}>{ja ? 'プロジェクト詳細を見る' : en ? 'Read the project case study' : '프로젝트 상세 기록 보기'} ↗</a>}
         {project?.videoUrl && <figure className="demo-video">
           <video key={project.id} src={project.videoUrl} controls playsInline preload="metadata" aria-label={en ? 'Field Survey Manager demonstration' : '야장관리자 시연 영상'}>
             <a href={project.videoUrl}>{en ? 'Open demonstration video' : '시연 영상 열기'}</a>

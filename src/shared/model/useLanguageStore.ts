@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-export type Language = 'ko' | 'en';
+export type Language = 'ko' | 'en' | 'ja';
 const initialLanguage = (): Language => {
   const value = new URLSearchParams(window.location.search).get('lang');
-  if (value === 'en' || value === 'ko') return value;
-  try { return localStorage.getItem('portfolio-language') === 'en' ? 'en' : 'ko'; } catch { return 'ko'; }
+  if (value === 'en' || value === 'ko' || value === 'ja') return value;
+  try { const stored = localStorage.getItem('portfolio-language'); return stored === 'en' || stored === 'ja' ? stored : 'ko'; } catch { return 'ko'; }
 };
 export const useLanguageStore = create<{ language: Language; setLanguage: (language: Language) => void }>((set) => ({
   language: initialLanguage(),

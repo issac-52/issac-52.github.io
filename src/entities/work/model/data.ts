@@ -17,9 +17,9 @@ const works: Work[] = [
     actions: [
       { ko: 'MySQL 5.7 EXPLAIN에서 약 240만·890만 행의 추정 검사 대상이 있는 두 테이블의 Full Table Scan을 확인했습니다.', en: 'Used MySQL 5.7 EXPLAIN to identify full table scans on two tables with estimated scan counts of approximately 2.4M and 8.9M rows.' },
       { ko: '실제 데이터와 업무 조건을 대조해 한 테이블은 기존 복합 인덱스의 선두 컬럼 조건을 보완하는 방향으로 결정했습니다.', en: 'Validated actual data and business constraints, then chose to add a predicate matching the leading column of an existing composite index for one table.' },
-      { ko: '다른 테이블은 날짜 조회 패턴에 맞는 신규 인덱스 추가를 결정했습니다. 두 조치로 세 쿼리의 공통 병목을 개선할 계획입니다.', en: 'Planned an additional index aligned with the other table’s date filtering pattern, targeting the shared bottleneck across all three queries.' },
+      { ko: '다른 테이블은 날짜 조회 패턴에 맞는 신규 인덱스 추가를 결정했습니다. 개선 후 단일 쿼리를 재측정했습니다.', en: 'Planned an additional index aligned with the other table’s date filtering pattern and remeasured the individual query after optimization.' },
     ],
-    result: { ko: '개선 전 단일 쿼리 55초. 인덱스 적용 및 개선 후 실측은 예정되어 있으며, 3~5초는 목표 예상치로 확정 성과가 아닙니다.', en: 'Baseline: 55 seconds for one query. Index deployment and post-change measurements are pending; 3–5 seconds is a preliminary estimate, not a verified result.' },
+    result: { ko: '개선 전 단일 쿼리 55초. 개선 후 재측정한 단일 쿼리 실행 시간은 약 0.041초입니다. 측정 환경과 실행 계획에 따라 소요 시간은 달라질 수 있으며, 병렬 쿼리 3개 전체 응답 시간과는 구분됩니다.', en: 'Baseline: 55 seconds for one query. A subsequent measurement of the individual query was approximately 0.041 seconds. This is not the combined response time of the three parallel queries; timing varies by environment and execution plan.' },
     tags: ['MySQL 5.7', 'EXPLAIN', 'Composite Index', 'SQL Tuning', 'Legacy Migration'],
   },
   {
@@ -107,13 +107,23 @@ const works: Work[] = [
     tags: ['Storybook', 'GitLab CI/CD', 'Docker', 'Nginx', 'Kubernetes PVC'],
   },
 ];
+const japaneseWork: Record<string, { title: string; context: string }> = {
+  'mysql-query-tuning': { title: "レガシーSQLのボトルネック分析とインデックス最適化", context: "PowerBuilderシステムの移行中、大規模テーブルを参照する類似SQLが3本並列実行されていました。改善前の単一クエリ実行時間は約55秒でした。" },
+  'consistency': { title: "商品データの整合性回復", context: "複数ノードのAPIとバッチ処理で商品を連携・解除する際、ElasticsearchとAltibase間で部分的な書き込み失敗や重複が発生していました。" },
+  'catalog': { title: "認証・保証情報と変更履歴の管理", context: "商品の連携状態によって認証・保証情報の保存先と取得方法が異なり、未連携商品にも対応する必要がありました。" },
+  'automation': { title: "取引先Excel照合業務の自動化", context: "取引先から届くExcelファイルを担当者がDBと手作業で照合する定型業務がありました。" },
+  'blue-green': { title: "Blue-Greenデプロイの構築", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'admin-platform': { title: "統合管理プラットフォームの開発", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'ci-cd': { title: "CI/CDとアプリケーションデプロイ連携", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'storybook': { title: "Storybook共有環境と静的ファイル配信の改善", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+};
 export function getWorks(language: Language) {
   return works.map(work => ({
     id: work.id,
-    title: work.title[language],
-    context: work.context[language],
-    actions: work.actions.map(action => action[language]),
-    result: work.result[language],
+    title: language === 'ja' ? japaneseWork[work.id]?.title ?? work.title.en : work.title[language],
+    context: language === 'ja' ? japaneseWork[work.id]?.context ?? work.context.en : work.context[language],
+    actions: work.actions.map(action => action[language === 'ja' ? 'en' : language]),
+    result: work.result[language === 'ja' ? 'en' : language],
     tags: work.tags,
   }));
 }
