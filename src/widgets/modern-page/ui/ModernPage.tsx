@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { getWorks } from '@/entities/work/model/data';
 import { personalInfo } from '@/entities/person/model/personalInfo';
 import { useDetailModalStore } from '@/features/node-detail/model/useDetailModalStore';
 import { siteConfig } from '@/shared/config/site';
 import { getExperiences, getProjects } from '@/shared/config/localizedContent';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
-import { RibbonStudy } from './RibbonStudy';
+import { useMediaQuery } from '@/shared/lib/useMediaQuery';
 import { SocialLinks } from './SocialLinks';
 import './editorial.css';
+
+const FieldNotebook = lazy(() => import('./FieldNotebook'));
 
 export function ModernPage() {
   const open = useDetailModalStore(s => s.open);
@@ -15,6 +17,10 @@ export function ModernPage() {
   const en = language === 'en';
   const pick = (ko: string, english: string) => en ? english : ko;
   const intro = pick('다나와에서는 누락된 상품 데이터를 복구하는 로직을 만들었습니다. 지금은 PowerBuilder 업무 화면을 Java와 Vue로 옮기고 있습니다.', 'At Danawa, I built recovery logic for missing product data. Today I’m moving PowerBuilder workflows to Java and Vue.');
+  const [selected,setSelected]=useState('meter-admin');
+  const [engaged,setEngaged]=useState(false);
+  const staticView=useMediaQuery('(max-width: 680px), (prefers-reduced-motion: reduce)');
+  const selectProject=(id:string)=>{setSelected(id);setEngaged(true);};
   const projectList = getProjects(language);
   useEffect(() => {
     document.documentElement.lang = language;
@@ -29,7 +35,7 @@ export function ModernPage() {
       <div className="io-lang" aria-label={pick('언어 선택','Language')}>{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
     </header>
     <main id="main" tabIndex={-1}>
-      <section className="io-hero">
+      <div className="book-spread"><section className="io-hero">
         <div className="io-intro">
           <p className="io-role">Software engineer <span>/</span> Seoul, KR</p>
           <h1>Issac<br/><em>Oh.</em></h1>
@@ -37,10 +43,13 @@ export function ModernPage() {
           <p className="io-bio">{intro}</p>
           <SocialLinks />
         </div>
-        <RibbonStudy />
+
       </section>
-      <section id="projects" className="io-section"><header><h2>{pick('프로젝트','Selected work')}</h2><span>Selected work</span></header>
-        {projectList.map(p => <a className="io-project" key={p.id} href={p.caseStudyHref}>
+      <div aria-hidden="true" className="book-stage">{staticView ? <img className="book-poster" src="/notebook/cover.svg" alt=""/> :
+        <Suspense fallback={<img className="book-poster" src="/notebook/cover.svg" alt=""/>}><FieldNotebook project={selected} engaged={engaged}/></Suspense>}</div>
+      <section id="projects" onPointerLeave={()=>setEngaged(false)} onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setEngaged(false);}} className="io-section"><header><h2>{pick('프로젝트','Selected work')}</h2><span>Selected work</span></header>
+        {projectList.map(p => <a className="io-project" key={p.id} href={p.caseStudyHref} onPointerEnter={()=>selectProject(p.id)} onFocus={()=>selectProject(p.id)}>
+          {staticView && <img className="project-record" src={'/notebook/'+p.id+'.svg'} alt=""/>}
           <div><small>{p.period}</small><h3>{p.name}</h3></div>
           <div><p>{p.id === 'field-work'
             ? pick('검침원이 남긴 시작·종료 기록과 사진을 정산 내역과 HWPX 검침카드로 연결했습니다.', 'Connected field readings and photos to settlements and printable inspection cards.')
@@ -49,6 +58,7 @@ export function ModernPage() {
           <span className="io-arrow" aria-hidden="true">↗︎</span>
         </a>)}
       </section>
+      </div>
       <section id="experience" className="io-section"><header><h2>{pick('경력','Experience')}</h2></header>
         {getExperiences(language).map(item => <button className="io-row io-timeline" key={item.id} onClick={() => open({kind:'experience',id:item.id})}><small>{item.period}</small><span><strong>{item.name}</strong><span>{item.role}</span></span><i aria-hidden="true">＋</i></button>)}
       </section>

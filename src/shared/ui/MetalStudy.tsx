@@ -1,5 +1,10 @@
+import { Vector3 } from 'three/src/math/Vector3.js';
+import { TorusKnotGeometry } from 'three/src/geometries/TorusKnotGeometry.js';
+import { TorusGeometry } from 'three/src/geometries/TorusGeometry.js';
+import { Matrix4 } from 'three/src/math/Matrix4.js';
+import { Euler } from 'three/src/math/Euler.js';
 import { useEffect, useRef } from 'react';
-import { Euler, Matrix4, TorusGeometry, TorusKnotGeometry, Vector3 } from 'three';
+
 
 type Shape = 'knot' | 'coil' | 'ring';
 
