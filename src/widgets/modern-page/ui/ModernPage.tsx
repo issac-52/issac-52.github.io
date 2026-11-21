@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getWorks } from '@/entities/work/model/data';
 import { personalInfo } from '@/entities/person/model/personalInfo';
 import { useDetailModalStore } from '@/features/node-detail/model/useDetailModalStore';
@@ -15,6 +15,8 @@ export function ModernPage() {
   const en = language === 'en';
   const pick = (ko: string, english: string) => en ? english : ko;
   const intro = pick('다나와에서는 누락된 상품 데이터를 복구하는 로직을 만들었습니다. 지금은 PowerBuilder 업무 화면을 Java와 Vue로 옮기고 있습니다.', 'At Danawa, I built recovery logic for missing product data. Today I’m moving PowerBuilder workflows to Java and Vue.');
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const works = getWorks(language);
   const projectList = getProjects(language);
   useEffect(() => {
     document.documentElement.lang = language;
@@ -40,7 +42,28 @@ export function ModernPage() {
         <a className="profile-explore" href="#experience">↓　Scroll to Explore</a>
       </section>
       <section id="experience" className="io-section chapter"><header><h2>{pick('경력','Experience')}</h2></header>
-        {getExperiences(language).map(item => <button className="io-row io-timeline" key={item.id} onClick={() => open({kind:'experience',id:item.id})}><small>{item.period}</small><span><strong>{item.name}</strong><span>{item.role}</span></span><i aria-hidden="true">＋</i></button>)}
+        {getExperiences(language).map(item => {
+          const records = works.filter(work => work.experienceId === item.id);
+          const isOpen = expanded === item.id;
+          return <div className="company-entry" key={item.id}>
+            <button className="io-row company-toggle" id={item.id + '-toggle'} aria-expanded={isOpen}
+              aria-controls={item.id + '-records'} onClick={() => setExpanded(isOpen ? null : item.id)}>
+              <small>{item.period}</small>
+              <span><strong>{item.name}</strong><span>{item.role}</span></span>
+              <span className="company-count">{records.length}{pick('건',' notes')} <i aria-hidden="true">{isOpen ? '−' : '+'}</i></span>
+            </button>
+            <div className="company-records" id={item.id + '-records'} role="region"
+              aria-labelledby={item.id + '-toggle'} hidden={!isOpen}>
+              <p>{item.desc}</p>
+              <h3>{pick('개발 기록','Engineering notes')}</h3>
+              <ul>{records.map(work => <li key={work.id}>
+                <button onClick={() => open({kind:'work', id:work.id})}>
+                  <span>{work.title}</span><span aria-hidden="true">↗︎</span>
+                </button>
+              </li>)}</ul>
+            </div>
+          </div>;
+        })}
       </section>
       <section id="projects" className="featured-work"><h2>{pick('프로젝트','Selected projects')}</h2>
         {projectList.map(p => <a className="work-feature" key={p.id} href={p.caseStudyHref}
@@ -57,9 +80,6 @@ export function ModernPage() {
           <div className="feature-caption"><small>{p.tags.filter(tag => !['Claude Code','Codex'].includes(tag)).slice(0,2).join(' / ')}</small><h3>{p.name}</h3></div>
           <span className="see-project">See Project <span aria-hidden="true">↗</span></span>
         </a>)}
-      </section>
-      <section id="notes" className="io-section chapter"><header><h2>{pick('개발 기록','Engineering notes')}</h2></header>
-        {getWorks(language).map(work => <button className="io-row io-note" key={work.id} onClick={() => open({kind:'work',id:work.id})}><small>{work.company}</small><strong>{work.title}</strong><i aria-hidden="true">＋</i></button>)}
       </section>
       <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>

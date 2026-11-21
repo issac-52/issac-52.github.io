@@ -200,3 +200,15 @@
  .feature-caption {bottom:20%;left:6%;}
  .see-project {left:6%;right:auto;bottom:5%;}
 }
+
+.company-entry { grid-column:2; border-bottom:1px solid var(--rule); }
+.company-toggle { width:100%;border:0; }
+.company-toggle[aria-expanded=true] strong { color:var(--blue); }
+.company-count { color:var(--muted);font-size:.8rem;white-space:nowrap; }
+.company-count i { margin-left:.45rem; }
+.company-records { padding:0 0 1.8rem clamp(0px,2vw,24px); }
+.company-records p { white-space:pre-line;color:var(--muted);font-size:.94rem;max-width:72ch; }
+.company-records h3 { margin:1.5rem 0 .4rem;font-size:.85rem;color:var(--blue); }
+.company-records button { display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:1rem;text-align:left;padding:.85rem .2rem;border-top:1px solid var(--rule); }
+.company-records button:hover { color:var(--blue); }
+#experience.chapter { align-content:start; justify-content:flex-start; }

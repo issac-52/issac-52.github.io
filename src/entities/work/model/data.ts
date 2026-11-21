@@ -3,17 +3,20 @@ import type { Language } from '@/shared/model/useLanguageStore';
 type Text = { ko: string; en: string };
 interface Work {
   id: string;
-  company?: Text;
+  experienceId: 'exp-0' | 'exp-1';
   title: Text;
   context: Text;
   actions: Text[];
   result: Text;
   tags: string[];
 }
-const mg = { ko: 'MG신용정보', en: 'MG Credit Information' };
+const companies = {
+  'exp-0': { ko: 'MG신용정보', en: 'MG Credit Information' },
+  'exp-1': { ko: '다나와사업부', en: 'Danawa Division' },
+};
 const works: Work[] = [
   {
-    id: 'mg-modernization', company: mg,
+    id: 'mg-modernization', experienceId: 'exp-0',
     title: { ko: 'PowerBuilder 업무 화면을 Java·Vue로 전환', en: 'Migrating PowerBuilder workflows to Java and Vue' },
     context: { ko: '기존 업무 화면의 조회·입력 규칙이 PowerBuilder 이벤트와 DataWindow에 나뉘어 있었습니다.', en: 'Business rules were distributed across PowerBuilder events and DataWindows.' },
     actions: [{ ko: '기존 화면의 처리 순서와 SQL을 분석해 Java API와 Vue 화면에 반영했습니다.', en: 'Traced event sequences and SQL, then implemented the flows in Java APIs and Vue screens.' },{ ko: '담당 API의 요청·응답을 Swagger에 문서화했습니다.', en: 'Documented request and response formats in Swagger.' }],
@@ -21,7 +24,7 @@ const works: Work[] = [
     tags: ['Java', 'Vue', 'PowerBuilder', 'Swagger'],
   },
   {
-    id: 'mg-query', company: mg,
+    id: 'mg-query', experienceId: 'exp-0',
     title: { ko: '레거시 조회 SQL의 전체 스캔 개선', en: 'Reducing full scans in a legacy query' },
     context: { ko: '유사한 조회 세 개가 병렬로 실행됐고, 그중 한 SELECT는 단독 실행에 55초가 걸렸습니다.', en: 'Three similar queries ran in parallel. One SELECT took 55 seconds in isolation.' },
     actions: [{ ko: 'MySQL 5.7 실행 계획에서 전체 스캔을 확인하고, 기존 복합 인덱스의 선두 컬럼 조건을 보완했습니다.', en: 'Identified full scans with EXPLAIN and added a predicate on the leading column of an existing composite index.' },{ ko: '다른 테이블에는 날짜 범위 조회용 인덱스를 추가했습니다.', en: 'Added an index on the date used for range lookups in a second table.' }],
@@ -30,6 +33,7 @@ const works: Work[] = [
   },
   {
     id: 'consistency',
+    experienceId: 'exp-1',
     title: { ko: '상품 링크·미링크 데이터 정합성 복구', en: 'Recovering product data consistency' },
     context: { ko: '멀티 노드 API와 배치가 상품 링크·미링크를 처리하는 환경에서 Elasticsearch와 Altibase 간 생성·삭제의 부분 실패와 중복 데이터가 반복됐습니다.', en: 'In a multi-node API and batch environment, product linking and unlinking caused recurring partial writes, failed deletions and duplicate data across Elasticsearch and Altibase.' },
     actions: [
@@ -42,6 +46,7 @@ const works: Work[] = [
   },
   {
     id: 'catalog',
+    experienceId: 'exp-1',
     title: { ko: '인증·보증 데이터와 변경 이력 관리', en: 'Certification, warranty & change history' },
     context: { ko: '상품 링크 여부에 따라 인증·보증 정보의 저장소와 조회 방식이 달라, 미링크 상품까지 관리 범위를 확장해야 했습니다.', en: 'Certification and warranty data used different storage and retrieval paths depending on product linking status. Management needed to support unlinked products as well.' },
     actions: [
@@ -54,6 +59,7 @@ const works: Work[] = [
   },
   {
     id: 'automation',
+    experienceId: 'exp-1',
     title: { ko: '입점업체 Excel 대조 업무 자동화', en: 'Automating merchant spreadsheet reconciliation' },
     context: { ko: '입점업체가 전달한 Excel 파일을 담당자가 DB와 수동 대조·가공하고 개발자를 통해 결과를 전달하던 반복 업무가 있었습니다.', en: 'Operations staff manually compared merchant Excel files with database records, processed the results and relied on developers to deliver output files.' },
     actions: [
@@ -66,6 +72,7 @@ const works: Work[] = [
   },
   {
     id: 'platform',
+    experienceId: 'exp-1',
     title: { ko: '에누리·다나와 통합 관리자 플랫폼', en: 'Unified Enuri–Danawa administration platform' },
     context: { ko: '별도로 운영되던 두 서비스의 백오피스 기능을 통합할 신규 관리자 플랫폼을 4인 TF에서 개발했습니다.', en: 'Worked in a four-person team on a new administration platform to bring together back-office functions from two independently operated services.' },
     actions: [
@@ -78,6 +85,7 @@ const works: Work[] = [
   },
   {
     id: 'blue-green',
+    experienceId: 'exp-1',
     title: { ko: '뉴오피스 프론트엔드 Blue-Green 배포 개선', en: 'Blue-green deployment for the New Office frontend' },
     context: { ko: '기존 Next.js·React 기반 뉴오피스 프론트엔드는 Docker 컨테이너 재시작 방식으로 배포해 서비스 중단 가능성이 있었습니다. 기존 버전과 신규 버전을 분리해 실행하는 배포 구조가 필요했습니다.', en: 'The Next.js/React New Office frontend was deployed by restarting its Docker container, creating a risk of service interruption. The deployment process needed to run existing and new versions separately.' },
     actions: [
@@ -90,6 +98,7 @@ const works: Work[] = [
   },
   {
     id: 'delivery',
+    experienceId: 'exp-1',
     title: { ko: 'GitLab–Harbor–ArgoCD 애플리케이션 배포 연동', en: 'Connecting application delivery with GitLab, Harbor & ArgoCD' },
     context: { ko: '사내에서 제공된 Kubernetes·Harbor·ArgoCD 기반에 신규 애플리케이션의 빌드와 배포 흐름을 연결해야 했습니다.', en: 'The new application needed a repeatable build and delivery flow connected to the existing Kubernetes, Harbor and ArgoCD infrastructure.' },
     actions: [
@@ -102,6 +111,7 @@ const works: Work[] = [
   },
   {
     id: 'storybook',
+    experienceId: 'exp-1',
     title: { ko: 'Storybook 공유 환경과 정적 파일 배포 개선', en: 'Shared Storybook & static delivery improvements' },
     context: { ko: '팀과 기획자가 공통 UI를 확인할 내부 Storybook 공유 환경과 배포 산출물 관리가 필요했습니다.', en: 'The team and product stakeholders needed an internal Storybook environment for reviewing shared UI components and managing build artifacts.' },
     actions: [
@@ -116,7 +126,8 @@ const works: Work[] = [
 export function getWorks(language: Language) {
   return works.map(work => ({
     id: work.id,
-    company: work.company?.[language] ?? (language === "ko" ? "다나와사업부" : "Danawa Division"),
+    experienceId: work.experienceId,
+    company: companies[work.experienceId][language],
     title: work.title[language],
     context: work.context[language],
     actions: work.actions.map(action => action[language]),
