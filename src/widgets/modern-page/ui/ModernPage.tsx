@@ -50,17 +50,19 @@ export function ModernPage() {
               aria-controls={item.id + '-records'} onClick={() => setExpanded(isOpen ? null : item.id)}>
               <small>{item.period}</small>
               <span><strong>{item.name}</strong><span>{item.role}</span></span>
-              <span className="company-count">{records.length}{pick('건',' notes')} <i aria-hidden="true">{isOpen ? '−' : '+'}</i></span>
+              <span className="company-count">{records.length}{pick('건',' notes')} <i aria-hidden="true" className="company-chevron"/></span>
             </button>
             <div className="company-records" id={item.id + '-records'} role="region"
-              aria-labelledby={item.id + '-toggle'} hidden={!isOpen}>
+              aria-labelledby={item.id + '-toggle'} aria-hidden={!isOpen}>
+              <div className="records-clip"><div className="records-body">
               <p>{item.desc}</p>
               <h3>{pick('개발 기록','Engineering notes')}</h3>
               <ul>{records.map(work => <li key={work.id}>
-                <button onClick={() => open({kind:'work', id:work.id})}>
+                <button disabled={!isOpen} onClick={() => open({kind:'work', id:work.id})}>
                   <span>{work.title}</span><span aria-hidden="true">↗︎</span>
                 </button>
               </li>)}</ul>
+              </div></div>
             </div>
           </div>;
         })}

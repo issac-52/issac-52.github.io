@@ -134,7 +134,6 @@
 .chapter .io-row,.chapter .io-project { padding-block:clamp(1.25rem,3vh,2.25rem); }
 #experience.chapter { background:#19191c; }
 #projects.chapter { background:#232026; }
-#notes.chapter { background:#171619; }
 #about.chapter { background:#211f23; }
 @keyframes chapter-entrance { from {opacity:.15; transform:translateY(48px);} to {opacity:1; transform:none;} }
 @supports (animation-timeline:view()) {
@@ -206,7 +205,19 @@
 .company-toggle[aria-expanded=true] strong { color:var(--blue); }
 .company-count { color:var(--muted);font-size:.8rem;white-space:nowrap; }
 .company-count i { margin-left:.45rem; }
-.company-records { padding:0 0 1.8rem clamp(0px,2vw,24px); }
+/* A fractional grid track follows the actual height of each company's records. */
+.company-records {
+  display:grid; grid-template-rows:0fr; opacity:0; visibility:hidden;
+  transition:grid-template-rows .36s cubic-bezier(.22,.68,.22,1), opacity .23s ease, visibility 0s .36s;
+}
+.company-records[aria-hidden=false] { grid-template-rows:1fr; opacity:1; visibility:visible; transition-delay:0s; }
+.records-clip { min-height:0; overflow:hidden; }
+.records-body { padding:0 .35rem 1.8rem clamp(6px,2vw,24px); }
+.company-chevron { display:inline-block; width:.55rem; height:.55rem; border:solid currentColor; border-width:0 1.5px 1.5px 0; transform:translateY(-2px) rotate(45deg); transition:transform .32s ease; }
+.company-toggle[aria-expanded=true] .company-chevron { transform:translateY(2px) rotate(225deg); }
+@media(prefers-reduced-motion:reduce) {
+  .company-records,.company-chevron { transition:none; }
+}
 .company-records p { white-space:pre-line;color:var(--muted);font-size:.94rem;max-width:72ch; }
 .company-records h3 { margin:1.5rem 0 .4rem;font-size:.85rem;color:var(--blue); }
 .company-records button { display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:1rem;text-align:left;padding:.85rem .2rem;border-top:1px solid var(--rule); }
