@@ -12,6 +12,7 @@ export const personalInfo: PersonalInfo = {
   skills: {
     BACKEND: ['Java', 'Spring', 'PHP', 'MySQL', 'PostgreSQL'],
     FRONTEND: ['React', 'Next.js', 'TypeScript', 'Vue.js'],
+    'MESSAGING & DELIVERY': ['RabbitMQ', 'Docker', 'Nginx', 'GitLab CI/CD'],
     CLOUD: ['AWS EC2', 'Supabase', 'Cloudflare R2', 'Vercel'],
     'AI TOOLS': ['Claude Code', 'Codex'],
     IDE: ['VS Code', 'Cursor', 'IntelliJ IDEA'],
