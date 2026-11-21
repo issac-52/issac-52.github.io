@@ -14,7 +14,7 @@ export const personalInfo: PersonalInfo = {
     FRONTEND: ['React', 'Next.js', 'TypeScript', 'Vue.js'],
     CLOUD: ['AWS EC2', 'Supabase', 'Cloudflare R2', 'Vercel'],
     'AI TOOLS': ['Claude Code', 'Codex'],
-    IDE: ['Cursor', 'IntelliJ IDEA'],
+    IDE: ['VS Code', 'Cursor', 'IntelliJ IDEA'],
   },
   contact: {
     이메일: 'issac1162@gmail.com',
