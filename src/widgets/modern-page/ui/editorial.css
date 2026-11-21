@@ -51,7 +51,10 @@
 .io-row span span { display: block; }
 .io-row strong { font-weight: 650; }
 .io-skills div { display: grid; grid-template-columns: 30% 1fr; gap: 1rem; padding-block: .6rem; border-bottom: 1px solid var(--rule); }
-.io-skills dd { font-size: .93rem; }
+.io-skills dd { font-size: .93rem; color:var(--muted); }
+.io-skills .primary-skills { padding-block:1rem; }
+.io-skills .primary-skills dd { color:var(--ink); font-size:clamp(1.05rem,1.6vw,1.35rem); font-weight:550; }
+.io-skills .primary-skills dt { color:var(--blue); }
 .io-page footer { border-top: 1px solid var(--rule); padding-block: 2rem; }
 .io-email { font-size: clamp(1.5rem,4vw,3rem); letter-spacing: -.06em; }
 .io-page footer div { gap: 1rem; margin-top: 2rem; font-size: .82rem; }

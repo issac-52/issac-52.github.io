@@ -83,7 +83,7 @@ export function ModernPage() {
           <span className="see-project">See Project <span aria-hidden="true">↗</span></span>
         </a>)}
       </section>
-      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
+      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group} className={group === 'BACKEND' || group === 'FRONTEND' ? 'primary-skills' : undefined}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>
     <footer><div><span>© {new Date().getFullYear()} Yisak Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
   </div>;
