@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getWorks } from '@/entities/work/model/data';
 import { personalInfo } from '@/entities/person/model/personalInfo';
 import { useDetailModalStore } from '@/features/node-detail/model/useDetailModalStore';
@@ -10,6 +10,25 @@ import './editorial.css';
 
 
 export function ModernPage() {
+  const runway = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const track = runway.current;
+    if (!track) return;
+    let frame = 0;
+    function update() {
+      frame = 0;
+      if (!track) return;
+      const distance = track.offsetHeight - (track.firstElementChild?.clientHeight ?? 0);
+      const progress = Math.min(1, Math.max(0, -track.getBoundingClientRect().top / Math.max(1, distance)));
+      track.style.setProperty('--opening', String(progress));
+    }
+    function schedule() { if (!frame) frame = requestAnimationFrame(update); }
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    const observer = new ResizeObserver(schedule);
+    observer.observe(track);
+    return () => { window.removeEventListener('scroll', schedule); observer.disconnect(); cancelAnimationFrame(frame); };
+  }, []);
   const open = useDetailModalStore(s => s.open);
   const { language, setLanguage } = useLanguageStore();
   const en = language === 'en';
@@ -24,12 +43,12 @@ export function ModernPage() {
   return <div className="io-page" id="top">
     <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content')}</a>
     <header className="io-nav">
-      <a href="#top" className="io-brand" aria-label="Issac Oh">ISSAC OH<span aria-hidden="true">✳︎</span></a>
+      <a href="#top" className="io-brand" aria-label="Issac Oh"><img src="/sac-profile.png" width="40" height="40" alt="SAC"/></a>
       <nav aria-label={pick('주요 메뉴','Navigation')}><a href="#projects">{pick('작업','Work')}</a><a href="#experience">{pick('경력','Experience')}</a></nav>
       <div className="io-lang" aria-label={pick('언어 선택','Language')}>{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
     </header>
     <main id="main" tabIndex={-1}>
-      <section className="io-hero">
+      <div className="intro-runway" ref={runway}><section className="io-hero">
         <div className="io-intro">
           <p className="io-role">Software engineer <span>/</span> Seoul, KR</p>
           <h1>Issac<br/><em>Oh.</em></h1>
@@ -38,9 +57,12 @@ export function ModernPage() {
           <SocialLinks />
         </div>
 
-        <img className="sac-profile" src="/sac-profile.png" width="460" height="460" alt="SAC"/>
+        <a className="intro-next" href="#experience" aria-label={pick('경력으로 이동','Go to experience')}>↓</a>
+      </section></div>
+      <section id="experience" className="io-section chapter"><header><h2>{pick('경력','Experience')}</h2></header>
+        {getExperiences(language).map(item => <button className="io-row io-timeline" key={item.id} onClick={() => open({kind:'experience',id:item.id})}><small>{item.period}</small><span><strong>{item.name}</strong><span>{item.role}</span></span><i aria-hidden="true">＋</i></button>)}
       </section>
-      <section id="projects" className="io-section"><header><h2>{pick('프로젝트','Selected work')}</h2><span>Selected work</span></header>
+      <section id="projects" className="io-section chapter"><header><h2>{pick('프로젝트','Selected work')}</h2><span>Selected work</span></header>
         {projectList.map(p => <a className="io-project" key={p.id} href={p.caseStudyHref}>
           <div><small>{p.period}</small><h3>{p.name}</h3></div>
           <div><p>{p.id === 'field-work'
@@ -50,13 +72,10 @@ export function ModernPage() {
           <span className="io-arrow" aria-hidden="true">↗︎</span>
         </a>)}
       </section>
-      <section id="experience" className="io-section"><header><h2>{pick('경력','Experience')}</h2></header>
-        {getExperiences(language).map(item => <button className="io-row io-timeline" key={item.id} onClick={() => open({kind:'experience',id:item.id})}><small>{item.period}</small><span><strong>{item.name}</strong><span>{item.role}</span></span><i aria-hidden="true">＋</i></button>)}
-      </section>
-      <section className="io-section"><header><h2>{pick('개발 기록','Engineering notes')}</h2></header>
+      <section id="notes" className="io-section chapter"><header><h2>{pick('개발 기록','Engineering notes')}</h2></header>
         {getWorks(language).map(work => <button className="io-row io-note" key={work.id} onClick={() => open({kind:'work',id:work.id})}><small>{work.company}</small><strong>{work.title}</strong><i aria-hidden="true">＋</i></button>)}
       </section>
-      <section id="about" className="io-section"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
+      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>
     <footer><div><span>© {new Date().getFullYear()} Issac Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
   </div>;
