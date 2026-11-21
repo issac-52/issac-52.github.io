@@ -1,22 +1,25 @@
+import { LatheGeometry } from 'three/src/geometries/LatheGeometry.js';
+import { Vector2 } from 'three/src/math/Vector2.js';
 import { Vector3 } from 'three/src/math/Vector3.js';
-import { TorusKnotGeometry } from 'three/src/geometries/TorusKnotGeometry.js';
-import { TorusGeometry } from 'three/src/geometries/TorusGeometry.js';
 import { Matrix4 } from 'three/src/math/Matrix4.js';
 import { Euler } from 'three/src/math/Euler.js';
 import { useEffect, useRef } from 'react';
 
 
-type Shape = 'knot' | 'coil' | 'ring';
+
 
 // Project the same lit geometry to a transparent canvas on devices without WebGL.
-export function MetalStudy({ shape = 'knot' }: { shape?: Shape }) {
+export function WaterDrop() {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas?.getContext('2d');
     if (!canvas || !ctx) return;
-    const geometry = shape === 'ring' ? new TorusGeometry(1, .36, 24, 100)
-      : new TorusKnotGeometry(.95, shape === 'coil' ? .17 : .27, 168, 20, 2, shape === 'coil' ? 5 : 3);
+    const profile = Array.from({length:49}, (_, i) => {
+      const t = i / 48;
+      return new Vector2(1.12 * Math.sin(Math.PI * t) ** .54 * (1-t) ** .72, 2*t-1);
+    });
+    const geometry = new LatheGeometry(profile, 80);
     geometry.computeBoundingSphere();
     const radius = geometry.boundingSphere!.radius;
     const points = geometry.getAttribute('position');
@@ -39,7 +42,7 @@ export function MetalStudy({ shape = 'knot' }: { shape?: Shape }) {
       canvas.height = Math.round(height*dpr);
       const scale = Math.min(width,height) * .47 / radius;
       ctx.setTransform(dpr*scale,0,0,-dpr*scale,canvas.width/2,canvas.height/2);
-      matrix.makeRotationFromEuler(new Euler(.48+tiltY,-.35+tiltX,-.5));
+      matrix.makeRotationFromEuler(new Euler(.13+tiltY,-.25+tiltX,-.12));
       vertices.forEach((v,i) => v.fromBufferAttribute(points,i).applyMatrix4(matrix));
       for (const face of faces) {
         face.depth = vertices[face.a].z + vertices[face.b].z + vertices[face.c].z;
@@ -53,7 +56,7 @@ export function MetalStudy({ shape = 'knot' }: { shape?: Shape }) {
         const a=vertices[face.a], b=vertices[face.b], c=vertices[face.c];
         if ((b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x) <= 0) continue;
         const t=face.tone;
-        ctx.fillStyle = ctx.strokeStyle = 'rgb('+t+','+Math.round(t*.98)+','+Math.min(255,t+9)+')';
+        ctx.fillStyle = ctx.strokeStyle = 'rgb('+t+','+Math.min(255,t+22)+','+Math.min(255,t+45)+')';
         ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.lineTo(c.x,c.y); ctx.closePath();
         ctx.fill(); ctx.stroke();
       }
@@ -77,6 +80,6 @@ export function MetalStudy({ shape = 'knot' }: { shape?: Shape }) {
       observer.disconnect(); cancelAnimationFrame(frame); geometry.dispose();
       canvas.removeEventListener('pointermove',move); canvas.removeEventListener('pointerleave',reset);
     };
-  },[shape]);
+  },[]);
   return <canvas className="metal-study" ref={ref} aria-hidden="true"/>;
 }

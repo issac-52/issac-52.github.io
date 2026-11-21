@@ -1,8 +1,9 @@
-import { MetalStudy } from '@/shared/ui/MetalStudy';
+import { lazy, Suspense, useState } from 'react';
 import { useEffect, type ReactNode } from 'react';
 import { projects } from '@/entities/project/model/data';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
 
+const FieldNotebook = lazy(() => import('./FieldNotebook'));
 const source = 'https://github.com/issac-52/meter-admin';
 const revision = `${source}/blob/04425a90bcf4f7d69107d6266fa18b9dbbcc4b8f`;
 const videoUrl = projects.find(project => project.id === 'meter-admin')!.videoUrl;
@@ -12,6 +13,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export function MeterAdminPage() {
+  const [bookOpen,setBookOpen]=useState(false);
   const { language, setLanguage } = useLanguageStore();
   const en = language === 'en';
   useEffect(() => {
@@ -52,7 +54,7 @@ export function MeterAdminPage() {
       </nav>
     </header>
     <main id="meter-study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero"><MetalStudy shape="ring"/>
+      <div className="study-hero"><div className="notebook-stage"><Suspense fallback={<img src="/notebook/cover.svg" alt=""/>}><FieldNotebook engaged={bookOpen}/></Suspense><button type="button" aria-label={en ? 'Open field notebook' : '현장 수첩 펼치기'} aria-pressed={bookOpen} onClick={()=>setBookOpen(!bookOpen)}/></div>
         <p className="section-kicker">METER ADMIN / FIELD SURVEY MANAGER</p>
         <h1>{en ? 'Field Survey Manager' : '야장관리자'}</h1>
         <p>{en ? 'Client work · Live in production · Ongoing maintenance' : '외주 프로젝트 · 실서비스 운영 · 유지보수 중'}<br />Next.js 16 · React 19 · Supabase · Cloudflare R2 · NAVER Maps</p>

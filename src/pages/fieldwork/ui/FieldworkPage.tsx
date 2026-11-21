@@ -1,4 +1,4 @@
-import { MetalStudy } from '@/shared/ui/MetalStudy';
+import { WaterDrop } from '@/shared/ui/WaterDrop';
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
@@ -44,7 +44,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
       </nav>
     </header>
     <main id="study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero"><MetalStudy shape="coil"/><p className="section-kicker">FIELD WORK MANAGER / ENGINEERING JOURNAL</p>
+      <div className="study-hero"><WaterDrop/><p className="section-kicker">FIELD WORK MANAGER / ENGINEERING JOURNAL</p>
         <h1>{section === 'overview' ? (en ? 'Water Operations Manager' : '수도관리자') : section === 'performance' ? (en ? 'Query performance' : '조회 성능 측정') : (en ? 'Development with Codex' : 'Codex 개발 기록')}</h1>
         <p>{en ? 'Client work · MVP implemented, deployment connected · Ongoing improvements' : '외주 프로젝트 · MVP 구현 및 배포 연결 · 지속 개선 중'}<br />{en ? 'Last documented: 10 November 2026' : '기록 기준: 2026년 11월 10일'}</p>
       </div>

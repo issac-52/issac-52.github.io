@@ -8,27 +8,19 @@ class SceneBoundary extends Component<{children:ReactNode; fallback:ReactNode},{
   render(){return this.state.failed ? this.props.fallback : this.props.children;}
 }
 
-function Binding({project, engaged}:{project:string; engaged:boolean}) {
+function Binding({engaged}:{engaged:boolean}) {
   const hinge=useRef<Group>(null);
   const sheet=useRef<Group>(null);
   const target=useRef(0);
   const turn=useRef(0);
   const invalidate=useThree(s=>s.invalidate);
-  const [cover,survey,reading,inside]=useLoader(TextureLoader,['cover','meter-admin','field-work','inside'].map(name=>'/notebook/'+name+'.svg'));
-  for(const tex of [cover,survey,reading,inside]) tex.colorSpace=SRGBColorSpace;
+  const [cover,survey,inside]=useLoader(TextureLoader,['cover','meter-admin','inside'].map(name=>'/notebook/'+name+'.svg'));
+  for(const tex of [cover,survey,inside]) tex.colorSpace=SRGBColorSpace;
   useEffect(()=>{
-    const section=document.getElementById('projects');
-    const motion=matchMedia('(prefers-reduced-motion: reduce)');
-    function sync(){
-      if (!section) return;
-      target.current=engaged ? 1 : MathUtils.clamp((innerHeight*.85-section.getBoundingClientRect().top)/(innerHeight*.48),0,1);
-      if(motion.matches && hinge.current) hinge.current.rotation.y=-2.78*target.current;
-      invalidate();
-    }
-    sync(); window.addEventListener('scroll',sync,{passive:true}); window.addEventListener('resize',sync);
-    return ()=>{window.removeEventListener('scroll',sync);window.removeEventListener('resize',sync);};
+    target.current=engaged ? 1 : 0;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches && hinge.current) hinge.current.rotation.y=-2.78*target.current;
+    invalidate();
   },[engaged,invalidate]);
-  useEffect(()=>{turn.current=matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : .38;invalidate();},[project,invalidate]);
   useFrame(({camera},delta)=>{
     if(!hinge.current || !sheet.current) return;
     const angle=-2.78*target.current;
@@ -42,7 +34,7 @@ function Binding({project, engaged}:{project:string; engaged:boolean}) {
   return <group rotation={[-.08,-.20,-.11]}>
     <mesh position={[0,0,-.12]}><boxGeometry args={[1.94,2.55,.08]}/><meshStandardMaterial color="#6d577e"/></mesh>
     <mesh><boxGeometry args={[1.88,2.48,.18]}/><meshStandardMaterial color="#e6e1d8"/></mesh>
-    <group ref={sheet} position={[-.94,0,.10]}><mesh position={[.94,0,0]}><planeGeometry args={[1.88,2.48]}/><meshBasicMaterial map={project==='field-work'?reading:survey} side={DoubleSide}/></mesh></group>
+    <group ref={sheet} position={[-.94,0,.10]}><mesh position={[.94,0,0]}><planeGeometry args={[1.88,2.48]}/><meshBasicMaterial map={survey} side={DoubleSide}/></mesh></group>
     <group ref={hinge} position={[-.97,0,.14]}>
       <mesh position={[.97,0,0]}><boxGeometry args={[1.94,2.56,.035]}/><meshStandardMaterial color="#ad9abd" transparent opacity={.91}/></mesh>
       <mesh position={[1,.08,-.025]} rotation={[0,Math.PI,.065]}>
@@ -54,8 +46,8 @@ function Binding({project, engaged}:{project:string; engaged:boolean}) {
   </group>;
 }
 
-export default function FieldNotebook(props:{project:string;engaged:boolean}){
-  const fallback=<img className="book-poster" src={'/notebook/'+(props.engaged?props.project:'cover')+'.svg'} alt=""/>;
+export default function FieldNotebook(props:{engaged:boolean}){
+  const fallback=<img className="book-poster" src={'/notebook/'+(props.engaged?'meter-admin':'cover')+'.svg'} alt=""/>;
   return <SceneBoundary fallback={fallback}><Canvas frameloop="demand" dpr={[1,1.6]} camera={{fov:36,position:[1,1,5.4]}} fallback={fallback}>
     <ambientLight intensity={1.6}/><directionalLight position={[-2,4,4]} intensity={3}/>
     <Suspense fallback={null}><Binding {...props}/></Suspense>

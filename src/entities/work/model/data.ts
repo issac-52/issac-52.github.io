@@ -3,13 +3,31 @@ import type { Language } from '@/shared/model/useLanguageStore';
 type Text = { ko: string; en: string };
 interface Work {
   id: string;
+  company?: Text;
   title: Text;
   context: Text;
   actions: Text[];
   result: Text;
   tags: string[];
 }
+const mg = { ko: 'MG신용정보', en: 'MG Credit Information' };
 const works: Work[] = [
+  {
+    id: 'mg-modernization', company: mg,
+    title: { ko: 'PowerBuilder 업무 화면을 Java·Vue로 전환', en: 'Migrating PowerBuilder workflows to Java and Vue' },
+    context: { ko: '기존 업무 화면의 조회·입력 규칙이 PowerBuilder 이벤트와 DataWindow에 나뉘어 있었습니다.', en: 'Business rules were distributed across PowerBuilder events and DataWindows.' },
+    actions: [{ ko: '기존 화면의 처리 순서와 SQL을 분석해 Java API와 Vue 화면에 반영했습니다.', en: 'Traced event sequences and SQL, then implemented the flows in Java APIs and Vue screens.' },{ ko: '담당 API의 요청·응답을 Swagger에 문서화했습니다.', en: 'Documented request and response formats in Swagger.' }],
+    result: { ko: '전환 TF에서 업무 화면 10개 이상과 API 20개 이상을 담당했습니다.', en: 'Responsible for at least 10 screens and at least 20 APIs on the migration team.' },
+    tags: ['Java', 'Vue', 'PowerBuilder', 'Swagger'],
+  },
+  {
+    id: 'mg-query', company: mg,
+    title: { ko: '레거시 조회 SQL의 전체 스캔 개선', en: 'Reducing full scans in a legacy query' },
+    context: { ko: '유사한 조회 세 개가 병렬로 실행됐고, 그중 한 SELECT는 단독 실행에 55초가 걸렸습니다.', en: 'Three similar queries ran in parallel. One SELECT took 55 seconds in isolation.' },
+    actions: [{ ko: 'MySQL 5.7 실행 계획에서 전체 스캔을 확인하고, 기존 복합 인덱스의 선두 컬럼 조건을 보완했습니다.', en: 'Identified full scans with EXPLAIN and added a predicate on the leading column of an existing composite index.' },{ ko: '다른 테이블에는 날짜 범위 조회용 인덱스를 추가했습니다.', en: 'Added an index on the date used for range lookups in a second table.' }],
+    result: { ko: '해당 SELECT를 단독으로 다시 실행해 0.041초를 측정했습니다.', en: 'The same SELECT measured 0.041 seconds on an isolated retest.' },
+    tags: ['MySQL 5.7', 'EXPLAIN', 'SQL'],
+  },
   {
     id: 'consistency',
     title: { ko: '상품 링크·미링크 데이터 정합성 복구', en: 'Recovering product data consistency' },
@@ -98,6 +116,7 @@ const works: Work[] = [
 export function getWorks(language: Language) {
   return works.map(work => ({
     id: work.id,
+    company: work.company?.[language] ?? (language === "ko" ? "다나와사업부" : "Danawa Division"),
     title: work.title[language],
     context: work.context[language],
     actions: work.actions.map(action => action[language]),

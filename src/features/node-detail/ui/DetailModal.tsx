@@ -24,7 +24,7 @@ export function DetailModal() {
         <p className="text-sm leading-7 detail-copy mb-5">{en ? 'Backend-focused full-stack developer with approximately four years of experience in Java/Spring APIs, enterprise administration interfaces, data consistency and legacy modernization.' : personalInfo.bio}</p>
         {Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group} className="mb-4"><h3 className="text-xs text-dim mb-2">{group}</h3><div className="flex flex-wrap gap-2">{skills.map(skill => <Tag key={skill}>{skill}</Tag>)}</div></div>)}
       </> : work ? <>
-        <Eyebrow>ENGINEERING WORK · CONNECTWAVE</Eyebrow>
+        <Eyebrow>ENGINEERING WORK · {work.company}</Eyebrow>
         <h2 className="detail-title mb-5 pr-16">{work.title}</h2>
         <div className="case-section"><h3>{en ? 'Context' : '배경과 문제'}</h3><p>{work.context}</p></div>
         <div className="case-section"><h3>{en ? 'My contribution' : '담당한 일'}</h3><ul>{work.actions.map(action => <li key={action}>{action}</li>)}</ul></div>
