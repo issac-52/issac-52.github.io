@@ -26,7 +26,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
   const title = tabs.find(([key]) => key === section)![1];
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = `${title} · Field Work Manager | Issac Oh`;
+    document.title = `${title} · Field Work Manager | Yisak Oh`;
     document.querySelector('meta[name="description"]')?.setAttribute('content', en ? 'A Codex-assisted field operations MVP. Architecture, synthetic 20k-site performance experiments and transparent engineering evidence.' : '약 2만 수용가 현장 검침 시스템. 프로젝트 구조와 Codex 협업, 가상 데이터 성능 개선의 실행 근거를 기록합니다.');
   }, [language, title, en]);
   const first20 = results.comparisons.find(r => r.name === 'list_20_first_page')!;
@@ -35,7 +35,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
   const scope = en ? 'Synthetic 20,000 sites · Java 21 / PostgreSQL 17 · Development benchmark, not production HTTP latency.' : '가상 수용가 20,000건 · Java 21 / PostgreSQL 17 · 운영 HTTP 응답시간이 아닌 개발 환경 측정';
   return <div className="portfolio study-page text-ink font-body">
     <a className="skip-link" href="#study-main" onClick={event => {event.preventDefault(); document.getElementById('study-main')?.focus(); document.getElementById('study-main')?.scrollIntoView();}}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
-    <header className="site-header"><a className="brand" href="#projects">ISSAC OH</a>
+    <header className="site-header"><a className="brand" href="#projects">YISAK OH</a>
       <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
         <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
           <button lang="ko" aria-pressed={!en} onClick={() => setLanguage('ko')}>KR</button>

@@ -20,21 +20,21 @@ export function ModernPage() {
   const projectList = getProjects(language);
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = en ? 'Issac Oh | Backend-focused Full-stack Developer' : '오이삭 | 백엔드 중심 풀스택 개발자';
+    document.title = en ? 'Yisak Oh | Web Engineer' : '오이삭 | 웹 엔지니어';
     document.querySelector('meta[name="description"]')?.setAttribute('content', intro);
   }, [language, en, intro]);
   return <div className="io-page" id="top">
     <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content')}</a>
     <header className="io-nav">
-      <a href="#top" className="io-brand" aria-label="Issac Oh"><i aria-hidden="true"/>issac-52.github.io</a>
+      <a href="#top" className="io-brand" aria-label="Yisak Oh"><i aria-hidden="true"/>issac-52.github.io</a>
       <div className="io-lang" aria-label={pick('언어 선택','Language')}>{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
     </header>
     <main id="main" tabIndex={-1}>
       <section className="profile-landing">
         <div className="profile-pair">
           <img className="profile-avatar" src="/sac-profile.png" alt="SAC" width="144" height="144"/>
-          <div><p className="profile-hello">{pick('안녕하세요,','Hello, I’m')}</p><h1>Issac Oh</h1>
-            <p className="profile-role">BACKEND / FULL-STACK DEVELOPER</p>
+          <div><p className="profile-hello">{pick('안녕하세요,','Hello, I’m')}</p><h1>Yisak Oh</h1>
+            <p className="profile-role">Web Engineer</p>
             <p className="profile-line">{pick('백오피스와 현장 업무 도구를 만드는 오이삭입니다.', 'I build back-office systems and tools for field teams.')}</p>
             <span className="profile-location">◎ Seoul, Korea</span><SocialLinks/>
           </div>
@@ -83,6 +83,6 @@ export function ModernPage() {
       </section>
       <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>
-    <footer><div><span>© {new Date().getFullYear()} Issac Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
+    <footer><div><span>© {new Date().getFullYear()} Yisak Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
   </div>;
 }

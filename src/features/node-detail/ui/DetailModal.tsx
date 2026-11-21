@@ -20,8 +20,8 @@ export function DetailModal() {
     <Modal open={!!target} onClose={close} maxWidthClassName={work || project?.videoUrl ? 'max-w-[780px]' : 'max-w-[580px]'}>
       {target?.kind === 'person' ? <>
         <Eyebrow>ABOUT ME</Eyebrow>
-        <h2 className="detail-title mb-2 pr-16">{en ? 'Issac Oh' : personalInfo.name}</h2>
-        <p className="text-sm leading-7 detail-copy mb-5">{en ? 'Backend-focused full-stack developer with approximately four years of experience in Java/Spring APIs, enterprise administration interfaces, data consistency and legacy modernization.' : personalInfo.bio}</p>
+        <h2 className="detail-title mb-2 pr-16">{en ? 'Yisak Oh' : personalInfo.name}</h2>
+        <p className="text-sm leading-7 detail-copy mb-5">{en ? 'Web engineer with approximately four years of experience in Java/Spring APIs, enterprise administration interfaces, data consistency and legacy modernization.' : personalInfo.bio}</p>
         {Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group} className="mb-4"><h3 className="text-xs text-dim mb-2">{group}</h3><div className="flex flex-wrap gap-2">{skills.map(skill => <Tag key={skill}>{skill}</Tag>)}</div></div>)}
       </> : work ? <>
         <Eyebrow>ENGINEERING WORK · {work.company}</Eyebrow>

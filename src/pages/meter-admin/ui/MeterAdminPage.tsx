@@ -18,7 +18,7 @@ export function MeterAdminPage() {
   const en = language === 'en';
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = en ? 'Field Survey Manager · Case study | Issac Oh' : '야장관리자 · 프로젝트 기록 | 오이삭';
+    document.title = en ? 'Field Survey Manager · Case study | Yisak Oh' : '야장관리자 · 프로젝트 기록 | 오이삭';
     document.querySelector('meta[name="description"]')?.setAttribute('content', en
       ? 'A Next.js field survey application: Excel imports that preserve survey values, template exports, photos, maps and Claude Code collaboration.'
       : '수용가·밸브 현장 조사 도구. 기존 조사값을 보존하는 Excel 등록, 원본 양식 출력, 사진·지도와 Claude Code 협업을 소개합니다.');
@@ -44,7 +44,7 @@ export function MeterAdminPage() {
       document.getElementById('meter-study-main')?.scrollIntoView();
     }}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
     <header className="site-header">
-      <a className="brand" href="#projects">ISSAC OH</a>
+      <a className="brand" href="#projects">YISAK OH</a>
       <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}>
         <a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
         <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
@@ -108,6 +108,6 @@ export function MeterAdminPage() {
         ].map(([href, label]) => <a key={href} href={href} target="_blank" rel="noreferrer">{label} ↗︎</a>)}</div>
       </section>
     </main>
-    <footer className="site-footer"><span>© {new Date().getFullYear()} Issac Oh</span><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↑</a></footer>
+    <footer className="site-footer"><span>© {new Date().getFullYear()} Yisak Oh</span><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↑</a></footer>
   </div>;
 }

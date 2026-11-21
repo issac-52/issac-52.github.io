@@ -1,6 +1,6 @@
-# Issac Portfolio
+# Yisak Oh Portfolio
 
-React + TypeScript + Vite 기반 Java 백엔드 중심 풀스택 개발자 포트폴리오입니다.
+React + TypeScript + Vite 기반 웹 엔지니어 포트폴리오입니다.
 경력, 대표 실무 사례, 사이드 프로젝트, 기술 스택과 연락처를 소개합니다.
 
 ## 실행 및 빌드
