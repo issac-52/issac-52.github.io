@@ -226,3 +226,6 @@
 .company-records button { display:flex;width:100%;align-items:baseline;justify-content:space-between;gap:1rem;text-align:left;padding:.85rem .2rem;border-top:1px solid var(--rule); }
 .company-records button:hover { color:var(--blue); }
 #experience.chapter { align-content:start; justify-content:flex-start; }
+
+.work-art.weekly-blog {display:grid;place-items:center;background:#483f39;}
+.magazine-cover {padding:.45em .55em 1em;border-top:.08em solid currentColor;background:#efe8da;color:#272521;font:italic clamp(2.5rem,7vw,7rem)/1 Georgia,serif;transform:rotate(-6deg);}

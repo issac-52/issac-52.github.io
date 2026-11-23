@@ -11,8 +11,8 @@ interface Work {
   tags: string[];
 }
 const companies = {
-  'exp-0': { ko: 'MG신용정보', en: 'MG Credit Information' },
-  'exp-1': { ko: '다나와사업부', en: 'Danawa Division' },
+  'exp-0': { ko: 'MG신용정보', en: 'MG Credit Information', ja: 'MG信用情報' },
+  'exp-1': { ko: '다나와사업부', en: 'Danawa Division', ja: 'ダナワ事業部' },
 };
 const works: Work[] = [
   {
@@ -123,15 +123,26 @@ const works: Work[] = [
     tags: ['Storybook', 'GitLab CI/CD', 'Docker', 'Nginx', 'Kubernetes PVC'],
   },
 ];
+const japaneseWork: Record<string, { title: string; context: string }> = {
+  'mg-modernization': { title: 'PowerBuilder業務画面のJava・Vue移行', context: '照会・入力のルールがPowerBuilderのイベントとDataWindowに分散していました。' },
+  'mg-query': { title: "レガシーSQLのボトルネック分析とインデックス最適化", context: "PowerBuilderシステムの移行中、大規模テーブルを参照する類似SQLが3本並列実行されていました。改善前の単一クエリ実行時間は約55秒でした。" },
+  'consistency': { title: "商品データの整合性回復", context: "複数ノードのAPIとバッチ処理で商品を連携・解除する際、ElasticsearchとAltibase間で部分的な書き込み失敗や重複が発生していました。" },
+  'catalog': { title: "認証・保証情報と変更履歴の管理", context: "商品の連携状態によって認証・保証情報の保存先と取得方法が異なり、未連携商品にも対応する必要がありました。" },
+  'automation': { title: "取引先Excel照合業務の自動化", context: "取引先から届くExcelファイルを担当者がDBと手作業で照合する定型業務がありました。" },
+  'blue-green': { title: "Blue-Greenデプロイの構築", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'admin-platform': { title: "統合管理プラットフォームの開発", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'ci-cd': { title: "CI/CDとアプリケーションデプロイ連携", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'storybook': { title: "Storybook共有環境と静的ファイル配信の改善", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+};
 export function getWorks(language: Language) {
   return works.map(work => ({
     id: work.id,
     experienceId: work.experienceId,
     company: companies[work.experienceId][language],
-    title: work.title[language],
-    context: work.context[language],
-    actions: work.actions.map(action => action[language]),
-    result: work.result[language],
+    title: language === 'ja' ? japaneseWork[work.id]?.title ?? work.title.en : work.title[language],
+    context: language === 'ja' ? japaneseWork[work.id]?.context ?? work.context.en : work.context[language],
+    actions: work.actions.map(action => action[language === 'ja' ? 'en' : language]),
+    result: work.result[language === 'ja' ? 'en' : language],
     tags: work.tags,
   }));
 }

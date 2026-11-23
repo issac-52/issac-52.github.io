@@ -13,35 +13,35 @@ export function ModernPage() {
   const open = useDetailModalStore(s => s.open);
   const { language, setLanguage } = useLanguageStore();
   const en = language === 'en';
-  const pick = (ko: string, english: string) => en ? english : ko;
-  const intro = pick('다나와에서는 누락된 상품 데이터를 복구하는 로직을 만들었습니다. 지금은 PowerBuilder 업무 화면을 Java와 Vue로 옮기고 있습니다.', 'At Danawa, I built recovery logic for missing product data. Today I’m moving PowerBuilder workflows to Java and Vue.');
+  const pick = (ko: string, english: string, japanese: string) => language === 'ja' ? japanese : en ? english : ko;
+  const intro = pick('다나와에서는 누락된 상품 데이터를 복구하는 로직을 만들었습니다. 지금은 PowerBuilder 업무 화면을 Java와 Vue로 옮기고 있습니다.', 'At Danawa, I built recovery logic for missing product data. Today I’m moving PowerBuilder workflows to Java and Vue.', 'ダナワでは欠損した商品データの復旧処理を開発しました。現在はPowerBuilderの業務画面をJavaとVueに移行しています。');
   const [expanded, setExpanded] = useState<string | null>(null);
   const works = getWorks(language);
   const projectList = getProjects(language);
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = en ? 'Yisak Oh | Web Engineer' : '오이삭 | 웹 엔지니어';
+    document.title = language === 'ja' ? 'Yisak Oh | ウェブエンジニア' : en ? 'Yisak Oh | Web Engineer' : '오이삭 | 웹 엔지니어';
     document.querySelector('meta[name="description"]')?.setAttribute('content', intro);
   }, [language, en, intro]);
   return <div className="io-page" id="top">
-    <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content')}</a>
+    <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content', '本文へ')}</a>
     <header className="io-nav">
       <a href="#top" className="io-brand" aria-label="Yisak Oh"><i aria-hidden="true"/>issac-52.github.io</a>
-      <div className="io-lang" aria-label={pick('언어 선택','Language')}>{(['ko','en'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
+      <div className="io-lang" aria-label={pick('언어 선택','Language', '言語')}>{(['ko','en','ja'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
     </header>
     <main id="main" tabIndex={-1}>
       <section className="profile-landing">
         <div className="profile-pair">
           <img className="profile-avatar" src="/sac-profile.png" alt="SAC" width="144" height="144"/>
-          <div><p className="profile-hello">{pick('안녕하세요,','Hello, I’m')}</p><h1>Yisak Oh</h1>
+          <div><p className="profile-hello">{pick('안녕하세요,','Hello, I’m', 'こんにちは、')}</p><h1>Yisak Oh</h1>
             <p className="profile-role">Web Engineer</p>
-            <p className="profile-line">{pick('백오피스와 현장 업무 도구를 만드는 오이삭입니다.', 'I build back-office systems and tools for field teams.')}</p>
+            <p className="profile-line">{pick('백오피스와 현장 업무 도구를 만드는 오이삭입니다.', 'I build back-office systems and tools for field teams.', 'バックオフィスシステムと現場の業務ツールを開発しています。')}</p>
             <span className="profile-location">◎ Seoul, Korea</span><SocialLinks/>
           </div>
         </div>
         <a className="profile-explore" href="#experience">↓　Scroll to Explore</a>
       </section>
-      <section id="experience" className="io-section chapter"><header><h2>{pick('경력','Experience')}</h2></header>
+      <section id="experience" className="io-section chapter"><header><h2>{pick('경력','Experience', '職歴')}</h2></header>
         {getExperiences(language).map(item => {
           const records = works.filter(work => work.experienceId === item.id);
           const isOpen = expanded === item.id;
@@ -50,13 +50,13 @@ export function ModernPage() {
               aria-controls={item.id + '-records'} onClick={() => setExpanded(isOpen ? null : item.id)}>
               <small>{item.period}</small>
               <span><strong>{item.name}</strong><span>{item.role}</span></span>
-              <span className="company-count">{records.length}{pick('건',' notes')} <i aria-hidden="true" className="company-chevron"/></span>
+              <span className="company-count">{records.length}{pick('건',' notes', '件')} <i aria-hidden="true" className="company-chevron"/></span>
             </button>
             <div className="company-records" id={item.id + '-records'} role="region"
               aria-labelledby={item.id + '-toggle'} aria-hidden={!isOpen}>
               <div className="records-clip"><div className="records-body">
               <p>{item.desc}</p>
-              <h3>{pick('개발 기록','Engineering notes')}</h3>
+              <h3>{pick('개발 기록','Engineering notes', '件')}</h3>
               <ul>{records.map(work => <li key={work.id}>
                 <button disabled={!isOpen} onClick={() => open({kind:'work', id:work.id})}>
                   <span>{work.title}</span><span aria-hidden="true">↗︎</span>
@@ -67,7 +67,7 @@ export function ModernPage() {
           </div>;
         })}
       </section>
-      <section id="projects" className="featured-work"><h2>{pick('프로젝트','Selected projects')}</h2>
+      <section id="projects" className="featured-work"><h2>{pick('프로젝트','Selected projects', 'プロジェクト')}</h2>
         {projectList.map(p => <a className="work-feature" key={p.id} href={p.caseStudyHref}
           onPointerMove={event => {
             if (event.pointerType !== 'mouse') return;
@@ -78,13 +78,14 @@ export function ModernPage() {
           }}>
           <div className={'work-art '+p.id} aria-hidden="true">{p.id==='meter-admin'
             ? <><img className="survey-cover" src="/notebook/cover.svg" alt=""/><img className="survey-sheet" src="/notebook/meter-admin.svg" alt=""/></>
+            : p.id === 'weekly-blog' ? <span className="magazine-cover">Browinfo</span>
             : <><span className="water-ripples"/><img className="water-object" src="/water-study.webp" alt=""/></>}</div>
           <div className="feature-caption"><small>{p.tags.filter(tag => !['Claude Code','Codex'].includes(tag)).slice(0,2).join(' / ')}</small><h3>{p.name}</h3></div>
           <span className="see-project">See Project <span aria-hidden="true">↗</span></span>
         </a>)}
       </section>
-      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group} className={group === 'BACKEND' || group === 'FRONTEND' ? 'primary-skills' : undefined}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
+      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit', '技術')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group} className={group === 'BACKEND' || group === 'FRONTEND' ? 'primary-skills' : undefined}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
     </main>
-    <footer><div><span>© {new Date().getFullYear()} Yisak Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top')}</a></div></footer>
+    <footer><div><span>© {new Date().getFullYear()} Yisak Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top', 'トップへ')}</a></div></footer>
   </div>;
 }

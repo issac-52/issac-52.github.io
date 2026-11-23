@@ -22,4 +22,14 @@ export const projects: Project[] = [
     repo: { owner: 'issac-52', name: 'field-worker' },
     caseStudyHref: '#/projects/field-work',
   },
+  {
+    id: 'weekly-blog',
+    name: 'Browinfo · 주간 매거진',
+    period: '비공개 배포 · 관리자 검토 흐름 운영',
+    role: '사이드 프로젝트',
+    desc: '주간 기사 초안을 받아 출처를 확인하고 관리자가 승인한 글만 발행하는 매거진입니다. 기존 weekly-blog를 Next.js·Supabase 기반으로 전환하고, 재시도 중복 방지와 출처 검토·승인 이력을 구현했습니다.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'Vercel', 'OAuth'],
+    repo: { owner: 'issac-52', name: 'weekly-blog' },
+    caseStudyHref: '#/projects/weekly-blog',
+  },
 ];
