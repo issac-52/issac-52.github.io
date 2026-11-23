@@ -67,7 +67,7 @@ export function DesktopMindmap() {
             transition-transform hover:-translate-y-[3px] hover:scale-[1.04]"
         >
           오이삭
-          <span className="block font-mono font-normal text-[10px] text-dim mt-1">Issac Oh</span>
+          <span className="block font-mono font-normal text-[10px] text-dim mt-1">Yisak Oh</span>
         </button>
 
         {PRIMARY.map((p) => (

@@ -32,7 +32,7 @@ export function LegacyPage() {
     <div className="relative z-[1] font-legacy bg-lgbg text-[#333] min-h-screen">
       <div className="bg-lgnav text-[#ccc] text-xs px-4 h-10 flex items-center justify-between">
         <div className="text-white font-bold">
-          Issac 포트폴리오{' '}
+          Yisak Oh 포트폴리오{' '}
           <span className="bg-[#5cb85c] text-white text-[10px] px-1.5 py-0.5 rounded ml-2">INTRANET</span>
         </div>
         <div className="[&>span]:ml-3.5 [&>span:hover]:text-white [&>span:hover]:underline">
@@ -50,7 +50,7 @@ export function LegacyPage() {
         <table className="w-full border-collapse text-xs bg-white/10 rounded overflow-hidden">
           <tbody>
             {[
-              ['이름', 'Issac'],
+              ['이름', 'Yisak Oh'],
               ['경력', '프론트엔드 개발 4년차'],
               ['소속', 'MG신용정보 (PowerBuilder→Java/Vue3 마이그레이션 TF)'],
               ['관심분야', '레거시 마이그레이션, FSD 아키텍처, 상태관리'],
@@ -79,7 +79,7 @@ export function LegacyPage() {
       </div>
 
       <div className="px-4 py-3.5 text-center text-[11px] text-[#999] border-t border-[#ddd] mt-1">
-        Copyright (c) 2016 Issac. All rights reserved. Best viewed at 1024x768 with IE9.
+        Copyright (c) 2016 Yisak Oh. All rights reserved. Best viewed at 1024x768 with IE9.
       </div>
     </div>
   );

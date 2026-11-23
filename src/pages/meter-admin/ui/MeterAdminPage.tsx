@@ -1,7 +1,9 @@
+import { lazy, Suspense, useState } from 'react';
 import { useEffect, type ReactNode } from 'react';
 import { projects } from '@/entities/project/model/data';
 import { useLanguageStore } from '@/shared/model/useLanguageStore';
 
+const FieldNotebook = lazy(() => import('./FieldNotebook'));
 const source = 'https://github.com/issac-52/meter-admin';
 const revision = `${source}/blob/04425a90bcf4f7d69107d6266fa18b9dbbcc4b8f`;
 const videoUrl = projects.find(project => project.id === 'meter-admin')!.videoUrl;
@@ -11,11 +13,12 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export function MeterAdminPage() {
+  const [bookOpen,setBookOpen]=useState(false);
   const { language, setLanguage } = useLanguageStore();
   const en = language === 'en';
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = en ? 'Field Survey Manager · Case study | Issac Oh' : '야장관리자 · 프로젝트 기록 | 오이삭';
+    document.title = en ? 'Field Survey Manager · Case study | Yisak Oh' : '야장관리자 · 프로젝트 기록 | 오이삭';
     document.querySelector('meta[name="description"]')?.setAttribute('content', en
       ? 'A Next.js field survey application: Excel imports that preserve survey values, template exports, photos, maps and Claude Code collaboration.'
       : '수용가·밸브 현장 조사 도구. 기존 조사값을 보존하는 Excel 등록, 원본 양식 출력, 사진·지도와 Claude Code 협업을 소개합니다.');
@@ -41,9 +44,9 @@ export function MeterAdminPage() {
       document.getElementById('meter-study-main')?.scrollIntoView();
     }}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
     <header className="site-header">
-      <a className="brand" href="#projects">Issac<span>.dev</span></a>
+      <a className="brand" href="#projects">YISAK OH</a>
       <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}>
-        <a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗</a>
+        <a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
         <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
           <button lang="ko" aria-pressed={!en} onClick={() => setLanguage('ko')}>KR</button>
           <button lang="en" aria-pressed={en} onClick={() => setLanguage('en')}>EN</button>
@@ -51,13 +54,13 @@ export function MeterAdminPage() {
       </nav>
     </header>
     <main id="meter-study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero">
+      <div className="study-hero"><div className="notebook-stage"><Suspense fallback={<img src="/notebook/cover.svg" alt=""/>}><FieldNotebook engaged={bookOpen}/></Suspense><button type="button" aria-label={en ? 'Open field notebook' : '현장 수첩 펼치기'} aria-pressed={bookOpen} onClick={()=>setBookOpen(!bookOpen)}/></div>
         <p className="section-kicker">METER ADMIN / FIELD SURVEY MANAGER</p>
-        <h1>{en ? 'Keep field evidence.\nDeliver it in the required format.' : '현장의 기록을 지키고,\n필요한 양식으로 전달합니다.'}</h1>
+        <h1>{en ? 'Field Survey Manager' : '야장관리자'}</h1>
         <p>{en ? 'Client work · Live in production · Ongoing maintenance' : '외주 프로젝트 · 실서비스 운영 · 유지보수 중'}<br />Next.js 16 · React 19 · Supabase · Cloudflare R2 · NAVER Maps</p>
       </div>
       <nav className="study-tabs" aria-label={en ? 'Related project' : '연관 프로젝트'}>
-        <a href="#/projects/field-work">{en ? 'Field Work Manager case study' : '수도관리자 사례도 보기'} ↗</a>
+        <a href="#/projects/field-work">{en ? 'Field Work Manager case study' : '수도관리자 사례도 보기'} ↗︎</a>
       </nav>
       <Section title={en ? 'From spreadsheet to field survey to delivery' : 'Excel에서 시작해 현장 조사와 제출까지'}>
         <p>{en ? 'Office users register consumer and valve lists, field users add readings, photos and location information, and administrators review progress and export results. The application connects these steps for water-meter, gate-valve, air-valve and hydrant surveys.' : '사무실에서 수용가·밸브 목록을 등록하고, 현장에서 지침·사진·위치를 기록한 뒤, 관리자가 진행상태와 결과물을 확인합니다. 수도 계량기와 제수밸브·공기밸브·소화전 조사의 등록부터 결과 추출까지 연결한 도구입니다.'}</p>
@@ -87,7 +90,7 @@ export function MeterAdminPage() {
       <Section title={en ? 'Product demonstration' : '서비스 시연'}>
         <figure className="demo-video">
           <video src={videoUrl} controls playsInline preload="none" aria-label={en ? 'Field Survey Manager demonstration' : '야장관리자 시연 영상'} />
-          <figcaption><a className="text-teal underline" href={videoUrl} target="_blank" rel="noreferrer">{en ? 'Open the existing demonstration video' : '기존 시연 영상 직접 열기'} ↗</a></figcaption>
+          <figcaption><a className="text-teal underline" href={videoUrl} target="_blank" rel="noreferrer">{en ? 'Open the existing demonstration video' : '기존 시연 영상 직접 열기'} ↗︎</a></figcaption>
         </figure>
       </Section>
       <div className="study-callout">
@@ -102,9 +105,9 @@ export function MeterAdminPage() {
           [`${revision}/features/excel-manager/api/template-fill.ts`, en ? 'Template export' : '원본 양식 채우기'],
           [`${revision}/ARCHITECTURE.md`, en ? 'Architecture & limitations' : '구조와 검토 과제'],
           [`${revision}/CLAUDE.md`, en ? 'AI collaboration rules' : 'AI 협업 규칙'],
-        ].map(([href, label]) => <a key={href} href={href} target="_blank" rel="noreferrer">{label} ↗</a>)}</div>
+        ].map(([href, label]) => <a key={href} href={href} target="_blank" rel="noreferrer">{label} ↗︎</a>)}</div>
       </section>
     </main>
-    <footer className="site-footer"><span>© {new Date().getFullYear()} Issac Oh</span><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↑</a></footer>
+    <footer className="site-footer"><span>© {new Date().getFullYear()} Yisak Oh</span><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↑</a></footer>
   </div>;
 }

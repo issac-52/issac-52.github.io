@@ -21,21 +21,21 @@ export function DetailModal() {
     <Modal open={!!target} onClose={close} maxWidthClassName={work || project?.videoUrl ? 'max-w-[780px]' : 'max-w-[580px]'}>
       {target?.kind === 'person' ? <>
         <Eyebrow>ABOUT ME</Eyebrow>
-        <h2 className="font-display text-xl mb-2 pr-16">{en ? 'Issac Oh' : personalInfo.name}</h2>
-        <p className="text-sm leading-7 text-[#c3c8db] mb-5">{en ? 'Backend-focused full-stack developer with approximately four years of experience in Java/Spring APIs, enterprise administration interfaces, data consistency and legacy modernization.' : personalInfo.bio}</p>
+        <h2 className="detail-title mb-2 pr-16">{en ? 'Yisak Oh' : personalInfo.name}</h2>
+        <p className="text-sm leading-7 detail-copy mb-5">{en ? 'Web engineer with approximately four years of experience in Java/Spring APIs, enterprise administration interfaces, data consistency and legacy modernization.' : personalInfo.bio}</p>
         {Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group} className="mb-4"><h3 className="text-xs text-dim mb-2">{group}</h3><div className="flex flex-wrap gap-2">{skills.map(skill => <Tag key={skill}>{skill}</Tag>)}</div></div>)}
       </> : work ? <>
-        <Eyebrow>ENGINEERING WORK · CONNECTWAVE</Eyebrow>
-        <h2 className="font-display text-xl mb-5 pr-16">{work.title}</h2>
+        <Eyebrow>ENGINEERING WORK · {work.company}</Eyebrow>
+        <h2 className="detail-title mb-5 pr-16">{work.title}</h2>
         <div className="case-section"><h3>{ja ? '背景・課題' : en ? 'Context' : '배경과 문제'}</h3><p>{work.context}</p></div>
         <div className="case-section"><h3>{ja ? '担当したこと' : en ? 'My contribution' : '담당한 일'}</h3><ul>{work.actions.map(action => <li key={action}>{action}</li>)}</ul></div>
         <div className="case-section"><h3>{ja ? '成果・担当範囲' : en ? 'Outcome & scope' : '결과와 담당 범위'}</h3><p>{work.result}</p></div>
         <div className="flex flex-wrap gap-1.5">{work.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}</div>
       </> : item && <>
         <Eyebrow>{target?.kind === 'experience' ? 'WORK EXPERIENCE' : 'SIDE PROJECT'}</Eyebrow>
-        <h2 className="font-display text-xl mb-3 pr-16">{item.name}</h2>
+        <h2 className="detail-title mb-3 pr-16">{item.name}</h2>
         <div className="text-sm text-dim mb-4 leading-7">{item.role} · {item.period}</div>
-        {item.desc && <p className="text-sm leading-7 text-[#c3c8db] mb-5 whitespace-pre-line">{item.desc}</p>}
+        {item.desc && <p className="text-sm leading-7 detail-copy mb-5 whitespace-pre-line">{item.desc}</p>}
         <div className="flex flex-wrap gap-1.5">{item.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}</div>
         {project?.caseStudyHref && <a className="primary-link mt-6" href={project.caseStudyHref} onClick={close}>{ja ? 'プロジェクト詳細を見る' : en ? 'Read the project case study' : '프로젝트 상세 기록 보기'} ↗</a>}
         {project?.videoUrl && <figure className="demo-video">
