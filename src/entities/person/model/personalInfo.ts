@@ -20,7 +20,7 @@ export const personalInfo: PersonalInfo = {
   },
 
   contact: {
-    이메일: 'issac1162@gmail.com',
+    이메일: 'cosac1162@gmail.com',
     GitHub: 'https://github.com/issac-52',
   },
 };
