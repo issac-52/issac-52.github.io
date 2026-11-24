@@ -11,10 +11,10 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
     desc: 'Joined a team migrating a PowerBuilder business system to a Java/Vue web application. Analyze existing source code and workflows, and translate requirements from the project manager and business users into APIs and screens.\n\nUsed MySQL 5.7 execution plans to identify full table scans and adjusted indexes and predicates. A single SELECT went from 55 seconds to 0.041 seconds on retest.',
   },
   'exp-1': {
-    name: 'Connectwave · Danawa Division',
+    name: 'Connectwave · Danawa Division, Back-office Development Team',
     period: 'Aug 2022 – Mar 2026',
-    role: 'Back-office Development · Unified Administration Platform TF',
-    desc: 'Developed Java/Spring management APIs, database tables and PHP/Cron batch jobs for product and catalog operations. Extended an existing RabbitMQ consumer with failed-product lookup and compensation logic to address Elasticsearch–Altibase consistency errors.\n\nIn a four-person team, developed the Next.js frontend structure, GraphQL integration, permissions and menu interfaces, and reusable components for a unified Enuri–Danawa administration platform. Configured blue-green deployment for the New Office frontend using Docker Compose, shell scripts and Nginx. Also worked on application delivery integration with GitLab CI/CD, Harbor and ArgoCD, and a shared Storybook environment.',
+    role: 'Back-office Development · Unified Admin Platform TF',
+    desc: 'Maintained core business logic for managing catalogs and products, in Java/Spring and PHP. Built and improved management APIs, database tables and PHP/Cron batch jobs for operations requests.\n\nFrom Jan 2025 to Jan 2026, in a four-person team, developed the frontend structure, member, permission and category screens, and shared components of a Next.js-based unified Enuri–Danawa admin platform. Also worked on GitLab CI/CD, Harbor and ArgoCD delivery and a blue-green deployment setup.',
   },
 };
 const japaneseExperience: Record<string, Pick<Experience, 'name' | 'period' | 'role' | 'desc'>> = {
@@ -25,10 +25,10 @@ const japaneseExperience: Record<string, Pick<Experience, 'name' | 'period' | 'r
     desc: 'PowerBuilderベースの業務システムをJava / VueのWebアプリケーションへ移行するプロジェクトに参画しています。既存ソースコードと業務フローを分析し、担当APIと画面の開発を行っています。\n\nMySQL 5.7のEXPLAINで並列実行される3本の類似SQLに共通するボトルネックを調査しました。既存複合インデックスの活用と追加インデックスを検討し、単一クエリの実行時間を約55秒から再測定値約0.041秒へ改善しました。3本の合計応答時間とは異なります。',
   },
   'exp-1': {
-    name: 'Connectwave · Danawa事業部',
+    name: 'Connectwave · Danawa事業部 バックオフィス開発チーム',
     period: '2022年8月 – 2026年3月',
     role: 'バックオフィス開発・統合管理プラットフォームTF',
-    desc: 'Java / Springによる管理API、DBテーブル、PHP / Cronバッチ処理を開発しました。RabbitMQ Consumerに補償・復旧処理を追加し、ElasticsearchとAltibase間の商品データ整合性の問題に対応しました。\n\n4人のTFではNext.jsベースの統合管理プラットフォームの画面構成、GraphQL連携、権限・メニューUI、共通コンポーネントを担当しました。Docker Compose・Shell・NginxによるBlue-Greenデプロイや、GitLab CI/CD・Harbor・ArgoCDの連携、Storybook共有環境にも取り組みました。',
+    desc: 'Java/SpringとPHPで、カタログや商品を管理する中核ビジネスロジックの保守を担当しました。運用要望に合わせて管理API、DBテーブル、PHP/Cronバッチを開発・改善しました。\n\n2025年1月〜2026年1月は4人のTFで、Next.jsベースのエヌリ・ダナワ統合管理プラットフォームのフロントエンド構成、会員・権限・カテゴリ画面、共通コンポーネントを開発しました。GitLab CI/CD・Harbor・ArgoCDのデプロイ連携とBlue-Greenデプロイ構成にも携わりました。',
   },
 };
 export const getExperiences = (language: Language) => language === 'ja'
