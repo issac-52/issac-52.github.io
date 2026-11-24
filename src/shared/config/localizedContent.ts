@@ -56,9 +56,9 @@ const englishProjects = {
   },
   'field-work': {
     name: 'Water Operations Manager',
-    period: 'MVP implemented · Deployment connected · Performance work',
+    period: 'Live in production · about 30 active users',
     role: 'Side project · Client work',
-    desc: 'A field operations system covering Excel imports, maps and geocoding, START/END readings, photos, settlement and HWPX exports for roughly 20,000 sites. Built and verified with Codex assistance, with EC2 and Cloudflare integration. Synthetic 20k-site benchmarks document query bottlenecks and before/after results.',
+    desc: 'A field operations system connecting Excel imports, maps and geocoding, START/END readings, photos, settlement and HWPX exports for about 20,000 sites. It runs in production with about 30 people using it daily. Built with Codex; cut SQL calls for one list page from 62 to 4.',
   },
 };
 const japaneseProjects = {
@@ -67,8 +67,8 @@ const japaneseProjects = {
     desc: 'Excelの取り込み、現場での入力、写真、地図、結果出力を一元管理するツールです。再取り込み時にも既存の調査値を保持し、元のExcelテンプレートに結果を出力します。',
   },
   'field-work': {
-    name: '水道現場業務管理システム', period: 'MVP実装・性能改善', role: '個人開発・受託',
-    desc: '約2万件の対象を想定し、Excel登録、地図・位置情報、検針、写真、精算、HWPX出力を連携する現場向け業務システムです。Java / Spring Boot、React、PostgreSQLを使用しています。',
+    name: '水道現場業務管理システム', period: '本番運用中・利用者約30名', role: '個人開発・受託',
+    desc: '約2万件の需要家を対象に、Excel登録、地図・位置情報、検針、写真、精算、HWPX出力をつなぐ現場業務システムです。本番運用中で、約30名が日々の業務で利用しています。Codexと開発し、一覧1ページのSQL実行回数を62回から4回に減らしました。',
   },
   'ai-native-architecture': {
     name: 'AI-Native Architecture Lab', period: '研究プロトタイプ・AIエージェント実験は未実施', role: '個人研究',

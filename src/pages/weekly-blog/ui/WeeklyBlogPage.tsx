@@ -1,65 +1,68 @@
-import { useLanguageStore } from '@/shared/model/useLanguageStore';
-
-const copy = {
-  ko: {
-    back: '← 프로젝트 목록', title: 'Browinfo · 주간 매거진',
-    intro: '주간 기사 초안을 모으고, 출처를 확인한 뒤 관리자가 승인한 글을 발행하는 사이드 프로젝트입니다.',
-    problem: '초안이 들어오면 바로 발행할 수 없었습니다',
-    problemBody: '기존 weekly-blog를 주간 매거진으로 옮기면서 초안 접수와 공개 발행 사이에 검토 단계를 두었습니다. 작성된 기사마다 원문 출처를 연결하고, 관리자가 내용을 수정하거나 반려할 수 있게 했습니다. 공개 조회 API는 발행된 글만 돌려줍니다.',
-    workflow: '초안 접수부터 발행까지',
-    workflowBody: 'ChatGPT에서 작성한 초안은 OAuth로 보호된 MCP/API를 통해 검토 대기 상태로 저장합니다. 같은 주간 실행 키를 사용한 재시도는 중복 제출을 막습니다. 관리자는 출처 접근과 원문을 확인하고 체크리스트를 마친 뒤 승인·발행합니다. 수정과 상태 변경 이력은 별도로 남깁니다.',
-    choice: '운영하며 정한 기준',
-    choiceBody: '기사의 출처 도메인은 관리자 화면에서 추가·수정·비활성화합니다. 자동 접근 확인과 사람의 원문 확인을 구분했습니다. Supabase Auth의 관리자 이메일 허용 목록으로 쓰기 기능을 보호하고, 비공개 배포에서는 사이트 접근 비밀번호를 사용합니다.',
-    stack: '구성과 현재 상태',
-    stackBody: 'Next.js 16, TypeScript, Supabase PostgreSQL·Auth, Vercel을 사용합니다. 초안 수신 설정과 관리자 승인 화면을 확인했고 비공개로 배포했습니다. 공개 발행과 실제 OAuth 연결의 정상 동작은 별도로 확인해야 합니다.',
-    source: 'GitHub 소스 보기 ↗',
-  },
-  ja: {
-    back: '← プロジェクト一覧', title: 'Browinfo · 週刊マガジン',
-    intro: '週刊記事の下書きを受け取り、出典を確認し、管理者の承認後に公開する個人プロジェクトです。',
-    problem: '下書きの公開前にレビューが必要',
-    problemBody: 'weekly-blogを週刊マガジンへ移行する際、下書きの受信と公開の間にレビュー段階を追加しました。記事ごとに出典を記録し、管理者による編集と差し戻しを可能にしました。公開APIは承認済みの記事だけを返します。',
-    workflow: '下書き受信から公開まで',
-    workflowBody: 'ChatGPTによる下書きをOAuthで保護されたMCP/API経由でレビュー待ちとして保存します。週単位の冪等キーで再送時の重複を防止します。管理者は出典と原文を確認し、チェックリストを完了して承認・公開します。編集履歴やステータス変更も記録します。',
-    choice: '運用ルールとアクセス制御',
-    choiceBody: '管理者画面から出典ドメインの追加・更新・無効化ができます。自動アクセス確認と人による原文確認を分離しました。書き込み操作はSupabase Authとメールアドレスの許可リストで保護し、非公開環境にはアクセスパスワードを設定しています。',
-    stack: '技術構成と現在の状態',
-    stackBody: 'Next.js 16、TypeScript、Supabase PostgreSQL・Auth、Vercelを使用しています。下書き受信設定と管理者承認画面を非公開環境で確認しました。一般公開とOAuth連携の本番動作は別途確認が必要です。',
-    source: 'GitHubリポジトリを見る ↗',
-  },
-  en: {
-    back: '← Projects', title: 'Browinfo · Weekly Magazine',
-    intro: 'A side project for collecting weekly article drafts, checking sources and publishing after editorial approval.',
-    problem: 'Drafts need review before publication',
-    problemBody: 'While migrating weekly-blog into a magazine, I added a review stage between draft intake and public release. Articles carry source references, and administrators can edit or reject them. Public read APIs return published articles only.',
-    workflow: 'From intake to publication',
-    workflowBody: 'ChatGPT drafts arrive through an OAuth-protected MCP/API and enter review. A weekly idempotency key prevents duplicate submissions on retry. Administrators check source access and original material, complete the checklist and approve publication. Edits and status changes are recorded.',
-    choice: 'Editorial and access rules',
-    choiceBody: 'Administrators can add, update and disable source domains. Automated reachability checks are separate from human review of originals. Supabase Auth and an email allowlist protect writes, while private deployment uses an access password.',
-    stack: 'Stack and current status',
-    stackBody: 'Next.js 16, TypeScript, Supabase PostgreSQL and Auth, and Vercel. Draft intake settings and the administrative approval screen have been checked in a private deployment. Public publication and live OAuth connection still need separate validation.',
-    source: 'View GitHub repository ↗',
-  },
-};
+import { Bullets, CaseStudy, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
 
 export function WeeklyBlogPage() {
-  const { language } = useLanguageStore();
-  const t = copy[language];
-  return <main className="portfolio min-h-screen bg-bg text-ink font-body">
-    <div className="page-shell" style={{ maxWidth: 920, paddingTop: 64, paddingBottom: 96 }}>
-      <a className="text-link" href="#projects">{t.back}</a>
-      <p className="section-kicker" style={{ marginTop: 44 }}>SIDE PROJECT</p>
-      <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.2 }}>{t.title}</h1>
-      <p className="hero-description">{t.intro}</p>
-      {([
-        [t.problem, t.problemBody],
-        [t.workflow, t.workflowBody],
-        [t.choice, t.choiceBody],
-        [t.stack, t.stackBody],
-      ] as const).map(([title, body]) => <section className="content-section" key={title}>
-        <h2 style={{ fontSize: '1.4rem' }}>{title}</h2><p className="about-copy">{body}</p>
-      </section>)}
-      <a className="text-link" href="https://github.com/issac-52/weekly-blog" target="_blank" rel="noreferrer">{t.source}</a>
-    </div>
-  </main>;
+  return <CaseStudy
+    id="weekly-blog"
+    title={{ ko: 'Browinfo · 주간 매거진', en: 'Browinfo · Weekly Magazine', ja: 'Browinfo · 週刊マガジン' }}
+    status={{ ko: '비공개 배포 · 관리자 검토 흐름 운영', en: 'Private deployment · Editorial review in use', ja: '非公開デプロイ・承認フロー運用' }}
+    summary={{
+      ko: '주간 기사 초안을 받아 출처를 확인하고, 관리자가 승인한 글만 발행하는 매거진입니다. 기존 weekly-blog를 Next.js와 Supabase로 옮기면서 초안 접수와 공개 발행 사이에 검토 단계를 넣었습니다.',
+      en: 'A weekly magazine that receives article drafts, checks their sources and publishes only what an administrator approves. While moving the old weekly-blog to Next.js and Supabase, I added a review stage between draft intake and publication.',
+      ja: '週刊記事の下書きを受け取り、出典を確認し、管理者が承認した記事だけを公開するマガジンです。既存のweekly-blogをNext.jsとSupabaseへ移行する際、下書きの受信と公開の間にレビュー段階を追加しました。',
+    }}
+    role={{ ko: '개인 프로젝트 · 설계, 개발, 운영', en: 'Personal project · Design, development and operation', ja: '個人開発・設計、開発、運用' }}
+    stack={['Next.js 16', 'TypeScript', 'Supabase', 'Vercel', 'OAuth / MCP']}
+    links={[{ href: 'https://github.com/issac-52/weekly-blog', label: { ko: 'GitHub', en: 'GitHub' } }]}
+  >
+    <Section title={{ ko: '업무 흐름', en: 'Workflow', ja: '業務フロー' }}>
+      <Flow steps={[
+        { ko: 'ChatGPT에서 쓴 초안이 OAuth로 보호된 MCP/API로 들어옴', en: 'Drafts written in ChatGPT arrive through an OAuth-protected MCP/API', ja: 'ChatGPTで書いた下書きがOAuthで保護されたMCP/API経由で届く' },
+        { ko: '검토 대기 상태로 저장', en: 'Saved in a pending-review state', ja: 'レビュー待ちとして保存' },
+        { ko: '관리자가 출처 접근과 원문을 확인하고 체크리스트 작성', en: 'An administrator checks sources and originals and completes the checklist', ja: '管理者が出典と原文を確認し、チェックリストを完了' },
+        { ko: '승인한 글만 공개 발행', en: 'Only approved articles are published', ja: '承認した記事のみ公開' },
+        { ko: '수정과 상태 변경을 이력으로 기록', en: 'Edits and status changes are recorded', ja: '編集とステータス変更を履歴に記録' },
+      ]}/>
+    </Section>
+
+    <Section title={{ ko: '시스템 구성', en: 'Architecture', ja: 'システム構成' }}>
+      <Diagram
+        path={[
+          { name: 'ChatGPT', role: { ko: '초안 작성', en: 'Draft writing', ja: '下書き作成' } },
+          { name: 'MCP / API', role: { ko: 'OAuth 인증 · 초안 수신', en: 'OAuth · draft intake', ja: 'OAuth・下書き受信' } },
+          { name: 'Next.js', role: { ko: '관리자 화면 · 공개 페이지', en: 'Admin screens · public pages', ja: '管理画面・公開ページ' } },
+        ]}
+        stores={[
+          { ko: 'Supabase PostgreSQL · 기사와 이력', en: 'Supabase PostgreSQL · articles and history', ja: 'Supabase PostgreSQL・記事と履歴' },
+          { ko: 'Supabase Auth · 관리자 허용 목록', en: 'Supabase Auth · admin allowlist', ja: 'Supabase Auth・管理者許可リスト' },
+          { ko: 'Vercel · 배포', en: 'Vercel · hosting', ja: 'Vercel・デプロイ' },
+        ]}
+        caption={{ ko: '공개 조회 API는 발행된 글만 돌려줍니다.', en: 'Public read APIs return published articles only.', ja: '公開APIは公開済みの記事だけを返します。' }}
+      />
+    </Section>
+
+    <Section title={{ ko: '설계에서 중요하게 본 것', en: 'Key design decisions', ja: '設計で重視したこと' }}>
+      <Decisions items={[
+        {
+          title: { ko: '자동 생성 글도 사람이 승인한다', en: 'Generated drafts still need a human', ja: '自動生成の記事も人が承認する' },
+          body: { ko: '초안은 바로 공개되지 않고 검토 대기로 들어갑니다. 관리자는 내용을 고치거나 반려할 수 있고, 승인한 글만 공개 API에 나타납니다.', en: 'Drafts never go live directly. Administrators can edit or reject them, and only approved articles appear in the public API.', ja: '下書きはすぐには公開されず、レビュー待ちになります。管理者は編集や差し戻しができ、承認した記事だけが公開APIに表示されます。' },
+        },
+        {
+          title: { ko: '재시도해도 중복되지 않는다', en: 'Retries never duplicate', ja: '再送しても重複しない' },
+          body: { ko: '주간 실행 키를 멱등 키로 써서, 같은 주의 초안이 다시 들어와도 한 번만 저장됩니다.', en: 'A weekly run key acts as an idempotency key, so a retried submission for the same week is stored once.', ja: '週単位の実行キーを冪等キーとして使い、同じ週の下書きが再送されても一度だけ保存されます。' },
+        },
+        {
+          title: { ko: '자동 확인과 사람의 확인을 나눈다', en: 'Automated checks and human review are separate', ja: '自動確認と人の確認を分ける' },
+          body: { ko: '출처 도메인은 관리자 화면에서 추가·수정·비활성화합니다. 출처에 접근되는지는 자동으로, 원문 내용은 사람이 확인합니다.', en: 'Source domains are managed in the admin screen. Reachability is checked automatically; the original content is checked by a person.', ja: '出典ドメインは管理画面で追加・更新・無効化します。到達性は自動で、原文の内容は人が確認します。' },
+        },
+      ]}/>
+      <Prose>{{ ko: '쓰기 기능은 Supabase Auth와 관리자 이메일 허용 목록으로 보호하고, 비공개 배포에는 사이트 접근 비밀번호를 둡니다.', en: 'Writes are protected by Supabase Auth and an admin email allowlist, and the private deployment sits behind an access password.', ja: '書き込みはSupabase Authと管理者メールの許可リストで保護し、非公開環境にはアクセスパスワードを設定しています。' }}</Prose>
+    </Section>
+
+    <Section title={{ ko: '남은 과제', en: 'Next steps', ja: '今後の課題' }}>
+      <Bullets items={[
+        { ko: '공개 발행 전환', en: 'Open the magazine to the public', ja: '一般公開への切り替え' },
+        { ko: '실제 OAuth 연결 환경에서의 초안 수신 점검', en: 'Validate draft intake over the live OAuth connection', ja: '本番OAuth接続での下書き受信の確認' },
+      ]}/>
+    </Section>
+  </CaseStudy>;
 }

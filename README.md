@@ -26,6 +26,7 @@ npm run build
 - 영문 경력 및 프로젝트: `src/shared/config/localizedContent.ts`
 - GitHub 및 이메일: `src/shared/config/site.ts`
 - 페이지 문구: `src/widgets/modern-page/ui/ModernPage.tsx`
+- 프로젝트 상세(공통 레이아웃): `src/widgets/case-study/ui/CaseStudy.tsx`
 - 야장관리자 상세: `src/pages/meter-admin/ui/MeterAdminPage.tsx`
 
 미진행 프로젝트와 임의 커밋 데이터는 표시하지 않습니다.
@@ -53,7 +54,7 @@ GitHub Pages의 직접 새로고침에도 동작하는 해시 경로를 사용�
 
 - `#/projects/field-work` — 프로젝트 개요·아키텍처·업무 규칙
 - `#/projects/field-work/performance` — SQL/지연 개선 전후 그래프·표·측정 조건·PDF·원시 JSON
-- `#/projects/field-work/codex` — Codex 기반 개발에서 사람의 판단과 AI 지원, 실패 재현·실행 검증 방식
+- `#/projects/field-work/codex` — 이전 링크 호환용, 개요로 연결 (Codex 개발 방식은 개요에 포함)
 
 모든 상세 페이지는 한국어/영문을 지원하며 기존 프로젝트 카드에서 연결됩니다. `public/fieldwork`의 자료는 가상 데이터만 사용한 개발 환경 측정입니다. 운영 HTTP/R2 성능이나 모든 경로의 성능 개선을 의미하지 않습니다. 야장관리자의 Claude Code 활용과 수도관리자의 Codex 활용을 구분합니다.
 
