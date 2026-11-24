@@ -33,7 +33,7 @@ export function ModernPage() {
   const pick = (ko: string, en: string, ja: string) => t({ ko, en, ja });
   const works = getWorks(language);
   const projectList = getProjects(language);
-  const intro = pick('기업 업무 시스템의 API와 관리자 화면을 만듭니다.', 'I build APIs and admin screens for business systems.', '企業の業務システムのAPIと管理画面を作っています。');
+  const intro = pick('변화하는 시대에서 개발자의 강점은 이제 설계 능력과 커뮤니케이션 능력이라고 생각합니다.', 'In a changing era, I believe a developer’s strengths now lie in design and communication.', '変化する時代において、開発者の強みはこれから設計力とコミュニケーション力だと考えています。');
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -92,10 +92,11 @@ export function ModernPage() {
             <div className={'hp-thumb ' + p.id} aria-hidden="true">{p.id === 'meter-admin'
               ? <img src="/notebook/cover.svg" alt=""/>
               : p.id === 'weekly-blog' ? <span>Browinfo</span>
+              : p.id === 'ai-native-architecture' ? <>{Array.from({ length: 6 }, (_, i) => <i key={i}/>)}</>
               : <img src="/water-study.webp" alt=""/>}</div>
             <div>
               <p className="hp-status">{p.period}</p>
-              <h3><a href={p.caseStudyHref} className="hp-cover-link">{p.name}<Arrow/></a></h3>
+              <h3><a href={p.caseStudyHref} className="hp-cover-link" {...(p.caseStudyHref?.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>{p.name}<Arrow/></a></h3>
               <p className="hp-desc">{p.desc}</p>
               <p className="hp-stack">{p.tags.join(', ')}</p>
             </div>

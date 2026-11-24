@@ -48,6 +48,12 @@ const englishProjects = {
     role: 'Side project',
     desc: 'A weekly magazine where incoming drafts are checked against sources and published after administrator approval. Migrated weekly-blog to Next.js and Supabase, with duplicate-submission protection, source checks and an approval history.',
   },
+  'ai-native-architecture': {
+    name: 'AI-Native Architecture Lab',
+    period: 'Research prototype · AI-agent trials not yet run',
+    role: 'Personal research',
+    desc: 'Implements the same order API in six structures (layered, DDD, hexagonal, vertical slice, modular monolith and domain co-location) and checks in CI that a shared HTTP contract suite passes for all of them. It is groundwork for comparing how code structure affects AI coding agents; so far only file-discovery benchmarks have been measured.',
+  },
   'field-work': {
     name: 'Water Operations Manager',
     period: 'MVP implemented · Deployment connected · Performance work',
@@ -63,6 +69,10 @@ const japaneseProjects = {
   'field-work': {
     name: '水道現場業務管理システム', period: 'MVP実装・性能改善', role: '個人開発・受託',
     desc: '約2万件の対象を想定し、Excel登録、地図・位置情報、検針、写真、精算、HWPX出力を連携する現場向け業務システムです。Java / Spring Boot、React、PostgreSQLを使用しています。',
+  },
+  'ai-native-architecture': {
+    name: 'AI-Native Architecture Lab', period: '研究プロトタイプ・AIエージェント実験は未実施', role: '個人研究',
+    desc: '同じ注文APIをレイヤード、DDD、ヘキサゴナル、Vertical Slice、モジュラーモノリス、ドメイン中心の6つの構造で実装し、共通のHTTP契約テストで動作が同じかをCIで検証しています。コード構造がAIコーディングエージェントの作業にどう影響するかを比較するための実験基盤で、現時点ではファイル探索のベンチマークのみ測定しています。',
   },
   'weekly-blog': {
     name: 'Browinfo · 週刊マガジン', period: '非公開デプロイ・承認フロー運用', role: '個人開発',
