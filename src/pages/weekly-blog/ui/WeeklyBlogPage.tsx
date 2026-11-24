@@ -1,4 +1,4 @@
-import { Bullets, CaseStudy, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
+import { CaseStudy, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
 
 export function WeeklyBlogPage() {
   return <CaseStudy
@@ -58,11 +58,5 @@ export function WeeklyBlogPage() {
       <Prose>{{ ko: '쓰기 기능은 Supabase Auth와 관리자 이메일 허용 목록으로 보호하고, 비공개 배포에는 사이트 접근 비밀번호를 둡니다.', en: 'Writes are protected by Supabase Auth and an admin email allowlist, and the private deployment sits behind an access password.', ja: '書き込みはSupabase Authと管理者メールの許可リストで保護し、非公開環境にはアクセスパスワードを設定しています。' }}</Prose>
     </Section>
 
-    <Section title={{ ko: '남은 과제', en: 'Next steps', ja: '今後の課題' }}>
-      <Bullets items={[
-        { ko: '공개 발행 전환', en: 'Open the magazine to the public', ja: '一般公開への切り替え' },
-        { ko: '실제 OAuth 연결 환경에서의 초안 수신 점검', en: 'Validate draft intake over the live OAuth connection', ja: '本番OAuth接続での下書き受信の確認' },
-      ]}/>
-    </Section>
   </CaseStudy>;
 }
