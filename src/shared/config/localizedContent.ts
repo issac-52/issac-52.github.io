@@ -12,7 +12,7 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
   },
   'exp-1': {
     name: 'Connectwave · Danawa Division',
-    period: '2022 – Mar 2026',
+    period: 'Aug 2022 – Mar 2026',
     role: 'Back-office Development · Unified Administration Platform TF',
     desc: 'Developed Java/Spring management APIs, database tables and PHP/Cron batch jobs for product and catalog operations. Extended an existing RabbitMQ consumer with failed-product lookup and compensation logic to address Elasticsearch–Altibase consistency errors.\n\nIn a four-person team, developed the Next.js frontend structure, GraphQL integration, permissions and menu interfaces, and reusable components for a unified Enuri–Danawa administration platform. Configured blue-green deployment for the New Office frontend using Docker Compose, shell scripts and Nginx. Also worked on application delivery integration with GitLab CI/CD, Harbor and ArgoCD, and a shared Storybook environment.',
   },
@@ -26,7 +26,7 @@ const japaneseExperience: Record<string, Pick<Experience, 'name' | 'period' | 'r
   },
   'exp-1': {
     name: 'Connectwave · Danawa事業部',
-    period: '2022年 – 2026年3月',
+    period: '2022年8月 – 2026年3月',
     role: 'バックオフィス開発・統合管理プラットフォームTF',
     desc: 'Java / Springによる管理API、DBテーブル、PHP / Cronバッチ処理を開発しました。RabbitMQ Consumerに補償・復旧処理を追加し、ElasticsearchとAltibase間の商品データ整合性の問題に対応しました。\n\n4人のTFではNext.jsベースの統合管理プラットフォームの画面構成、GraphQL連携、権限・メニューUI、共通コンポーネントを担当しました。Docker Compose・Shell・NginxによるBlue-Greenデプロイや、GitLab CI/CD・Harbor・ArgoCDの連携、Storybook共有環境にも取り組みました。',
   },

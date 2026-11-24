@@ -22,6 +22,7 @@ npm run build
 - 사이드 프로젝트: `src/entities/project/model/data.ts`
 - 대표 실무 사례(한국어/영어): `src/entities/work/model/data.ts`
 - 기술 스택: `src/entities/person/model/personalInfo.ts`
+- 주요 성과·학력·연락 섹션: `src/widgets/modern-page/ui/ModernPage.tsx`
 - 영문 경력 및 프로젝트: `src/shared/config/localizedContent.ts`
 - GitHub 및 이메일: `src/shared/config/site.ts`
 - 페이지 문구: `src/widgets/modern-page/ui/ModernPage.tsx`
@@ -44,7 +45,7 @@ GitHub Pages의 `gh-pages` 브랜치로 빌드 결과를 배포합니다.
 ## 콘텐츠 기준
 
 2026-10-22 제공된 커리어 정리본과 사용자의 프로젝트 상태 정정을 기준으로 작성했습니다.
-커넥트웨이브 시작월은 증명서 대조 전이므로 연도만 표시합니다. 프로젝트별 미확인 참여 기간과 성과 수치는 표시하지 않습니다.
+커넥트웨이브 근무 기간(2022.08–2026.03)과 학력은 2026-10 이력서·경력기술서 기준입니다. 이력서 PDF는 연락처·생년월일이 포함되어 있어 사이트에 게시하지 않습니다. 프로젝트별 미확인 참여 기간과 성과 수치는 표시하지 않습니다.
 
 ## 수도관리자 상세 기록 (2026-11-10)
 
