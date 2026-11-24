@@ -1,91 +1,120 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getWorks } from '@/entities/work/model/data';
 import { personalInfo } from '@/entities/person/model/personalInfo';
 import { useDetailModalStore } from '@/features/node-detail/model/useDetailModalStore';
 import { siteConfig } from '@/shared/config/site';
 import { getExperiences, getProjects } from '@/shared/config/localizedContent';
-import { useLanguageStore } from '@/shared/model/useLanguageStore';
-import { SocialLinks } from './SocialLinks';
+import { useLanguageStore, type Language } from '@/shared/model/useLanguageStore';
 import './editorial.css';
 
+type L3 = Record<Language, string>;
+
+const skillLabels: Record<string, L3> = {
+  BACKEND: { ko: '백엔드', en: 'Backend', ja: 'バックエンド' },
+  FRONTEND: { ko: '프론트엔드', en: 'Frontend', ja: 'フロントエンド' },
+  'DATA & MESSAGING': { ko: '데이터·메시징', en: 'Data & messaging', ja: 'データ・メッセージング' },
+  'UI & API': { ko: 'UI·API 도구', en: 'UI & API tooling', ja: 'UI・APIツール' },
+  DELIVERY: { ko: '빌드·배포', en: 'Build & delivery', ja: 'ビルド・デプロイ' },
+  CLOUD: { ko: '클라우드', en: 'Cloud', ja: 'クラウド' },
+  'AI TOOLS': { ko: 'AI 개발 도구', en: 'AI coding tools', ja: 'AI開発ツール' },
+};
+
+const education: { school: L3; detail: L3; period: string }[] = [
+  { school: { ko: '한국방송통신대학교', en: 'Korea National Open University', ja: '韓国放送通信大学' }, detail: { ko: '3학년 재학 중', en: 'Enrolled, 3rd year', ja: '在学中（3年）' }, period: '' },
+  { school: { ko: '인하공업전문대학교 정보통신과', en: 'Inha Technical College, Information & Communication Eng.', ja: '仁荷工業専門大学 情報通信科' }, detail: { ko: '졸업', en: 'Graduated', ja: '卒業' }, period: '2017.03 – 2021.02' },
+];
+
+const Arrow = () => <svg className="hp-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 
 export function ModernPage() {
   const open = useDetailModalStore(s => s.open);
   const { language, setLanguage } = useLanguageStore();
-  const en = language === 'en';
-  const pick = (ko: string, english: string, japanese: string) => language === 'ja' ? japanese : en ? english : ko;
-  const intro = pick('다나와에서는 누락된 상품 데이터를 복구하는 로직을 만들었습니다. 지금은 PowerBuilder 업무 화면을 Java와 Vue로 옮기고 있습니다.', 'At Danawa, I built recovery logic for missing product data. Today I’m moving PowerBuilder workflows to Java and Vue.', 'ダナワでは欠損した商品データの復旧処理を開発しました。現在はPowerBuilderの業務画面をJavaとVueに移行しています。');
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const t = (text: L3) => text[language];
+  const pick = (ko: string, en: string, ja: string) => t({ ko, en, ja });
   const works = getWorks(language);
   const projectList = getProjects(language);
+  const intro = pick('변화하는 시대에서 개발자의 강점은 이제 설계 능력과 커뮤니케이션 능력이라고 생각합니다.', 'In a changing era, I believe a developer’s strengths now lie in design and communication.', '変化する時代において、開発者の強みはこれから設計力とコミュニケーション力だと考えています。');
+
   useEffect(() => {
     document.documentElement.lang = language;
-    document.title = language === 'ja' ? 'Yisak Oh | ウェブエンジニア' : en ? 'Yisak Oh | Web Engineer' : '오이삭 | 웹 엔지니어';
+    document.title = pick('오이삭 | Java 중심 풀스택 개발자', 'Yisak Oh | Java-focused full-stack engineer', 'Yisak Oh | Java中心のフルスタックエンジニア');
     document.querySelector('meta[name="description"]')?.setAttribute('content', intro);
-  }, [language, en, intro]);
-  return <div className="io-page" id="top">
-    <a className="skip-link" href="#main">{pick('본문으로 바로가기','Skip to content', '本文へ')}</a>
-    <header className="io-nav">
-      <a href="#top" className="io-brand" aria-label="Yisak Oh"><i aria-hidden="true"/>issac-52.github.io</a>
-      <div className="io-lang" aria-label={pick('언어 선택','Language', '言語')}>{(['ko','en','ja'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
+  }, [language]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return <div className="hp" id="top">
+    <a className="skip-link" href="#main">{pick('본문으로 바로가기', 'Skip to content', '本文へ')}</a>
+    <header className="hp-bar">
+      <a href="#top" className="hp-brand">issac-52.github.io</a>
+      <div className="hp-lang" role="group" aria-label={pick('언어', 'Language', '言語')}>{(['ko', 'en', 'ja'] as const).map(lang => <button key={lang} aria-pressed={language === lang} lang={lang} onClick={() => setLanguage(lang)}>{{ ko: '한국어', en: 'English', ja: '日本語' }[lang]}</button>)}</div>
     </header>
+
     <main id="main" tabIndex={-1}>
-      <section className="profile-landing">
-        <div className="profile-pair">
-          <img className="profile-avatar" src="/sac-profile.png" alt="SAC" width="144" height="144"/>
-          <div><p className="profile-hello">{pick('안녕하세요,','Hello, I’m', 'こんにちは、')}</p><h1>Yisak Oh</h1>
-            <p className="profile-role">Web Engineer</p>
-            <p className="profile-line">{pick('백오피스와 현장 업무 도구를 만드는 오이삭입니다.', 'I build back-office systems and tools for field teams.', 'バックオフィスシステムと現場の業務ツールを開発しています。')}</p>
-            <span className="profile-location">◎ Seoul, Korea</span><SocialLinks/>
+      <section className="hp-hero" aria-labelledby="name-h">
+        <div className="hp-hero-inner">
+          <img className="hp-avatar" src="/sac-profile.png" alt="" width="132" height="132"/>
+          <div>
+            <p className="hp-hello">{pick('안녕하세요,', 'Hello, I’m', 'こんにちは、')}</p>
+            <h1 id="name-h" className="hp-name">{pick('오이삭', 'Yisak Oh', 'Yisak Oh')}</h1>
+            <p className="hp-role">{pick('Java 중심 풀스택 개발자', 'Java-focused full-stack engineer', 'Java中心のフルスタックエンジニア')}</p>
+            <p className="hp-tagline">{intro}</p>
+            <div className="hp-actions">
+              <a className="hp-mail" href={'mailto:' + siteConfig.email}>{pick('이메일 보내기', 'Send an email', 'メールを送る')}</a>
+              <a className="hp-icon" href={siteConfig.githubUrl} aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.07c-3.1.68-3.76-1.32-3.76-1.32-.51-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.7 1.15 1.7 1.15.99 1.7 2.6 1.21 3.24.93.1-.72.39-1.21.7-1.49-2.47-.28-5.07-1.24-5.07-5.51 0-1.22.43-2.21 1.14-2.99-.11-.28-.5-1.41.11-2.94 0 0 .93-.3 3.06 1.14a10.6 10.6 0 0 1 5.57 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.53.23 2.66.11 2.94.72.78 1.14 1.77 1.14 2.99 0 4.28-2.61 5.22-5.1 5.5.4.35.76 1.02.76 2.06v3.06c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg></a>
+              <a className="hp-icon" href={siteConfig.linkedinUrl} aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm7 0h3.8v1.6h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75v5.6h-4v-4.96c0-1.18-.02-2.7-1.7-2.7-1.7 0-1.96 1.3-1.96 2.62v5.04h-4v-11Z"/></svg></a>
+            </div>
           </div>
         </div>
-        <a className="profile-explore" href="#experience">↓　Scroll to Explore</a>
+        <a className="hp-scroll" href="#experience"><span aria-hidden="true">↓</span> {pick('스크롤해서 보기', 'Scroll to explore', 'スクロールして見る')}</a>
       </section>
-      <section id="experience" className="io-section chapter"><header><h2>{pick('경력','Experience', '職歴')}</h2></header>
-        {getExperiences(language).map(item => {
-          const records = works.filter(work => work.experienceId === item.id);
-          const isOpen = expanded === item.id;
-          return <div className="company-entry" key={item.id}>
-            <button className="io-row company-toggle" id={item.id + '-toggle'} aria-expanded={isOpen}
-              aria-controls={item.id + '-records'} onClick={() => setExpanded(isOpen ? null : item.id)}>
-              <small>{item.period}</small>
-              <span><strong>{item.name}</strong><span>{item.role}</span></span>
-              <span className="company-count">{records.length}{pick('건',' notes', '件')} <i aria-hidden="true" className="company-chevron"/></span>
-            </button>
-            <div className="company-records" id={item.id + '-records'} role="region"
-              aria-labelledby={item.id + '-toggle'} aria-hidden={!isOpen}>
-              <div className="records-clip"><div className="records-body">
-              <p>{item.desc}</p>
-              <h3>{pick('개발 기록','Engineering notes', '件')}</h3>
-              <ul>{records.map(work => <li key={work.id}>
-                <button disabled={!isOpen} onClick={() => open({kind:'work', id:work.id})}>
-                  <span>{work.title}</span><span aria-hidden="true">↗︎</span>
-                </button>
-              </li>)}</ul>
-              </div></div>
+
+      <div className="hp-body">
+        <section id="experience" className="hp-section" aria-labelledby="experience-h">
+          <h2 id="experience-h">{pick('경력', 'Experience', '職歴')}</h2>
+          <ol className="hp-list">{getExperiences(language).map(item => {
+            const records = works.filter(work => work.experienceId === item.id);
+            return <li key={item.id} className="hp-entry">
+              <p className="hp-period">{item.period}</p>
+              <div>
+                <h3>{item.name}</h3>
+                <p className="hp-sub">{item.role}</p>
+                <p className="hp-desc">{item.desc}</p>
+                <ul className="hp-notes" aria-label={pick('개발 기록', 'Engineering notes', '開発記録')}>{records.map(work => <li key={work.id}>
+                  <button onClick={() => open({ kind: 'work', id: work.id })}>{work.title}<Arrow/></button>
+                </li>)}</ul>
+              </div>
+            </li>;
+          })}</ol>
+        </section>
+
+        <section id="projects" className="hp-section" aria-labelledby="projects-h">
+          <h2 id="projects-h">{pick('프로젝트', 'Projects', 'プロジェクト')}</h2>
+          <ul className="hp-list">{projectList.map(p => <li key={p.id} className="hp-entry hp-project">
+            <div className={'hp-thumb ' + p.id} aria-hidden="true">{p.id === 'meter-admin'
+              ? <img src="/notebook/cover.svg" alt=""/>
+              : p.id === 'weekly-blog' ? <span>Browinfo</span>
+              : p.id === 'ai-native-architecture' ? <>{Array.from({ length: 6 }, (_, i) => <i key={i}/>)}</>
+              : <img src="/water-study.webp" alt=""/>}</div>
+            <div>
+              <p className="hp-status">{p.period}</p>
+              <h3><a href={p.caseStudyHref} className="hp-cover-link" {...(p.caseStudyHref?.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}>{p.name}<Arrow/></a></h3>
+              <p className="hp-desc">{p.desc}</p>
+              <p className="hp-stack">{p.tags.join(', ')}</p>
             </div>
-          </div>;
-        })}
-      </section>
-      <section id="projects" className="featured-work"><h2>{pick('프로젝트','Selected projects', 'プロジェクト')}</h2>
-        {projectList.map(p => <a className="work-feature" key={p.id} href={p.caseStudyHref}
-          onPointerMove={event => {
-            if (event.pointerType !== 'mouse') return;
-            const el = event.currentTarget;
-            const box = el.getBoundingClientRect();
-            el.style.setProperty('--px', Math.min(box.width-70,Math.max(70,event.clientX-box.left))+'px');
-            el.style.setProperty('--py', Math.min(box.height-35,Math.max(35,event.clientY-box.top))+'px');
-          }}>
-          <div className={'work-art '+p.id} aria-hidden="true">{p.id==='meter-admin'
-            ? <><img className="survey-cover" src="/notebook/cover.svg" alt=""/><img className="survey-sheet" src="/notebook/meter-admin.svg" alt=""/></>
-            : p.id === 'weekly-blog' ? <span className="magazine-cover">Browinfo</span>
-            : <><span className="water-ripples"/><img className="water-object" src="/water-study.webp" alt=""/></>}</div>
-          <div className="feature-caption"><small>{p.tags.filter(tag => !['Claude Code','Codex'].includes(tag)).slice(0,2).join(' / ')}</small><h3>{p.name}</h3></div>
-          <span className="see-project">See Project <span aria-hidden="true">↗</span></span>
-        </a>)}
-      </section>
-      <section id="about" className="io-section chapter"><header><h2>{pick('기술','Toolkit', '技術')}</h2></header><dl className="io-skills">{Object.entries(personalInfo.skills).map(([group,skills]) => <div key={group} className={group === 'BACKEND' || group === 'FRONTEND' ? 'primary-skills' : undefined}><dt>{group}</dt><dd>{skills.join(' · ')}</dd></div>)}</dl></section>
+          </li>)}</ul>
+        </section>
+
+        <section id="toolkit" className="hp-section" aria-labelledby="toolkit-h">
+          <h2 id="toolkit-h">{pick('기술', 'Toolkit', '技術')}</h2>
+          <dl className="hp-skills">{Object.entries(personalInfo.skills).map(([group, skills]) => <div key={group}><dt>{skillLabels[group] ? t(skillLabels[group]) : group}</dt><dd>{skills.join(', ')}</dd></div>)}</dl>
+          <h3 className="hp-minor">{pick('학력', 'Education', '学歴')}</h3>
+          <ul className="hp-edu">{education.map(item => <li key={item.school.ko}><span>{t(item.school)}</span><span>{item.period ? item.period + ' ' : ''}{t(item.detail)}</span></li>)}</ul>
+        </section>
+      </div>
     </main>
-    <footer><div><span>© {new Date().getFullYear()} Yisak Oh</span><a href={siteConfig.githubUrl}>GitHub</a><a href="#top">{pick('맨 위로','Back to top', 'トップへ')}</a></div></footer>
+
+    <footer className="hp-foot">
+      <a className="hp-email" href={'mailto:' + siteConfig.email}>{siteConfig.email}</a>
+      <p>© {new Date().getFullYear()} {pick('오이삭', 'Yisak Oh', 'Yisak Oh')} · <a href="#top">{pick('맨 위로', 'Back to top', 'トップへ')}</a></p>
+    </footer>
   </div>;
 }

@@ -19,9 +19,9 @@ const works: Work[] = [
     id: 'mg-modernization', experienceId: 'exp-0',
     title: { ko: 'PowerBuilder 업무 화면을 Java·Vue로 전환', en: 'Migrating PowerBuilder workflows to Java and Vue' },
     context: { ko: '기존 업무 화면의 조회·입력 규칙이 PowerBuilder 이벤트와 DataWindow에 나뉘어 있었습니다.', en: 'Business rules were distributed across PowerBuilder events and DataWindows.' },
-    actions: [{ ko: '기존 화면의 처리 순서와 SQL을 분석해 Java API와 Vue 화면에 반영했습니다.', en: 'Traced event sequences and SQL, then implemented the flows in Java APIs and Vue screens.' },{ ko: '담당 API의 요청·응답을 Swagger에 문서화했습니다.', en: 'Documented request and response formats in Swagger.' }],
+    actions: [{ ko: '기존 화면의 처리 순서와 SQL을 분석해 Java API와 Vue 화면에 반영했습니다.', en: 'Traced event sequences and SQL, then implemented the flows in Java APIs and Vue screens.' },{ ko: '담당 API의 요청·응답을 Swagger에 문서화했습니다.', en: 'Documented request and response formats in Swagger.' },{ ko: '상담사 관리 화면을 옮기면서 기존 비밀번호 변경 처리와 로그인에 적용된 규칙이 다른 점을 발견해, PM과 현행 기준을 확인한 뒤 새 화면에 반영했습니다.', en: 'While migrating the counselor management screen, found that the legacy password-change flow and the login check applied different rules; confirmed the current standard with the PM and applied it to the new screen.' }],
     result: { ko: '전환 TF에서 업무 화면 10개 이상과 API 20개 이상을 담당했습니다.', en: 'Responsible for at least 10 screens and at least 20 APIs on the migration team.' },
-    tags: ['Java', 'Vue', 'PowerBuilder', 'Swagger'],
+    tags: ['Java', 'MyBatis', 'Vue', 'PowerBuilder', 'Swagger'],
   },
   {
     id: 'mg-query', experienceId: 'exp-0',
@@ -74,11 +74,11 @@ const works: Work[] = [
     id: 'platform',
     experienceId: 'exp-1',
     title: { ko: '에누리·다나와 통합 관리자 플랫폼', en: 'Unified Enuri–Danawa administration platform' },
-    context: { ko: '별도로 운영되던 두 서비스의 백오피스 기능을 통합할 신규 관리자 플랫폼을 4인 TF에서 개발했습니다.', en: 'Worked in a four-person team on a new administration platform to bring together back-office functions from two independently operated services.' },
+    context: { ko: '2025.01–2026.01, 별도로 운영되던 두 서비스의 백오피스 기능을 통합할 신규 관리자 플랫폼을 4인 TF에서 개발했습니다. 기존 JSP 화면의 동작을 분석해 새 화면으로 옮겼습니다.', en: 'From Jan 2025 to Jan 2026, worked in a four-person team on a new administration platform to bring together back-office functions from two independently operated services, analyzing the behavior of the existing JSP screens.' },
     actions: [
       { ko: 'Next.js·모노레포·FSD 기반 디렉터리와 기능 모듈 구조를 구성했습니다.', en: 'Organized frontend directories and feature modules using Next.js, a monorepo and Feature-Sliced Design.' },
       { ko: '회원·권한 UI, 사용자 역할·메뉴 권한 조회를 GraphQL·Apollo Client와 연동했습니다.', en: 'Integrated member and permission interfaces, role lookups and menu permissions with GraphQL and Apollo Client.' },
-      { ko: '계층형 카테고리 선택·미리보기, 검색·트리·테이블 공통 컴포넌트를 개발했습니다.', en: 'Developed reusable hierarchical category selection, previews, search, tree and table components.' },
+      { ko: '계층형 카테고리 선택·적용 전 미리보기를 구현하고, 검색·트리·테이블 등 공통 컴포넌트 10종 이상을 분리했습니다.', en: 'Built hierarchical category selection with a pre-apply preview, and extracted 10+ shared components including search, tree and table.' },
     ],
     result: { ko: '점진 전환을 위한 신규 UI 기반과 공통 관리 기능을 마련했습니다. 담당 범위는 프론트엔드 구조·기능과 기존 권한 API 연동입니다.', en: 'Delivered shared administration functions and a new UI foundation for incremental migration. My scope covered frontend structure, feature development and integration with existing permission APIs.' },
     tags: ['Next.js', 'React', 'TypeScript', 'GraphQL', 'Apollo Client', 'Zustand', 'FSD'],
@@ -125,14 +125,14 @@ const works: Work[] = [
 ];
 const japaneseWork: Record<string, { title: string; context: string }> = {
   'mg-modernization': { title: 'PowerBuilder業務画面のJava・Vue移行', context: '照会・入力のルールがPowerBuilderのイベントとDataWindowに分散していました。' },
-  'mg-query': { title: "レガシーSQLのボトルネック分析とインデックス最適化", context: "PowerBuilderシステムの移行中、大規模テーブルを参照する類似SQLが3本並列実行されていました。改善前の単一クエリ実行時間は約55秒でした。" },
-  'consistency': { title: "商品データの整合性回復", context: "複数ノードのAPIとバッチ処理で商品を連携・解除する際、ElasticsearchとAltibase間で部分的な書き込み失敗や重複が発生していました。" },
-  'catalog': { title: "認証・保証情報と変更履歴の管理", context: "商品の連携状態によって認証・保証情報の保存先と取得方法が異なり、未連携商品にも対応する必要がありました。" },
-  'automation': { title: "取引先Excel照合業務の自動化", context: "取引先から届くExcelファイルを担当者がDBと手作業で照合する定型業務がありました。" },
-  'blue-green': { title: "Blue-Greenデプロイの構築", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
-  'admin-platform': { title: "統合管理プラットフォームの開発", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
-  'ci-cd': { title: "CI/CDとアプリケーションデプロイ連携", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
-  'storybook': { title: "Storybook共有環境と静的ファイル配信の改善", context: "業務上の課題を整理し、既存の開発・運用環境に合わせて改善を実施しました。" },
+  'mg-query': { title: 'レガシーSQLのフルスキャン改善', context: '類似する照会SQLが3本並列で実行され、そのうち1本のSELECTは単独実行で約55秒かかっていました。' },
+  'consistency': { title: '商品データの整合性回復', context: '複数ノードのAPIとバッチ処理で商品を連携・解除する際、ElasticsearchとAltibase間で部分的な書き込み失敗や重複が発生していました。' },
+  'catalog': { title: '認証・保証情報と変更履歴の管理', context: '商品の連携状態によって認証・保証情報の保存先と取得方法が異なり、未連携商品にも対応する必要がありました。' },
+  'automation': { title: '取引先Excel照合業務の自動化', context: '取引先から届くExcelファイルを担当者がDBと手作業で照合し、結果ファイルの受け渡しを開発者に依頼する定型業務がありました。' },
+  'platform': { title: 'エヌリ・ダナワ統合管理プラットフォーム', context: '2025年1月〜2026年1月、別々に運用されていた2つのサービスの管理機能を統合する新プラットフォームを4人のTFで開発しました。既存JSP画面の動作を分析して移行しました。' },
+  'blue-green': { title: 'New OfficeフロントエンドのBlue-Greenデプロイ', context: 'Dockerコンテナを再起動してデプロイする方式で、サービスが中断する可能性がありました。旧バージョンと新バージョンを分けて実行する構成が必要でした。' },
+  'delivery': { title: 'GitLab・Harbor・ArgoCDによるデプロイ連携', context: '社内で提供されていたKubernetes・Harbor・ArgoCD基盤に、新しいアプリケーションのビルドとデプロイの流れをつなぐ必要がありました。' },
+  'storybook': { title: 'Storybook共有環境と静的ファイル配信の改善', context: 'チームと企画担当者が共通UIを確認できる社内Storybook環境と、ビルド成果物の管理が必要でした。' },
 };
 export function getWorks(language: Language) {
   return works.map(work => ({
