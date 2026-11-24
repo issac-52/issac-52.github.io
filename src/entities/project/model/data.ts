@@ -14,10 +14,10 @@ export const projects: Project[] = [
   {
     id: 'field-work',
     name: '수도관리자',
-    period: 'MVP 구현 · 운영 연결 · 성능 개선',
+    period: '실서비스 운영 중 · 실사용자 약 30명',
     ongoing: true,
     role: '사이드 프로젝트 · 외주',
-    desc: '약 2만 수용가의 Excel 등록, 지도·좌표, START/END 검침, 사진, 정산과 HWPX 출력을 연결한 현장 업무 시스템입니다. Codex를 활용해 요구사항을 구현·검증하고 EC2와 Cloudflare를 연결했습니다. 가상 2만 건으로 조회 병목을 측정하고 개선 전후를 기록합니다.',
+    desc: '약 2만 수용가의 Excel 등록, 지도·좌표, START/END 검침, 사진, 정산과 HWPX 출력을 연결한 현장 업무 시스템입니다. 실서비스로 운영 중이며 약 30명이 실제 업무에 쓰고 있습니다. Codex와 함께 개발했고, 목록 조회의 SQL 실행 수를 페이지당 62회에서 4회로 줄였습니다.',
     tags: ['Java 21 / Spring Boot', 'PostgreSQL', 'React / Vite', 'AWS EC2', 'Codex'],
     repo: { owner: 'issac-52', name: 'field-worker' },
     caseStudyHref: '#/projects/field-work',

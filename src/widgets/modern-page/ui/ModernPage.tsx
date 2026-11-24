@@ -20,7 +20,6 @@ const skillLabels: Record<string, L3> = {
 };
 
 const education: { school: L3; detail: L3; period: string }[] = [
-  { school: { ko: '한국방송통신대학교', en: 'Korea National Open University', ja: '韓国放送通信大学' }, detail: { ko: '3학년 재학 중', en: 'Enrolled, 3rd year', ja: '在学中（3年）' }, period: '' },
   { school: { ko: '인하공업전문대학교 정보통신과', en: 'Inha Technical College, Information & Communication Eng.', ja: '仁荷工業専門大学 情報通信科' }, detail: { ko: '졸업', en: 'Graduated', ja: '卒業' }, period: '2017.03 – 2021.02' },
 ];
 

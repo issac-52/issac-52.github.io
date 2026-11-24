@@ -1,122 +1,165 @@
-import { WaterDrop } from '@/shared/ui/WaterDrop';
-import { useEffect } from 'react';
-import type { ReactNode } from 'react';
-import { useLanguageStore } from '@/shared/model/useLanguageStore';
 import results from '../model/performance.json';
+import { Arrow, Bullets, CaseStudy, Decisions, Diagram, Flow, Metrics, Prose, Section, useT, type L } from '@/widgets/case-study/ui/CaseStudy';
 
+/** `codex` is kept so old links still work; it now renders the overview. */
 export type FieldworkSection = 'overview' | 'performance' | 'codex';
 const base = '#/projects/field-work';
-const sources = 'https://github.com/issac-52/field-worker';
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return <section className="study-section"><h2>{title}</h2>{children}</section>;
-}
-function Diagram({ en }: { en: boolean }) {
-  return <figure className="study-diagram">
-    <div><b>React / Vite</b><span>{en ? 'Field & admin UI' : '현장 입력 · 관리자 화면'}</span></div><span aria-hidden="true">→</span>
-    <div><b>Cloudflare Workers</b><span>{en ? 'Assets & API proxy' : '정적 자산 · API 프록시'}</span></div><span aria-hidden="true">→</span>
-    <div><b>Spring Boot / EC2</b><span>{en ? 'Authentication · domain APIs' : '인증 · 업무 API · 문서 작업'}</span></div>
-    <div className="study-storage"><span>PostgreSQL 17 · {en ? 'Business records' : '업무 데이터'}</span><span>Cloudflare R2 · {en ? 'Photos / HWPX / ZIP' : '사진 / HWPX / ZIP'}</span><span>NAVER · {en ? 'Maps / geocoding' : '지도 / 좌표 변환'}</span></div>
-    <figcaption>{en ? 'Architecture schematic based on code and deployment configuration; not a production screenshot.' : '코드와 배포 구성을 요약한 구조도이며 운영 화면 캡처가 아닙니다.'}</figcaption>
-  </figure>;
-}
+const source = 'https://github.com/issac-52/field-worker';
+
+const jaScenario: Record<string, string> = {
+  list_20_first_page: '先頭ページ20件',
+  list_100_first_page: '先頭ページ100件',
+  list_20_last_page: '最終ページ20件',
+  list_20_text_search: '文字列検索20件',
+};
+
 export function FieldworkPage({ section }: { section: FieldworkSection }) {
-  const { language, setLanguage } = useLanguageStore();
-  const en = language === 'en';
-  const tabs: [FieldworkSection, string][] = [['overview', en ? 'Project' : '프로젝트 개요'], ['performance', en ? 'Performance' : '성능 개선 기록'], ['codex', en ? 'With Codex' : 'Codex 기반 개발']];
-  const title = tabs.find(([key]) => key === section)![1];
-  useEffect(() => {
-    document.documentElement.lang = language;
-    document.title = `${title} · Field Work Manager | Yisak Oh`;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', en ? 'A Codex-assisted field operations MVP. Architecture, synthetic 20k-site performance experiments and transparent engineering evidence.' : '약 2만 수용가 현장 검침 시스템. 프로젝트 구조와 Codex 협업, 가상 데이터 성능 개선의 실행 근거를 기록합니다.');
-  }, [language, title, en]);
+  const t = useT();
+  const performance = section === 'performance';
   const first20 = results.comparisons.find(r => r.name === 'list_20_first_page')!;
   const first100 = results.comparisons.find(r => r.name === 'list_100_first_page')!;
-  const number = (v: number) => v.toFixed(2);
-  const scope = en ? 'Synthetic 20,000 sites · Java 21 / PostgreSQL 17 · Development benchmark, not production HTTP latency.' : '가상 수용가 20,000건 · Java 21 / PostgreSQL 17 · 운영 HTTP 응답시간이 아닌 개발 환경 측정';
-  return <div className="portfolio study-page text-ink font-body">
-    <a className="skip-link" href="#study-main" onClick={event => {event.preventDefault(); document.getElementById('study-main')?.focus(); document.getElementById('study-main')?.scrollIntoView();}}>{en ? 'Skip to content' : '본문으로 바로가기'}</a>
-    <header className="site-header"><a className="brand" href="#projects">YISAK OH</a>
-      <nav aria-label={en ? 'Project navigation' : '프로젝트 메뉴'}><a href="#projects">{en ? 'All projects' : '전체 프로젝트'} ↗︎</a>
-        <div className="language-switch" role="group" aria-label={en ? 'Language' : '언어'}>
-          <button lang="ko" aria-pressed={!en} onClick={() => setLanguage('ko')}>KR</button>
-          <button lang="en" aria-pressed={en} onClick={() => setLanguage('en')}>EN</button>
-        </div>
-      </nav>
-    </header>
-    <main id="study-main" tabIndex={-1} className="page-shell">
-      <div className="study-hero"><WaterDrop/><p className="section-kicker">FIELD WORK MANAGER / ENGINEERING JOURNAL</p>
-        <h1>{section === 'overview' ? (en ? 'Water Operations Manager' : '수도관리자') : section === 'performance' ? (en ? 'Query performance' : '조회 성능 측정') : (en ? 'Development with Codex' : 'Codex 개발 기록')}</h1>
-        <p>{en ? 'Client work · MVP implemented, deployment connected · Ongoing improvements' : '외주 프로젝트 · MVP 구현 및 배포 연결 · 지속 개선 중'}<br />{en ? 'Last documented: 10 November 2026' : '기록 기준: 2026년 11월 10일'}</p>
+  const tabs = [
+    { href: base, label: { ko: '개요', en: 'Overview', ja: '概要' }, current: !performance },
+    { href: `${base}/performance`, label: { ko: '성능 개선 기록', en: 'Performance work', ja: '性能改善' }, current: performance },
+  ];
+  const metrics = <Metrics items={[
+    { value: `${first20.beforeSql} → ${first20.afterSql}`, label: { ko: '목록 20건 조회 시 SQL 실행 수', en: 'SQL calls, 20-row list', ja: '一覧20件取得時のSQL実行回数' } },
+    { value: `${first100.beforeSql} → ${first100.afterSql}`, label: { ko: '목록 100건 조회 시 SQL 실행 수', en: 'SQL calls, 100-row list', ja: '一覧100件取得時のSQL実行回数' } },
+    { value: `${results.tests}`, label: { ko: '통과한 PostgreSQL 회귀 테스트', en: 'PostgreSQL regression tests passed', ja: '通過したPostgreSQL回帰テスト' } },
+  ]}/>;
+
+  return <CaseStudy
+    id="field-work"
+    title={{ ko: '수도관리자', en: 'Water Operations Manager', ja: '水道現場業務管理システム' }}
+    pageTitle={performance ? { ko: '수도관리자 · 성능 개선 기록', en: 'Water Operations Manager · Performance', ja: '水道現場業務管理システム・性能改善' } : undefined}
+    status={{ ko: '실서비스 운영 중 · 실사용자 약 30명', en: 'Live in production · about 30 active users', ja: '本番運用中・利用者約30名' }}
+    summary={{
+      ko: '약 2만 수용가의 상수도 검침 업무를 위한 현장 업무 시스템입니다. Excel 등록, 지도에서 대상 찾기, START/END 검침과 사진 기록, 정산, HWPX 검침카드 출력을 한 흐름으로 연결했고, 현재 약 30명이 실제 업무에 쓰고 있습니다.',
+      en: 'A field operations system for water-meter readings across about 20,000 service sites. It connects Excel import, map lookup, START/END readings with photos, settlement and HWPX reading cards in one workflow, and about 30 people use it in daily work.',
+      ja: '約2万件の需要家を対象にした上水道の検針業務のための現場業務システムです。Excel登録、地図での対象検索、START/ENDの検針と写真記録、精算、HWPX検針カードの出力を一つの流れにつなぎ、現在約30名が実際の業務で使っています。',
+    }}
+    role={{ ko: '외주 · 설계, 개발, 배포, 운영', en: 'Client work · Design, development, deployment and operation', ja: '受託・設計、開発、デプロイ、運用' }}
+    stack={['Java 21', 'Spring Boot', 'PostgreSQL 17', 'React / Vite', 'Cloudflare Workers · R2', 'AWS EC2', 'Codex']}
+    links={[{ href: source, label: { ko: 'GitHub', en: 'GitHub', ja: 'GitHub' } }]}
+    tabs={tabs}
+  >
+    {!performance ? <>
+      <Section title={{ ko: '업무 흐름', en: 'Workflow', ja: '業務フロー' }}>
+        <Flow steps={[
+          { ko: 'Excel로 수용가 등록, 중복과 삭제 대상 미리보기', en: 'Import sites from Excel with duplicate and deletion previews', ja: 'Excelで需要家を登録し、重複と削除対象をプレビュー' },
+          { ko: '주소를 좌표로 변환해 지도에서 대상 찾기', en: 'Geocode addresses and find sites on the map', ja: '住所を座標に変換し、地図で対象を探す' },
+          { ko: 'START·END 검침과 사진 기록', en: 'Record START and END readings with photos', ja: 'START・ENDの検針と写真を記録' },
+          { ko: '이력 확인과 정산', en: 'Review history and settle', ja: '履歴の確認と精算' },
+          { ko: 'Excel과 HWPX 검침카드로 출력', en: 'Export to Excel and HWPX reading cards', ja: 'ExcelとHWPXの検針カードに出力' },
+        ]}/>
+      </Section>
+
+      <Section title={{ ko: '시스템 구성', en: 'Architecture', ja: 'システム構成' }}>
+        <Diagram
+          path={[
+            { name: 'React / Vite', role: { ko: '현장 입력 · 관리자 화면', en: 'Field and admin UI', ja: '現場入力・管理画面' } },
+            { name: 'Cloudflare Workers', role: { ko: '정적 자산 · API 프록시', en: 'Assets · API proxy', ja: '静的アセット・APIプロキシ' } },
+            { name: 'Spring Boot / EC2', role: { ko: '인증 · 업무 API · 문서 생성', en: 'Auth · domain APIs · documents', ja: '認証・業務API・文書生成' } },
+          ]}
+          stores={[
+            { ko: 'PostgreSQL 17 · 업무 데이터', en: 'PostgreSQL 17 · business records', ja: 'PostgreSQL 17・業務データ' },
+            { ko: 'Cloudflare R2 · 사진, HWPX, ZIP', en: 'Cloudflare R2 · photos, HWPX, ZIP', ja: 'Cloudflare R2・写真、HWPX、ZIP' },
+            { ko: 'NAVER · 지도와 좌표 변환', en: 'NAVER · maps and geocoding', ja: 'NAVER・地図と座標変換' },
+          ]}
+          caption={{ ko: 'GitHub Actions에서 빌드한 JAR를 EC2에 배포합니다.', en: 'GitHub Actions builds the JAR that is deployed to EC2.', ja: 'GitHub ActionsでビルドしたJARをEC2にデプロイします。' }}
+        />
+        <Prose>{{ ko: '백엔드는 기능별 패키지로 나눈 단일 Spring Boot 애플리케이션입니다. 업무 데이터는 PostgreSQL에, 사진과 생성 문서는 비공개 R2에 둡니다.', en: 'The backend is a single Spring Boot application organized by feature. Business data lives in PostgreSQL; photos and generated documents live in a private R2 bucket.', ja: 'バックエンドは機能別パッケージで構成した単一のSpring Bootアプリケーションです。業務データはPostgreSQLに、写真と生成文書は非公開のR2に置いています。' }}</Prose>
+      </Section>
+
+      <Section title={{ ko: '설계에서 중요하게 본 것', en: 'Key design decisions', ja: '設計で重視したこと' }}>
+        <Decisions items={[
+          {
+            title: { ko: '수용가를 정확히 식별한다', en: 'Identify every site exactly once', ja: '需要家を正確に識別する' },
+            body: { ko: '수용가번호는 중복을 허용하지 않고, 번호가 없는 자료는 주소와 이름으로 식별합니다. 중복은 먼저 들어온 행을 남기고 보고하며, 삭제는 미리보기로 영향 범위를 확인한 뒤 실행합니다.', en: 'Customer numbers are unique; sites without one are identified by address and name. Duplicates keep the first row and are reported, and deletions show their impact before they run.', ja: '需要家番号は重複を許さず、番号のないデータは住所と氏名で識別します。重複は先に入った行を残して報告し、削除はプレビューで影響範囲を確認してから実行します。' },
+          },
+          {
+            title: { ko: '검침 기록은 증빙이 된다', en: 'Readings double as evidence', ja: '検針記録は証跡になる' },
+            body: { ko: 'START와 END의 날짜와 작업자를 따로 관리하고, END 지침이 START보다 작으면 저장하지 않습니다. 변경 이력과 현장당 최대 6장의 사진을 남깁니다.', en: 'START and END keep their own dates and workers, and an END reading lower than START is rejected. Change history and up to six photos per site are kept.', ja: 'STARTとENDの日付と作業者を別々に管理し、ENDの指針がSTARTより小さい場合は保存しません。変更履歴と現場ごとに最大6枚の写真を残します。' },
+          },
+          {
+            title: { ko: '정산 자료는 함부로 바뀌지 않는다', en: 'Settled data stays settled', ja: '精算データはむやみに変わらない' },
+            body: { ko: '관리자가 발급한 계정만 쓰고 첫 로그인 때 비밀번호를 바꾸게 합니다. 권한과 CSRF는 서버에서 검사하고, 확정·지급된 정산은 수정할 수 없습니다.', en: 'Only administrator-issued accounts exist, with a forced password change on first login. Roles and CSRF are enforced on the server, and confirmed or paid settlements are locked.', ja: '管理者が発行したアカウントだけを使い、初回ログイン時にパスワードを変更させます。権限とCSRFはサーバーで検証し、確定・支払済みの精算は変更できません。' },
+          },
+          {
+            title: { ko: '무거운 문서 작업은 뒤에서', en: 'Heavy documents run in the background', ja: '重い文書処理はバックグラウンドで' },
+            body: { ko: '사진이 들어간 HWPX 검침카드는 백그라운드에서 만들고 캐시합니다. 전체 ZIP 다운로드, 작업 취소와 생성물 정리를 지원합니다.', en: 'HWPX reading cards with photos are generated in the background and cached, with full ZIP downloads, cancellation and cleanup.', ja: '写真入りのHWPX検針カードはバックグラウンドで生成してキャッシュします。全体ZIPのダウンロード、処理のキャンセルと生成物の整理に対応しています。' },
+          },
+        ]}/>
+      </Section>
+
+      <Section title={{ ko: '조회 성능 개선', en: 'Query performance', ja: '照会性能の改善' }}>
+        {metrics}
+        <Prose>{{ ko: '목록 한 페이지를 읽을 때 수용가마다 상세·사진·검침을 따로 조회하는 구조를 찾아, 페이지 단위로 한 번에 읽도록 바꿨습니다. 가상 데이터 2만 건으로 전후를 측정했습니다.', en: 'The list endpoint loaded each site’s details, photos and readings separately. I changed it to read a whole page in bulk and measured before and after on a 20,000-site synthetic dataset.', ja: '一覧の1ページを読む際に需要家ごとに詳細・写真・検針を個別に取得していた構造を見つけ、ページ単位でまとめて読むように変えました。仮想データ2万件で改善前後を測定しました。' }}</Prose>
+        <a className="cs-more" href={`${base}/performance`}>{t({ ko: '성능 개선 기록 보기', en: 'Read the performance write-up', ja: '性能改善の記録を見る' })}<Arrow/></a>
+      </Section>
+
+      <Section title={{ ko: 'Codex로 개발한 방식', en: 'How I worked with Codex', ja: 'Codexでの開発' }}>
+        <Prose>{{ ko: '구현과 테스트 작성은 Codex와 함께 진행하고, 업무 규칙·데이터 보호 범위·배포와 PR 병합은 제가 결정했습니다. 저장소 규칙은 AGENTS.md에 두고, 고객 Excel·사진·자격 증명은 커밋하지 않습니다.', en: 'Implementation and tests were written with Codex; business rules, data-protection scope, deployments and PR merges were my decisions. Repository rules live in AGENTS.md, and customer spreadsheets, photos and credentials are never committed.', ja: '実装とテスト作成はCodexと進め、業務ルール・データ保護の範囲・デプロイとPRのマージは私が決めました。リポジトリのルールはAGENTS.mdに置き、顧客のExcel・写真・認証情報はコミットしません。' }}</Prose>
+        <Flow steps={[
+          { ko: '조사: 실제 코드와 측정으로 원인 확인', en: 'Inspect: confirm the cause in code and measurements', ja: '調査：実際のコードと測定で原因を確認' },
+          { ko: '재현: 실패하는 테스트를 먼저 작성', en: 'Reproduce: write a failing test first', ja: '再現：失敗するテストを先に書く' },
+          { ko: '변경: 최소 범위로 수정', en: 'Change: keep the fix minimal', ja: '変更：最小限の範囲で修正' },
+          { ko: '검증: 전체 회귀 테스트와 같은 조건 재측정', en: 'Verify: full regression suite and the same benchmark again', ja: '検証：全回帰テストと同条件での再測定' },
+          { ko: '검토: PR로 남기고 직접 리뷰 후 병합', en: 'Review: leave a PR, review it myself, then merge', ja: 'レビュー：PRに残し、自分でレビューしてからマージ' },
+        ]}/>
+      </Section>
+
+    </> : <PerformanceContent metrics={metrics}/>}
+  </CaseStudy>;
+}
+
+function PerformanceContent({ metrics }: { metrics: JSX.Element }) {
+  const t = useT();
+  const ms = (v: number) => v.toFixed(1);
+  const head: L[] = [
+    { ko: '시나리오', en: 'Scenario', ja: 'シナリオ' }, { ko: 'SQL 전 → 후', en: 'SQL before → after', ja: 'SQL 前 → 後' },
+    { ko: 'p50 전 → 후 (ms)', en: 'p50 before → after (ms)', ja: 'p50 前 → 後 (ms)' }, { ko: 'p95 전 → 후 (ms)', en: 'p95 before → after (ms)', ja: 'p95 前 → 後 (ms)' },
+  ];
+  return <>
+    <Section title={{ ko: '결과 요약', en: 'Summary', ja: '結果' }}>
+      {metrics}
+      <Prose>{{ ko: '가상 수용가 2만 건, Java 21과 PostgreSQL 17의 개발 환경에서 측정한 값입니다. 실제 운영 응답 시간과는 다를 수 있어, 환경에 덜 흔들리는 SQL 실행 수를 핵심 지표로 봤습니다.', en: 'Measured in a development environment with 20,000 synthetic sites on Java 21 and PostgreSQL 17. Because timings vary with the environment, the SQL call count is the primary result.', ja: '仮想の需要家2万件、Java 21とPostgreSQL 17の開発環境で測定した値です。実際の本番の応答時間とは異なる可能性があるため、環境に左右されにくいSQL実行回数を主な指標としました。' }}</Prose>
+    </Section>
+
+    <Section title={{ ko: '문제와 변경', en: 'Problem and change', ja: '問題と変更' }}>
+      <Prose>{[
+        { ko: '기존 목록은 전체 건수와 ID 목록을 읽은 뒤, 수용가마다 기본정보·사진·검침을 다시 조회했습니다. 그래서 SQL 실행 수가 2 + 3N으로 늘어났습니다.', en: 'The old list read the total count and the IDs, then queried details, photos and readings again for every site, so SQL calls grew as 2 + 3N.', ja: '以前の一覧は全件数とIDリストを読んだ後、需要家ごとに基本情報・写真・検針を再び取得していました。そのためSQL実行回数が2 + 3Nで増えていました。' },
+        { ko: '캐시를 먼저 붙이지 않고, 현재 페이지의 ID로 사진 수와 검침을 한 번에 읽도록 바꿨습니다. 상세 화면과 같은 매핑을 써서 응답 형식을 유지하고, 작업자에게 금액과 정산 상태가 보이지 않는 규칙도 그대로 지켰습니다. Redis, 메시지 큐, DB 마이그레이션은 필요하지 않았습니다.', en: 'Instead of adding a cache, the page’s IDs are used to read photo counts and readings in bulk. The detail mapping is reused so responses stay identical, and workers still cannot see fees or settlement state. No Redis, message queue or schema migration was needed.', ja: 'キャッシュを先に導入せず、現在のページのIDで写真の件数と検針をまとめて読むように変えました。詳細画面と同じマッピングを使って応答形式を保ち、作業者に金額や精算状態が見えないルールもそのまま守りました。Redis、メッセージキュー、DBマイグレーションは不要でした。' },
+      ]}</Prose>
+    </Section>
+
+    <Section title={{ ko: '측정 결과', en: 'Measurements', ja: '測定結果' }}>
+      <figure className="cs-figure"><img src="/fieldwork/query-count.png" alt={t({ ko: 'SQL 실행 수: 20건 62에서 4회, 100건 302에서 4회', en: 'SQL calls: 62 to 4 for 20 rows, 302 to 4 for 100 rows', ja: 'SQL実行回数：20件で62回から4回、100件で302回から4回' })}/><figcaption>{t({ ko: '요청당 JDBC 실행 수', en: 'JDBC executions per request', ja: 'リクエストあたりのJDBC実行回数' })}</figcaption></figure>
+      <figure className="cs-figure"><img src="/fieldwork/latency.png" alt={t({ ko: '목록 조회 개선 전후 응답 시간', en: 'List latency before and after', ja: '一覧取得の改善前後の応答時間' })}/><figcaption>{t({ ko: '같은 데이터·환경·측정 코드, 조회별 10~20회 측정', en: 'Same data, environment and harness; 10–20 samples per scenario', ja: '同じデータ・環境・測定コード、照会ごとに10〜20回測定' })}</figcaption></figure>
+      <div className="cs-table"><table>
+        <thead><tr>{head.map(h => <th key={h.en}>{t(h)}</th>)}</tr></thead>
+        <tbody>{results.comparisons.map(r => <tr key={r.name}><th>{t({ ko: r.label, en: r.labelEn, ja: jaScenario[r.name] })}</th><td>{r.beforeSql} → {r.afterSql}</td><td>{ms(r.beforeP50)} → {ms(r.afterP50)}</td><td>{ms(r.beforeP95)} → {ms(r.afterP95)}</td></tr>)}</tbody>
+      </table></div>
+      <Prose>{{ ko: `동시 요청 10개로 목록을 100번 조회했을 때 p50은 ${ms(results.concurrent.beforeP50)}ms에서 ${ms(results.concurrent.afterP50)}ms로, p95는 ${ms(results.concurrent.beforeP95)}ms에서 ${ms(results.concurrent.afterP95)}ms로 줄었습니다.`, en: `With 10 concurrent clients making 100 list requests, p50 went from ${ms(results.concurrent.beforeP50)} to ${ms(results.concurrent.afterP50)} ms and p95 from ${ms(results.concurrent.beforeP95)} to ${ms(results.concurrent.afterP95)} ms.`, ja: `同時リクエスト10件で一覧を100回取得したとき、p50は${ms(results.concurrent.beforeP50)}msから${ms(results.concurrent.afterP50)}msに、p95は${ms(results.concurrent.beforeP95)}msから${ms(results.concurrent.afterP95)}msに短縮しました。` }}</Prose>
+    </Section>
+
+    <Section title={{ ko: '검증 방법', en: 'How it was verified', ja: '検証方法' }}>
+      <Bullets items={[
+        { ko: '변경 전 최신 코드로 다시 측정하고, 전후 원본 데이터를 모두 보관했습니다.', en: 'Re-measured the latest code before the change and kept raw data for both runs.', ja: '変更前の最新コードで改めて測定し、前後の生データをすべて保管しました。' },
+        { ko: '쿼리 수 상한 테스트가 실패하는 것을 먼저 확인한 뒤, 1·20·100건 모두 4회 이하임을 검증했습니다.', en: 'Saw the query-budget tests fail first, then verified at most four queries for 1, 20 and 100 rows.', ja: 'クエリ数上限テストが失敗することを先に確認し、1・20・100件のいずれも4回以下であることを検証しました。' },
+        { ko: '관리자와 작업자 각각 목록과 상세 응답을 비교하고, 필터·정렬·빈 페이지를 확인했습니다.', en: 'Compared list and detail responses for both roles, including filters, ordering and empty pages.', ja: '管理者と作業者それぞれで一覧と詳細の応答を比較し、フィルター・並び順・空のページを確認しました。' },
+        { ko: `PostgreSQL 회귀 테스트 ${results.tests}개와 JAR 빌드를 통과했습니다.`, en: `Passed all ${results.tests} PostgreSQL regression tests and the JAR build.`, ja: `PostgreSQL回帰テスト${results.tests}件とJARビルドを通過しました。` },
+      ]}/>
+      <p className="cs-note">{t({ ko: '조건: CPU 2개, JVM 힙 768MiB, 커넥션 풀 10, START 1만·END 5천 건. 서비스와 JSON 직렬화까지 측정했고 HTTP·인증 필터·Cloudflare는 제외했습니다. 공개 자료는 모두 가상 데이터입니다.', en: 'Conditions: 2 CPUs, 768 MiB JVM heap, pool size 10, 10k START and 5k END records. Service and JSON serialization were measured; HTTP filters and Cloudflare were excluded. All published data is synthetic.', ja: '条件：CPU 2個、JVMヒープ768MiB、コネクションプール10、START 1万件・END 5千件。サービスとJSONシリアライズまでを測定し、HTTP・認証フィルター・Cloudflareは除外しました。公開資料はすべて仮想データです。' })}</p>
+    </Section>
+
+    <Section title={{ ko: '자료', en: 'Materials', ja: '資料' }}>
+      <div className="cs-inline-links">
+        <a href={results.pullRequestUrl || source} target="_blank" rel="noreferrer">{t({ ko: '성능 개선 PR', en: 'Pull request', ja: '性能改善のPR' })} ↗</a>
+        <a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{t({ ko: '측정 리포트 PDF', en: 'Report PDF', ja: '測定レポートPDF' })} ↗</a>
+        <a href="/fieldwork/before.json" target="_blank" rel="noreferrer">Before JSON ↗</a>
+        <a href="/fieldwork/after.json" target="_blank" rel="noreferrer">After JSON ↗</a>
       </div>
-      <nav className="study-tabs" aria-label={en ? 'Case study sections' : '상세 기록'}>
-        {tabs.map(([key, label]) => <a key={key} href={`${base}${key === 'overview' ? '' : `/${key}`}`} aria-current={section === key ? 'page' : undefined}>{label}<span>↗︎</span></a>)}
-      </nav>
-      {section === 'overview' && <>
-        <Section title={en ? 'The workflow, not just the screens' : '화면보다 먼저 연결한 업무 흐름'}>
-          <p>{en ? 'Field workers and administrators need a shared record of who inspected each site, which photos belong to START/END readings, and how completed work enters settlement and printable cards. The MVP connects these steps across approximately 20,000 service sites and an expected team of around 20 users.' : '조사자와 관리자는 누가 어떤 현장을 검침했는지, 사진이 어느 단계에 속하는지, 작업 결과가 정산과 검침카드에 어떻게 반영되는지 함께 확인해야 합니다. 약 2만 수용가와 약 20명 사용자를 대상으로 Excel 등록부터 현장 기록·정산·출력을 연결했습니다.'}</p>
-          <ol className="study-flow">{(en ? ['Import Excel', 'Geocode & find on map', 'Record START / END + photos', 'Review & settle', 'Export Excel / HWPX'] : ['Excel 수용가 등록', '주소 좌표 변환·지도 조회', 'START / END·사진 기록', '이력 확인·정산', 'Excel / HWPX 출력']).map(t => <li key={t}>{t}</li>)}</ol>
-        </Section>
-        <Section title={en ? 'System boundaries' : '시스템 구성과 경계'}><Diagram en={en} /><p>{en ? 'The backend stays a feature-organized Spring Boot application. PostgreSQL owns business records; private R2 stores photos and generated artifacts. The frontend proxies API requests through Workers. GitHub Actions builds the backend JAR for EC2 delivery.' : '백엔드는 기능별 패키지로 구성한 단일 Spring Boot 애플리케이션입니다. PostgreSQL이 업무 데이터를, 비공개 R2가 사진과 생성 파일을 보관합니다. 프론트는 Workers의 API 프록시를 거치며, GitHub Actions에서 빌드한 JAR를 EC2로 전달합니다.'}</p></Section>
-        <Section title={en ? 'Business rules shape the implementation' : '업무 규칙을 구현의 기준으로'}>
-          <div className="study-grid">{(en ? [
-            ['Import identity', 'Unique consumer numbers; unnumbered sites use address and name. Preserve first rows, report duplicates, support visible-row imports and preview deletion.'],
-            ['Readings & evidence', 'Independent START/END dates and workers, reject END readings below START, retain history, and allow up to six photos per site.'],
-            ['Access & settlement', 'Administrator-issued accounts, forced initial password change, server-side roles/CSRF and protection for confirmed/paid settlement.'],
-            ['Documents', 'HWPX cards include site data and photos. Reuse cached documents, run background jobs, offer combined ZIP downloads and cancellation/cleanup.'],
-          ] : [
-            ['등록과 식별', '수용가번호 UNIQUE, 번호 없는 자료는 주소·이름으로 식별합니다. 최초 행 우선·중복 보고·보이는 행 업로드와 삭제 미리보기를 제공합니다.'],
-            ['검침과 증빙', 'START/END의 날짜·작업자를 독립 관리하고 END 지침이 START보다 작으면 거부합니다. 변경 이력과 현장당 최대 6장 사진을 관리합니다.'],
-            ['권한과 정산', '관리자 발급 계정과 최초 비밀번호 변경, 서버 권한·CSRF 검증, 확정·지급 정산 자료 보호를 적용합니다.'],
-            ['문서와 파일', '사진을 포함한 HWPX 검침카드를 생성합니다. 문서 캐시, 백그라운드 작업, 전체 ZIP 다운로드, 작업 취소·생성물 정리를 제공합니다.'],
-          ]).map(([h,p]) => <article key={h}><h3>{h}</h3><p>{p}</p></article>)}</div>
-        </Section>
-        <Section title={en ? 'From implementation to measured improvement' : '구현 이후, 측정 가능한 개선으로'}>
-          <p>{en ? `The list endpoint issued ${first20.beforeSql} SQL executions for 20 rows and ${first100.beforeSql} for 100 rows. A repeatable experiment led to batched reads, with ${first100.afterSql} SQL executions for either page size. The next page presents measurements and their limits.` : `목록 20건에 SQL ${first20.beforeSql}회, 100건에 ${first100.beforeSql}회가 발생하는 구조를 측정했습니다. 페이지 단위 일괄 조회로 두 경우 모두 ${first100.afterSql}회로 줄였고, 응답 호환성과 권한을 테스트했습니다. 다음 페이지에 조건·결과·해석의 한계를 함께 남겼습니다.`}</p>
-          <a className="primary-link" href={`${base}/performance`}>{en ? 'Read the performance experiment' : '성능 개선 기록 보기'} →</a>
-        </Section>
-      </>}
-      {section === 'performance' && <>
-        <div className="study-callout"><b>{en ? 'A local paired experiment, not a production speed claim' : '운영 속도 성과와 개발 환경 실험을 구분합니다'}</b><p>{scope}</p></div>
-        <div className="study-metrics"><article><span>{en ? '20-row list SQL' : '20건 목록 SQL'}</span><strong>{first20.beforeSql} → {first20.afterSql}</strong></article><article><span>{en ? '100-row list SQL' : '100건 목록 SQL'}</span><strong>{first100.beforeSql} → {first100.afterSql}</strong></article><article><span>{en ? 'PostgreSQL regression tests' : 'PostgreSQL 회귀 테스트'}</span><strong>{results.tests} PASS</strong></article></div>
-        <Section title={en ? 'Observation → hypothesis → change' : '관측 → 가설 → 변경'}>
-          <p>{en ? 'The old list endpoint fetched IDs, then loaded each site’s detail, photos and inspections separately: 2 + 3N JDBC executions. Before adding a cache, I focused on this per-row database access pattern.' : '기존 목록은 전체 건수와 ID 목록을 조회한 뒤 각 수용가의 기본정보·사진·검침을 다시 읽었습니다. JDBC 실행 수가 2 + 3N으로 늘어나므로 캐시 도입 전에 이 반복 조회 구조를 우선 개선했습니다.'}</p>
-          <div className="study-code">{en ? 'Before: count + IDs + N × (site + photos + readings)' : '개선 전: 전체 건수 + ID 목록 + N × (기본정보 + 사진 + 검침)'}<br /><span>↓</span><br />{en ? 'After: count + page sites + grouped photo counts + page readings' : '개선 후: 전체 건수 + 페이지 기본정보 + 사진 수 집계 + 페이지 검침'}</div>
-          <p>{en ? 'The page’s IDs bound two bulk queries. Shared mapping preserves the detail response semantics; worker responses still omit fees and settlement state. No Redis, message broker, schema migration or public API change was needed.' : '선택된 페이지의 ID만 모아 사진 수와 검침을 일괄 조회합니다. 상세와 공통 매핑을 사용하되 작업자에게 금액·정산 상태가 노출되지 않게 유지했습니다. Redis·메시지 시스템·DB 마이그레이션·공개 API 변경 없이 적용했습니다.'}</p>
-        </Section>
-        <Section title={en ? 'Measured results' : '실제 측정 결과'}>
-          <figure className="study-chart"><img src="/fieldwork/query-count.png" alt={en ? 'SQL count before and after: 62 to 4 for 20 rows and 302 to 4 for 100 rows' : 'SQL 실행 수: 20건 62→4회, 100건 302→4회'} /><figcaption>{en ? 'JDBC execute calls per request. This metric is independent of timing noise.' : '요청당 JDBC execute 호출 수. 응답시간 변동과 별개로 확인한 구조적 변화입니다.'}</figcaption></figure>
-          <figure className="study-chart"><img src="/fieldwork/latency.png" alt={en ? 'Measured list latency before and after' : '목록 조회 개선 전후 실측 시간 그래프'} /><figcaption>{en ? 'Same 20k fixture, environment and harness; 10–20 samples per read scenario.' : '동일한 가상 2만 건·실행 환경·측정 코드. 조회별 표본 10~20회입니다.'}</figcaption></figure>
-          <div className="study-table"><table><thead><tr>{(en ? ['Scenario','SQL before → after','p50 before → after (ms)','p95 before → after (ms)'] : ['시나리오','SQL 전 → 후','p50 전 → 후 (ms)','p95 전 → 후 (ms)']).map(x=><th key={x}>{x}</th>)}</tr></thead><tbody>{results.comparisons.map(r=><tr key={r.name}><th>{en?r.labelEn:r.label}</th><td>{r.beforeSql} → {r.afterSql}</td><td>{number(r.beforeP50)} → {number(r.afterP50)}</td><td>{number(r.beforeP95)} → {number(r.afterP95)}</td></tr>)}</tbody></table></div>
-          <p>{en ? `With concurrency 10 and 100 list requests, p50 changed from ${number(results.concurrent.beforeP50)} to ${number(results.concurrent.afterP50)} ms and p95 from ${number(results.concurrent.beforeP95)} to ${number(results.concurrent.afterP95)} ms. This bounded closed-loop test does not establish maximum RPS.` : `동시성 10·목록 100회 실험에서 p50은 ${number(results.concurrent.beforeP50)}→${number(results.concurrent.afterP50)}ms, p95는 ${number(results.concurrent.beforeP95)}→${number(results.concurrent.afterP95)}ms였습니다. 제한된 반복 실험으로 최대 RPS를 산정하지 않았습니다.`}</p>
-        </Section>
-        <Section title={en ? 'How the result was verified' : '결과를 검증한 방법'}>
-          <ul>{(en ? ['Re-measured the latest develop revision before changing code; retained both raw JSON files.', 'Observed three failing query-budget cases, then verified a constant four-query budget for page sizes 1, 20 and 100.', 'Compared list records to detail records for both roles; tested filters, order, page clamping, missing numbers and empty pages.', 'Ran the complete PostgreSQL regression suite and built the JAR.'] : ['최신 develop에서 개선 전을 다시 측정하고 전후 원시 JSON을 보관했습니다.', '쿼리 상한 테스트 3개가 실패하는 것을 먼저 확인하고 1·20·100건 요청에서 4회 이하를 검증했습니다.', '관리자·작업자 각각 목록과 상세를 비교하고 필터·정렬·페이지 보정·번호 미등록·빈 목록을 검증했습니다.', '전체 PostgreSQL 회귀 테스트와 실행 JAR 빌드를 통과했습니다.']).map(x=><li key={x}>{x}</li>)}</ul>
-          <p>{en ? 'Conditions: CPU allocation 2, environment memory cap 8 GiB, JVM heap 768 MiB, connection pool 10, Java 21, PostgreSQL 17, 10k START and 5k END records. Service/controller + JSON serialization; no HTTP/auth filters, browser, Cloudflare or real R2. No production change was made in this experiment.' : '조건: CPU 할당 2개, 환경 메모리 한도 8GiB, JVM 힙 768MiB, 커넥션 풀 10개, Java 21·PostgreSQL 17, START 1만·END 5천 건. 서비스/컨트롤러와 JSON 직렬화를 측정했으며 HTTP·인증 필터·브라우저·Cloudflare·실제 R2는 제외했습니다. 이번 개선의 운영 적용은 별도입니다.'}</p>
-          <p>{en ? 'Timing is one paired run with small warm sample sets, not a long-running load test or a confidence interval. SQL-call reduction is the primary confirmed result. Unchanged map/document scenarios serve as context, not evidence of improvements to those paths.' : '예열 후 소표본으로 전후 한 쌍을 측정한 결과이며 장시간 부하나 신뢰구간을 제시한 실험은 아닙니다. SQL 횟수 감소를 핵심 검증 결과로 삼았습니다. 수정하지 않은 지도·문서의 시간 차이를 해당 기능의 개선 성과로 주장하지 않습니다.'}</p>
-          <div className="study-links"><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Download report PDF' : '개선 결과 PDF'} ↗︎</a><a href="/fieldwork/before.json" target="_blank" rel="noreferrer">Before JSON ↗︎</a><a href="/fieldwork/after.json" target="_blank" rel="noreferrer">After JSON ↗︎</a></div>
-        </Section>
-        <Section title={en ? 'What remains' : '다음 개선 대상으로 남긴 것'}><p>{en ? 'Photo-heavy HWPX rendering, ZIP reuse, search and spatial indexes need their own experiments. The earlier document-cache comparison was first generation versus cache reuse, not a code optimization result. Redis and SQS remain options to evaluate against measured needs.' : '사진 포함 HWPX 생성기, ZIP 재사용, 검색·좌표 인덱스는 별도 실험이 필요합니다. 앞선 문서 측정의 최초 생성/캐시 재사용 차이는 코드 개선 전후 성과가 아닙니다. Redis·SQS도 필요가 관측될 때 검토할 후보로 남겼습니다.'}</p></Section>
-      </>}
-      {section === 'codex' && <>
-        <Section title={en ? 'Make AI assistance visible' : 'AI의 기여와 사람의 판단을 구분합니다'}><p>{en ? 'This project was developed with Codex assistance. Rather than present generated code as independently hand-written work, this case study records the business decisions, implementation changes, executed checks and remaining limits separately.' : '이 프로젝트는 Codex를 활용해 개발했습니다. AI가 작성한 코드를 모두 직접 작성한 것처럼 표현하기보다, 업무 판단·구현 변경·실제 실행 검증·남은 한계를 구분해 기록합니다.'}</p></Section>
-        <Section title={en ? 'Division of responsibility' : '역할과 책임'}><div className="study-grid"><article><h3>{en ? 'My decisions & review' : '사용자·개발자로서 결정한 것'}</h3><ul>{(en ? ['Confirm field workflows and acceptance rules with business context.', 'Decide identity, settlement protection and destructive-operation scope.', 'Configure deployment accounts and environments; review and merge pull requests.'] : ['현장 업무 흐름과 수용 기준을 구체화합니다.', '수용가 식별, 정산 보호, 삭제 대상과 영향 범위를 결정합니다.', '운영 계정·환경을 설정하고 변경 내용을 검토한 뒤 PR을 병합합니다.']).map(x=><li key={x}>{x}</li>)}</ul></article><article><h3>{en ? 'Codex assistance' : 'Codex가 지원한 것'}</h3><ul>{(en ? ['Inspect repository instructions, API contracts and existing code.', 'Implement changes, write tests and execute checks in an isolated environment.', 'Create reproducible measurements, investigate failures and draft reports/PRs.'] : ['저장소 지침·API 계약·현재 구현을 조사합니다.', '변경 구현과 테스트 작성을 지원하고 독립 환경에서 검증을 실행합니다.', '재현 가능한 측정, 오류 원인 조사, 문서·PR 정리를 지원합니다.']).map(x=><li key={x}>{x}</li>)}</ul></article></div></Section>
-        <Section title={en ? 'A concrete feedback loop' : '이번 개선에서 실제로 진행한 순서'}><ol className="study-steps">{(en ? [
-          ['Inspect', 'Measured 62/302 SQL calls for 20/100 list rows. Read the actual service instead of assuming a cache was required.'],
-          ['Reproduce', 'Added query-budget and response-compatibility tests. Three budget cases failed before the change.'],
-          ['Change', 'Replaced per-site detail loading with page-level bulk reads and shared mapping.'],
-          ['Verify', `Passed ${results.tests} PostgreSQL regression tests, built the JAR and repeated the same benchmark.`],
-          ['Review', 'Preserved raw results and scope limits in reports and reviewable PRs; did not deploy the change automatically.'],
-        ] : [
-          ['조사', '20/100건 목록에서 SQL 62/302회를 측정했습니다. 캐시부터 도입하지 않고 실제 서비스 코드를 확인했습니다.'],
-          ['재현', '쿼리 상한과 응답 호환성 테스트를 작성했고 상한 테스트 3개가 실패하는 것을 확인했습니다.'],
-          ['변경', '수용가별 상세 호출을 페이지 단위 일괄 조회와 공통 매핑으로 교체했습니다.'],
-          ['검증', `PostgreSQL 회귀 ${results.tests}개와 JAR 빌드를 통과한 뒤 같은 조건으로 성능을 재측정했습니다.`],
-          ['검토', '원시 결과와 해석 한계를 문서·PR로 남기고 운영에 자동 반영하지 않았습니다.'],
-        ]).map(([h,p])=><li key={h}><h3>{h}</h3><p>{p}</p></li>)}</ol></Section>
-        <Section title={en ? 'Evidence over generated confidence' : '생성된 설명보다 실행 근거를 우선합니다'}><p>{en ? 'Repository rules are kept in AGENTS.md. Customer workbooks/photos and credentials stay out of commits. Existing Flyway migrations are preserved. Successful synthetic tests do not establish production R2 behavior or real-user latency; unrun checks are identified explicitly.' : 'AGENTS.md에 작업 지침을 두고 개인정보 Excel·사진·자격 증명은 커밋하지 않습니다. 기존 Flyway 이력을 유지하고 새 마이그레이션을 추가합니다. 합성 테스트 통과를 실제 R2나 운영 사용자 응답시간의 검증으로 바꾸어 표현하지 않고, 실행하지 않은 검증은 명시합니다.'}</p><p>{en ? 'The portfolio separates the original Field Survey Manager, built primarily with Claude Code, from this Spring Boot project, developed with Codex assistance.' : '기존 야장관리자(Claude Code 중심 개발)와 이번 Spring Boot 기반 수도관리자(Codex 활용)는 서로 다른 프로젝트로 구분합니다.'}</p></Section>
-      </>}
-      <section className="study-resources"><h2>{en ? 'Source & evidence' : '소스와 검증 근거'}</h2><div className="study-links"><a href={sources} target="_blank" rel="noreferrer">GitHub / field-worker ↗︎</a><a href={results.pullRequestUrl || sources} target="_blank" rel="noreferrer">{en ? 'Performance pull request' : '성능 개선 PR'} ↗︎</a><a href="/fieldwork/report.pdf" target="_blank" rel="noreferrer">{en ? 'Measurement report' : '측정 리포트'} ↗︎</a></div><p>{en ? 'All published charts use fictional data. No customer records, locations or photos are included.' : '공개 그래프는 가상 데이터만 사용했습니다. 고객 정보·실제 좌표·사진은 포함하지 않았습니다.'}</p></section>
-    </main>
-    <footer className="site-footer"><span>FIELD WORK MANAGER · 2026.11.10</span><a href="#projects">{en ? 'Back to projects' : '프로젝트 목록으로'} ↑</a></footer>
-  </div>;
+    </Section>
+  </>;
 }

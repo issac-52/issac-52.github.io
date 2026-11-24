@@ -1,0 +1,82 @@
+/* Project detail pages share the home page tokens (editorial.css) and column. */
+.cs-back span { display: inline-block; transition: transform .2s; }
+.cs-back:hover span { transform: translateX(-3px); }
+.cs-body { padding-top: 48px; }
+
+.cs-head { padding-bottom: 40px; margin-bottom: 64px; border-bottom: 1px solid var(--rule); }
+.cs-thumb { width: 120px; margin: 0 0 28px; }
+.cs-status { font-size: .85rem; color: var(--marker); font-weight: 600; }
+.cs-head h1 { margin-top: 6px; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1.15; font-weight: 800; letter-spacing: -.035em; }
+.cs-summary { margin-top: 18px; font-size: 1.08rem; line-height: 1.8; color: var(--muted); max-width: 40em; }
+.cs-meta { margin-top: 28px; }
+.cs-meta > div { display: grid; grid-template-columns: 6rem 1fr; gap: 16px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: .92rem; }
+.cs-meta > div:last-child { border-bottom: 1px solid var(--rule); }
+.cs-meta dt { color: var(--muted); }
+.cs-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.cs-links a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--rule); border-radius: 6px; font-size: .88rem; font-weight: 600; transition: border-color .2s, color .2s; }
+.cs-links a:hover { border-color: var(--muted); }
+.cs-links a:hover .hp-arrow { transform: translate(2px, -2px); }
+.cs-tabs { display: flex; gap: 24px; margin-top: 36px; border-bottom: 1px solid var(--rule); }
+.cs-tabs a { padding: 10px 0; margin-bottom: -1px; font-size: .92rem; font-weight: 600; color: var(--muted); border-bottom: 2px solid transparent; transition: color .2s; }
+.cs-tabs a:hover { color: var(--ink); }
+.cs-tabs a[aria-current=page] { color: var(--ink); border-color: var(--marker); }
+.cs-head:has(.cs-tabs) { border-bottom: 0; padding-bottom: 0; }
+
+.cs-section { margin-bottom: 80px; }
+.cs-section > h2 { font-size: 1.35rem; font-weight: 800; letter-spacing: -.025em; margin-bottom: 18px; }
+.cs-section > h3 { font-size: 1rem; font-weight: 700; margin: 28px 0 10px; }
+.cs-prose { color: var(--muted); max-width: 40em; }
+.cs-prose + .cs-prose { margin-top: 12px; }
+.cs-prose strong { color: var(--ink); font-weight: 600; }
+
+.cs-flow { counter-reset: step; margin-top: 8px; border-top: 1px solid var(--rule); }
+.cs-flow li { counter-increment: step; display: grid; grid-template-columns: 2.5rem 1fr; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.cs-flow li::before { content: counter(step); color: var(--marker); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.cs-decisions > div { display: grid; grid-template-columns: 12rem 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
+.cs-decisions > div:last-child { border-bottom: 1px solid var(--rule); }
+.cs-decisions dt { font-weight: 700; line-height: 1.55; }
+.cs-decisions dd { color: var(--muted); font-size: .95rem; }
+
+.cs-bullets li { position: relative; padding-left: 18px; color: var(--muted); }
+.cs-bullets li + li { margin-top: 8px; }
+.cs-bullets li::before { content: ''; position: absolute; left: 2px; top: .75em; width: 6px; height: 1px; background: var(--muted); }
+
+.cs-diagram { margin: 8px 0 20px; padding: 24px; border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); }
+.cs-diagram ol { display: flex; align-items: stretch; gap: 28px; }
+.cs-diagram ol li { position: relative; flex: 1; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.cs-diagram ol li + li::before { content: '→'; position: absolute; left: -22px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.cs-diagram b { display: block; font-size: .92rem; }
+.cs-diagram ol span { display: block; margin-top: 2px; font-size: .8rem; color: var(--muted); }
+.cs-diagram ul { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.cs-diagram ul li { padding: 4px 10px; border: 1px dashed var(--rule); border-radius: 4px; font-size: .8rem; color: var(--muted); }
+.cs-diagram figcaption { margin-top: 14px; font-size: .8rem; color: var(--muted); }
+
+.cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+.cs-metrics > div { padding: 18px 20px; background: var(--paper); }
+.cs-metrics dt { font-size: .82rem; color: var(--muted); }
+.cs-metrics dd { margin-top: 4px; font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+
+.cs-figure { margin: 20px 0; }
+.cs-figure img { width: 100%; border-radius: 6px; background: #fff; }
+.cs-figure figcaption, .cs-note { margin-top: 10px; font-size: .82rem; color: var(--muted); }
+.cs-table { overflow-x: auto; margin: 20px 0; }
+.cs-table table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.cs-table th, .cs-table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); text-align: left; white-space: nowrap; }
+.cs-table thead th { color: var(--muted); font-weight: 600; }
+.cs-table tbody th { font-weight: 600; }
+.cs-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-weight: 600; }
+.cs-more:hover { color: var(--marker); }
+.cs-more:hover .hp-arrow { transform: translate(2px, -2px); }
+.cs-video { width: 100%; border-radius: 8px; border: 1px solid var(--rule); background: #000; }
+.cs-inline-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.cs-inline-links a { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: .9rem; }
+.cs-inline-links a:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .cs-decisions > div, .cs-meta > div { grid-template-columns: 1fr; gap: 4px; }
+  .cs-diagram ol { flex-direction: column; gap: 22px; }
+  .cs-diagram ol li + li::before { content: '↓'; left: 50%; top: -19px; transform: translateX(-50%); }
+  .cs-metrics { grid-template-columns: 1fr; }
+}
+.cs-decisions + .cs-prose, .cs-prose + .cs-bullets, .cs-prose + .cs-flow { margin-top: 16px; }
