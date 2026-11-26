@@ -1,5 +1,5 @@
 import results from '../model/performance.json';
-import { Arrow, Bullets, CaseStudy, Decisions, Diagram, Flow, Metrics, Prose, Section, useT, type L } from '@/widgets/case-study/ui/CaseStudy';
+import { Arrow, Bullets, CaseStudy, Choices, Decisions, Diagram, Flow, Metrics, Prose, Section, useT, type L } from '@/widgets/case-study/ui/CaseStudy';
 
 /** `codex` is kept so old links still work; it now renders the overview. */
 export type FieldworkSection = 'overview' | 'performance' | 'codex';
@@ -69,6 +69,51 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
           caption={{ ko: 'GitHub Actions에서 빌드한 JAR를 EC2에 배포합니다.', en: 'GitHub Actions builds the JAR that is deployed to EC2.', ja: 'GitHub ActionsでビルドしたJARをEC2にデプロイします。' }}
         />
         <Prose>{{ ko: '백엔드는 기능별 패키지로 나눈 단일 Spring Boot 애플리케이션입니다. 업무 데이터는 PostgreSQL에, 사진과 생성 문서는 비공개 R2에 둡니다.', en: 'The backend is a single Spring Boot application organized by feature. Business data lives in PostgreSQL; photos and generated documents live in a private R2 bucket.', ja: 'バックエンドは機能別パッケージで構成した単一のSpring Bootアプリケーションです。業務データはPostgreSQLに、写真と生成文書は非公開のR2に置いています。' }}</Prose>
+      </Section>
+
+      <Section title={{ ko: '왜 이렇게 선택했나', en: 'Why these choices', ja: 'なぜこの選択をしたか' }}>
+        <Choices items={[
+          {
+            choice: { ko: '모바일 웹 (React / Vite)', en: 'Mobile web (React / Vite)', ja: 'モバイルWeb（React / Vite）' },
+            over: { ko: '네이티브 앱', en: 'a native app', ja: 'ネイティブアプリ' },
+            why: { ko: '사용자가 수십 명 규모이고 납기가 짧았습니다. 앱 설치나 스토어 심사 없이 주소만 전달하면 바로 쓸 수 있어야 했습니다.', en: 'The user base was a few dozen people and the deadline was short. Staff had to start from a link, with no app install or store review.', ja: '利用者は数十名規模で納期も短く、アプリのインストールやストア審査なしにURLを渡すだけで使える必要がありました。' },
+            cost: { ko: '오프라인과 카메라 사용이 네이티브보다 제한적입니다. 이후 PWA 설치와 기기 내 임시 저장으로 보완했습니다.', en: 'Offline use and the camera are more limited than native; I later added PWA install and on-device drafts.', ja: 'オフラインやカメラはネイティブより制約があり、後からPWAのインストールと端末内の一時保存で補いました。' },
+          },
+          {
+            choice: { ko: 'Spring Boot 모듈러 모놀리스', en: 'Spring Boot modular monolith', ja: 'Spring Bootのモジュラーモノリス' },
+            over: { ko: '여러 서비스로 분리', en: 'separate services', ja: '複数サービスへの分割' },
+            why: { ko: '이 규모에서는 하나의 애플리케이션이 가장 단순했습니다. 정산과 검침처럼 함께 바뀌어야 하는 데이터를 한 트랜잭션으로 다루고, 권한도 한곳에서 검사할 수 있습니다.', en: 'At this scale one application was simplest. Data that must change together, like readings and settlements, stays in one transaction, and authorization is checked in one place.', ja: 'この規模では一つのアプリケーションが最も単純でした。検針と精算のように一緒に変わるべきデータを一つのトランザクションで扱え、権限も一か所で検証できます。' },
+          },
+          {
+            choice: { ko: 'EC2에서 직접 운영하는 PostgreSQL', en: 'Self-managed PostgreSQL on EC2', ja: 'EC2で直接運用するPostgreSQL' },
+            over: { ko: 'RDS 같은 관리형 DB', en: 'a managed database such as RDS', ja: 'RDSなどのマネージドDB' },
+            why: { ko: '수용가·검침·정산 사이의 관계 무결성이 중요해 관계형 DB를 쓰고, 운영 비용을 줄이기 위해 같은 서버에서 직접 운영했습니다.', en: 'Integrity between sites, readings and settlements called for a relational database, and running it on the same server kept costs down.', ja: '需要家・検針・精算の間の整合性が重要なためリレーショナルDBを使い、運用コストを抑えるため同じサーバーで直接運用しました。' },
+            cost: { ko: '백업, 복구, 패치를 직접 책임져야 합니다.', en: 'Backups, recovery and patching are my responsibility.', ja: 'バックアップ、復旧、パッチ適用を自分で担う必要があります。' },
+          },
+          {
+            choice: { ko: '비공개 Cloudflare R2에 사진·문서 저장', en: 'Photos and documents in a private Cloudflare R2 bucket', ja: '写真・文書を非公開のCloudflare R2に保存' },
+            over: { ko: 'DB나 서버 디스크에 저장', en: 'the database or server disk', ja: 'DBやサーバーのディスクに保存' },
+            why: { ko: '사진과 생성된 검침카드는 업무 데이터와 크기와 수명이 다릅니다. DB에는 참조만 두고 파일은 분리해 서버 디스크와 DB를 가볍게 유지하며, 공개 주소 없이 권한을 확인한 뒤에만 내려줍니다.', en: 'Photos and generated reading cards differ from business records in size and lifetime. The database keeps only references, which keeps the server disk and DB small, and files are served only after an authorization check, never through public URLs.', ja: '写真や生成した検針カードは、業務データとサイズも寿命も異なります。DBには参照だけを置いてファイルを分離し、サーバーのディスクとDBを軽く保ち、公開URLなしで権限を確認した後にだけ返します。' },
+            cost: { ko: 'DB와 저장소가 한 트랜잭션이 아니어서, 삭제는 대기열에 넣고 실패하면 다시 시도하게 했습니다.', en: 'The database and the bucket are not one transaction, so deletions go through a queue with retries.', ja: 'DBとストレージが一つのトランザクションではないため、削除は待ち行列に入れ、失敗したら再試行するようにしました。' },
+          },
+          {
+            choice: { ko: '서버 세션과 관리자 발급 계정', en: 'Server sessions and admin-issued accounts', ja: 'サーバーセッションと管理者発行アカウント' },
+            over: { ko: 'JWT와 공개 회원가입', en: 'JWTs and public sign-up', ja: 'JWTと一般会員登録' },
+            why: { ko: '공개 가입이 필요 없는 소수 사용자 서비스라 토큰 갱신의 복잡함이 필요 없었습니다. 계정을 비활성화하거나 비밀번호를 초기화하면 기존 세션이 바로 끊깁니다.', en: 'A small closed user base needed no public sign-up or token-refresh complexity. Deactivating an account or resetting a password ends its sessions immediately.', ja: '一般登録が不要な少人数のサービスなので、トークン更新の複雑さは不要でした。アカウントを無効化したりパスワードを初期化すると、既存のセッションがすぐに切れます。' },
+            cost: { ko: '프론트와 API 도메인이 달라 쿠키 설정과 CSRF 방어를 직접 맞춰야 했습니다.', en: 'The frontend and API live on different domains, so cookie settings and CSRF protection had to be handled explicitly.', ja: 'フロントとAPIのドメインが異なるため、Cookie設定とCSRF対策を自分で合わせる必要がありました。' },
+          },
+          {
+            choice: { ko: '요청 시 비동기 생성 + 캐시 (HWPX)', en: 'On-demand async generation with a cache (HWPX)', ja: '要求時の非同期生成＋キャッシュ（HWPX）' },
+            over: { ko: '약 1만 9천 건 미리 생성', en: 'pre-generating about 19,000 cards', ja: '約1万9千件の事前生成' },
+            why: { ko: '저장할 때마다 문서를 만들면 응답이 느려지고 쓰지 않을 파일까지 생깁니다. 요청이 오면 뒤에서 만들고, 내용이 같으면 캐시를 재사용합니다.', en: 'Generating on every save slows responses and creates files nobody downloads. Cards are built in the background on request, and unchanged content reuses the cache.', ja: '保存のたびに文書を作ると応答が遅くなり、使わないファイルまで生まれます。要求が来たら裏で作り、内容が同じならキャッシュを再利用します。' },
+            cost: { ko: '진행률, 재시작 후 재개, 만료 정리를 따로 관리해야 합니다.', en: 'Progress, resume after restart and expiry cleanup have to be managed.', ja: '進捗、再起動後の再開、期限切れの整理を別途管理する必要があります。' },
+          },
+          {
+            choice: { ko: 'GitHub Actions + OIDC로 EC2 배포', en: 'EC2 deploys from GitHub Actions with OIDC', ja: 'GitHub Actions＋OIDCでEC2へデプロイ' },
+            over: { ko: 'SSH 키로 직접 배포', en: 'deploying over SSH with a key', ja: 'SSH鍵で直接デプロイ' },
+            why: { ko: '회사 PC에 서버 키를 두지 않고 배포할 수 있고, 오래 쓰는 AWS 키를 보관하지 않습니다. 배포 전 JAR를 백업하고 상태 확인이 실패하면 이전 버전으로 되돌립니다.', en: 'Deploys need no server key on my work PC and no long-lived AWS keys. The previous JAR is backed up and restored if the health check fails.', ja: '会社のPCにサーバーの鍵を置かずにデプロイでき、長期間使うAWSの鍵も保管しません。デプロイ前にJARをバックアップし、ヘルスチェックが失敗すれば前のバージョンに戻します。' },
+          },
+        ]}/>
       </Section>
 
       <Section title={{ ko: '설계에서 중요하게 본 것', en: 'Key design decisions', ja: '設計で重視したこと' }}>

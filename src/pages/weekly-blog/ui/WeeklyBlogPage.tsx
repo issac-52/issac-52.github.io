@@ -1,4 +1,4 @@
-import { CaseStudy, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
+import { CaseStudy, Choices, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
 
 export function WeeklyBlogPage() {
   return <CaseStudy
@@ -38,6 +38,22 @@ export function WeeklyBlogPage() {
         ]}
         caption={{ ko: '공개 조회 API는 발행된 글만 돌려줍니다.', en: 'Public read APIs return published articles only.', ja: '公開APIは公開済みの記事だけを返します。' }}
       />
+    </Section>
+
+    <Section title={{ ko: '왜 이렇게 선택했나', en: 'Why these choices', ja: 'なぜこの選択をしたか' }}>
+      <Choices items={[
+        {
+          choice: { ko: '글은 ChatGPT에서 쓰고, 사이트는 초안만 받기', en: 'Write in ChatGPT; the site only receives drafts', ja: '記事はChatGPTで書き、サイトは下書きを受け取るだけ' },
+          over: { ko: '사이트가 유료 LLM API와 예약 작업으로 직접 생성', en: 'the site calling a paid LLM API on a schedule', ja: 'サイトが有料LLM APIと定期実行で直接生成' },
+          why: { ko: '유료 API 호출과 예약 생성 코드를 없애 비용이 들지 않습니다. 연결 도구는 초안 생성만 할 수 있고 승인·발행 권한이 없어서, 사람이 검토하기 전에는 아무것도 공개되지 않습니다.', en: 'Removing paid API calls and scheduled generation removes that cost. The connected tool can only create drafts, with no approve or publish permission, so nothing goes public before a person reviews it.', ja: '有料APIの呼び出しと定期生成のコードをなくしたため、費用がかかりません。連携ツールは下書きの作成しかできず承認・公開の権限がないので、人が確認する前には何も公開されません。' },
+          cost: { ko: 'ChatGPT 연결을 위해 OAuth 서버 설정이 필요하고, 사용한 Supabase 기능은 아직 베타입니다.', en: 'The ChatGPT connection needs an OAuth server setup, and the Supabase feature it uses is still in beta.', ja: 'ChatGPT連携のためにOAuthサーバーの設定が必要で、使っているSupabaseの機能はまだベータです。' },
+        },
+        {
+          choice: { ko: 'Supabase Auth + 관리자 이메일 허용 목록', en: 'Supabase Auth with an admin email allowlist', ja: 'Supabase Auth＋管理者メールの許可リスト' },
+          over: { ko: '공개 회원가입과 역할 관리', en: 'public sign-up with role management', ja: '一般会員登録とロール管理' },
+          why: { ko: '쓰기 권한이 필요한 사람은 관리자뿐이라, 가입 기능 없이 허용 목록에 있는 계정만 관리 화면에 들어오게 했습니다.', en: 'Only administrators need write access, so there is no sign-up; only allowlisted accounts reach the admin screens.', ja: '書き込み権限が必要なのは管理者だけなので、登録機能を置かず、許可リストにあるアカウントだけが管理画面に入れるようにしました。' },
+        },
+      ]}/>
     </Section>
 
     <Section title={{ ko: '설계에서 중요하게 본 것', en: 'Key design decisions', ja: '設計で重視したこと' }}>
