@@ -114,3 +114,17 @@ export function Metrics({ items }: { items: { value: string; label: L }[] }) {
   const t = useT();
   return <dl className="cs-metrics">{items.map(item => <div key={item.label.en}><dt>{t(item.label)}</dt><dd>{item.value}</dd></div>)}</dl>;
 }
+
+const choiceUi = {
+  over: { ko: '대안', en: 'Instead of', ja: '代替案' },
+  cost: { ko: '감수한 점', en: 'Trade-off', ja: '引き受けた点' },
+};
+
+/** Technology choices: what was picked, over what, why, and what it costs. */
+export function Choices({ items }: { items: { choice: L; over: L; why: L; cost?: L }[] }) {
+  const t = useT();
+  return <dl className="cs-choices">{items.map(item => <div key={item.choice.en}>
+    <dt><span>{t(item.choice)}</span><small>{t(choiceUi.over)}: {t(item.over)}</small></dt>
+    <dd><p>{t(item.why)}</p>{item.cost && <p className="cs-cost"><b>{t(choiceUi.cost)}</b> {t(item.cost)}</p>}</dd>
+  </div>)}</dl>;
+}

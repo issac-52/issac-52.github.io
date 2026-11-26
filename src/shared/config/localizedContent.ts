@@ -40,7 +40,7 @@ const englishProjects = {
     name: 'Field Survey Manager',
     period: 'Live in production · Maintenance',
     role: 'Side project · Client work',
-    desc: 'Connects Excel imports, field entry, photos, maps and exports for consumer and valve surveys. Consumer reimports preserve existing survey values, while exports fill the original Excel template. Designed and developed with Claude Code as the primary coding tool; I operate the production service and handle maintenance.',
+    desc: 'Built to replace the paper field notes I carried while doing water surveys myself. It connects Excel imports, field entry, photos, maps and exports for meter and valve surveys, keeps field values on re-import, and fills results into the original Excel template. The partner company I work with now uses it as its official tool.',
   },
   'weekly-blog': {
     name: 'Browinfo · Weekly Magazine',
@@ -64,7 +64,7 @@ const englishProjects = {
 const japaneseProjects = {
   'meter-admin': {
     name: '現地調査管理システム', period: '本番運用中・保守', role: '個人開発・受託',
-    desc: 'Excelの取り込み、現場での入力、写真、地図、結果出力を一元管理するツールです。再取り込み時にも既存の調査値を保持し、元のExcelテンプレートに結果を出力します。',
+    desc: '自ら水道調査をしていた頃に持ち歩いていた紙の野帳を置き換えるために作った管理ツールです。需要家・バルブ調査のExcel登録から現場入力・写真・地図・結果出力までをつなぎ、再アップロードしても現場の調査値を守り、元のExcel様式に結果を書き込みます。現在は協力会社が公式ツールとして使っています。',
   },
   'field-work': {
     name: '水道現場業務管理システム', period: '本番運用中・利用者約30名', role: '個人開発・受託',

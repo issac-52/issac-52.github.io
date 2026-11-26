@@ -80,3 +80,14 @@
   .cs-metrics { grid-template-columns: 1fr; }
 }
 .cs-decisions + .cs-prose, .cs-prose + .cs-bullets, .cs-prose + .cs-flow { margin-top: 16px; }
+.cs-prose + .cs-decisions, .cs-decisions + .cs-flow { margin-top: 20px; }
+
+.cs-choices > div { display: grid; grid-template-columns: 12rem 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--rule); }
+.cs-choices > div:last-child { border-bottom: 1px solid var(--rule); }
+.cs-choices dt span { display: block; font-weight: 700; line-height: 1.5; }
+.cs-choices dt small { display: block; margin-top: 4px; font-size: .8rem; color: var(--muted); }
+.cs-choices dd { color: var(--muted); font-size: .95rem; }
+.cs-cost { margin-top: 8px; }
+.cs-cost b { color: var(--ink); font-weight: 600; margin-right: 6px; }
+@media (max-width: 640px) { .cs-choices > div { grid-template-columns: 1fr; gap: 8px; } }
+.cs-prose + .cs-choices { margin-top: 20px; }
