@@ -8,13 +8,13 @@ const englishExperience: Record<string, Pick<Experience, 'name' | 'period' | 'ro
     name: 'MG Credit Information · NCS Modernization TF',
     period: 'Jul 2026 – Present',
     role: 'Java API & Vue Application Development',
-    desc: 'Joined a team migrating a PowerBuilder business system to a Java/Vue web application. Analyze existing source code and workflows, and translate requirements from the project manager and business users into APIs and screens.\n\nUsed MySQL 5.7 execution plans to identify full table scans and adjusted indexes and predicates. A single SELECT went from 55 seconds to 0.041 seconds on retest.\n\nIn an environment using both MySQL and Sybase, I wrote tests that verify transaction rollback and propagation and Sybase transaction modes, and set up an air-gapped development environment where an AI coding assistant can run the tests itself.',
+    desc: 'Joined a team migrating three PowerBuilder counselor systems to a Java/Vue web application; one is complete and a second is in progress. Analyze existing source code and workflows, and translate requirements from the project manager and business users into APIs and screens.\n\nUsed MySQL 5.7 execution plans to identify full table scans and adjusted indexes and predicates. A single SELECT went from 55 seconds to 0.041 seconds on retest.\n\nIn an environment using both MySQL and Sybase, I wrote tests that verify transaction rollback and propagation and Sybase transaction modes, and set up an air-gapped development environment where an AI coding assistant can run the tests itself.',
   },
   'exp-1': {
     name: 'Connectwave · Danawa Division, Back-office Development Team',
     period: 'Aug 2022 – Mar 2026',
     role: 'Back-office Development · Unified Admin Platform TF',
-    desc: 'Maintained core business logic for managing catalogs and products, in Java/Spring and PHP. Built and improved management APIs, database tables and PHP/Cron batch jobs for operations requests.\n\nFrom Jan 2025 to Jan 2026, in a four-person team, developed the frontend structure, member, permission and category screens, and shared components of a Next.js-based unified Enuri–Danawa admin platform. Also worked on GitLab CI/CD, Harbor and ArgoCD delivery and a blue-green deployment setup.',
+    desc: 'Maintained core business logic for managing catalogs and products, in Java/Spring and PHP, in an environment of about 1 billion products and 30,000–100,000 product links a day. Built and improved management APIs, database tables and PHP/Cron batch jobs for operations requests.\n\nFrom Jan 2025 to Jan 2026, in a four-person team, developed the frontend structure, member, permission and category screens, and shared components of a Next.js-based unified Enuri–Danawa admin platform. Also worked on GitLab CI/CD, Harbor and ArgoCD delivery and a blue-green deployment setup.',
   },
 };
 const japaneseExperience: Record<string, Pick<Experience, 'name' | 'period' | 'role' | 'desc'>> = {
@@ -22,13 +22,13 @@ const japaneseExperience: Record<string, Pick<Experience, 'name' | 'period' | 'r
     name: 'MG信用情報 · 業務システム刷新TF',
     period: '2026年7月 – 現在',
     role: 'Java API・Vue業務画面開発',
-    desc: 'PowerBuilderベースの業務システムをJava / VueのWebアプリケーションへ移行するプロジェクトに参画しています。既存ソースコードと業務フローを分析し、担当APIと画面の開発を行っています。\n\nMySQL 5.7のEXPLAINで並列実行される3本の類似SQLに共通するボトルネックを調査しました。既存複合インデックスの活用と追加インデックスを検討し、単一クエリの実行時間を約55秒から再測定値約0.041秒へ改善しました。3本の合計応答時間とは異なります。\n\nMySQLとSybaseを併用する環境で、トランザクションのロールバック・伝播とSybaseのトランザクションモードを検証するテストを書き、閉域網の中でAIコーディングツールがテストまで自ら実行できる開発環境を構築しました。',
+    desc: 'PowerBuilderベースの相談員システム3つをJava / VueのWebアプリケーションへ移行するプロジェクトに参画し、1つの移行を終え、1つを移行中です。既存ソースコードと業務フローを分析し、担当APIと画面の開発を行っています。\n\nMySQL 5.7のEXPLAINで並列実行される3本の類似SQLに共通するボトルネックを調査しました。既存複合インデックスの活用と追加インデックスを検討し、単一クエリの実行時間を約55秒から再測定値約0.041秒へ改善しました。3本の合計応答時間とは異なります。\n\nMySQLとSybaseを併用する環境で、トランザクションのロールバック・伝播とSybaseのトランザクションモードを検証するテストを書き、閉域網の中でAIコーディングツールがテストまで自ら実行できる開発環境を構築しました。',
   },
   'exp-1': {
     name: 'Connectwave · Danawa事業部 バックオフィス開発チーム',
     period: '2022年8月 – 2026年3月',
     role: 'バックオフィス開発・統合管理プラットフォームTF',
-    desc: 'Java/SpringとPHPで、カタログや商品を管理する中核ビジネスロジックの保守を担当しました。運用要望に合わせて管理API、DBテーブル、PHP/Cronバッチを開発・改善しました。\n\n2025年1月〜2026年1月は4人のTFで、Next.jsベースのエヌリ・ダナワ統合管理プラットフォームのフロントエンド構成、会員・権限・カテゴリ画面、共通コンポーネントを開発しました。GitLab CI/CD・Harbor・ArgoCDのデプロイ連携とBlue-Greenデプロイ構成にも携わりました。',
+    desc: 'Java/SpringとPHPで、カタログや商品を管理する中核ビジネスロジックの保守を担当しました。全商品約10億件、1日3万〜10万件の商品リンクを処理する環境です。運用要望に合わせて管理API、DBテーブル、PHP/Cronバッチを開発・改善しました。\n\n2025年1月〜2026年1月は4人のTFで、Next.jsベースのエヌリ・ダナワ統合管理プラットフォームのフロントエンド構成、会員・権限・カテゴリ画面、共通コンポーネントを開発しました。GitLab CI/CD・Harbor・ArgoCDのデプロイ連携とBlue-Greenデプロイ構成にも携わりました。',
   },
 };
 export const getExperiences = (language: Language) => language === 'ja'
