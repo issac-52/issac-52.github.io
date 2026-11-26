@@ -25,9 +25,9 @@ export const projects: Project[] = [
   {
     id: 'weekly-blog',
     name: 'Browinfo · 주간 매거진',
-    period: '비공개 배포 · 관리자 검토 흐름 운영',
+    period: '공개 운영 중 · browinfo.com',
     role: '사이드 프로젝트',
-    desc: '주간 기사 초안을 받아 출처를 확인하고 관리자가 승인한 글만 발행하는 매거진입니다. 기존 weekly-blog를 Next.js·Supabase 기반으로 전환하고, 재시도 중복 방지와 출처 검토·승인 이력을 구현했습니다.',
+    desc: 'ChatGPT로 쓴 주간 기사의 출처를 자동으로 검사하고, 통과한 글은 바로 발행하는 매거진입니다. browinfo.com에서 공개 운영 중이며, 모든 글을 승인하던 흐름을 운영 경험에 맞춰 자동 발행으로 바꾸고, 재시도 중복 방지와 출처 관리를 구현했습니다.',
     tags: ['Next.js', 'TypeScript', 'Supabase', 'Vercel', 'OAuth'],
     repo: { owner: 'issac-52', name: 'weekly-blog' },
     caseStudyHref: '#/projects/weekly-blog',

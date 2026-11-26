@@ -1,26 +1,29 @@
-import { CaseStudy, Choices, Decisions, Diagram, Flow, Prose, Section } from '@/widgets/case-study/ui/CaseStudy';
+import { CaseStudy, Choices, Decisions, Diagram, Flow, Section } from '@/widgets/case-study/ui/CaseStudy';
 
 export function WeeklyBlogPage() {
   return <CaseStudy
     id="weekly-blog"
     title={{ ko: 'Browinfo · 주간 매거진', en: 'Browinfo · Weekly Magazine', ja: 'Browinfo · 週刊マガジン' }}
-    status={{ ko: '비공개 배포 · 관리자 검토 흐름 운영', en: 'Private deployment · Editorial review in use', ja: '非公開デプロイ・承認フロー運用' }}
+    status={{ ko: '공개 운영 중 · browinfo.com', en: 'Live at browinfo.com', ja: '公開運用中・browinfo.com' }}
     summary={{
-      ko: '주간 기사 초안을 받아 출처를 확인하고, 관리자가 승인한 글만 발행하는 매거진입니다. 기존 weekly-blog를 Next.js와 Supabase로 옮기면서 초안 접수와 공개 발행 사이에 검토 단계를 넣었습니다.',
-      en: 'A weekly magazine that receives article drafts, checks their sources and publishes only what an administrator approves. While moving the old weekly-blog to Next.js and Supabase, I added a review stage between draft intake and publication.',
-      ja: '週刊記事の下書きを受け取り、出典を確認し、管理者が承認した記事だけを公開するマガジンです。既存のweekly-blogをNext.jsとSupabaseへ移行する際、下書きの受信と公開の間にレビュー段階を追加しました。',
+      ko: 'ChatGPT로 작성한 주간 기사를 받아 출처를 자동으로 검사하고, 통과한 글은 바로 발행하는 매거진입니다. 처음에는 모든 글을 관리자가 승인했지만, 운영해 보니 글마다 수정·출처 재검사·저장·발행을 반복하느라 발행이 밀려서 자동 검사를 통과한 글은 즉시 발행하도록 바꿨습니다.',
+      en: 'A weekly magazine that takes articles written in ChatGPT, checks their sources automatically and publishes the ones that pass. Every article used to need administrator approval, but in practice editing, re-checking sources, saving and publishing each one delayed issues, so articles that pass the automated checks now go live immediately.',
+      ja: 'ChatGPTで書いた週刊記事を受け取り、出典を自動で検査し、通過した記事をすぐに公開するマガジンです。当初はすべての記事を管理者が承認していましたが、運用してみると記事ごとに修正・出典の再検査・保存・公開を繰り返すために公開が遅れたため、自動検査を通過した記事は即時公開するように変えました。',
     }}
     role={{ ko: '개인 프로젝트 · 설계, 개발, 운영', en: 'Personal project · Design, development and operation', ja: '個人開発・設計、開発、運用' }}
     stack={['Next.js 16', 'TypeScript', 'Supabase', 'Vercel', 'OAuth / MCP']}
-    links={[{ href: 'https://github.com/issac-52/weekly-blog', label: { ko: 'GitHub', en: 'GitHub' } }]}
+    links={[
+      { href: 'https://www.browinfo.com/', label: { ko: '사이트', en: 'Website', ja: 'サイト' } },
+      { href: 'https://github.com/issac-52/weekly-blog', label: { ko: 'GitHub', en: 'GitHub' } },
+    ]}
   >
     <Section title={{ ko: '업무 흐름', en: 'Workflow', ja: '業務フロー' }}>
       <Flow steps={[
         { ko: 'ChatGPT에서 쓴 초안이 OAuth로 보호된 MCP/API로 들어옴', en: 'Drafts written in ChatGPT arrive through an OAuth-protected MCP/API', ja: 'ChatGPTで書いた下書きがOAuthで保護されたMCP/API経由で届く' },
-        { ko: '검토 대기 상태로 저장', en: 'Saved in a pending-review state', ja: 'レビュー待ちとして保存' },
-        { ko: '관리자가 출처 접근과 원문을 확인하고 체크리스트 작성', en: 'An administrator checks sources and originals and completes the checklist', ja: '管理者が出典と原文を確認し、チェックリストを完了' },
-        { ko: '승인한 글만 공개 발행', en: 'Only approved articles are published', ja: '承認した記事のみ公開' },
-        { ko: '수정과 상태 변경을 이력으로 기록', en: 'Edits and status changes are recorded', ja: '編集とステータス変更を履歴に記録' },
+        { ko: '출처 접근, 문단별 근거 표시, 요약·본문 분량을 자동 검사', en: 'Source access, per-section citations and length are checked automatically', ja: '出典へのアクセス、段落ごとの根拠表示、要約・本文の分量を自動検査' },
+        { ko: '모두 통과하면 즉시 발행', en: 'Articles that pass are published immediately', ja: 'すべて通過すれば即時公開' },
+        { ko: '하나라도 실패하면 검토 대기로 남기고 보류 사유 기록', en: 'Anything that fails waits for review with the reason recorded', ja: '一つでも失敗すればレビュー待ちとし、保留理由を記録' },
+        { ko: '발행된 글도 관리자가 반려하면 사이트에서 내려감', en: 'Administrators can still reject a published article to take it down', ja: '公開済みの記事も管理者が差し戻せばサイトから外れる' },
       ]}/>
     </Section>
 
@@ -45,8 +48,14 @@ export function WeeklyBlogPage() {
         {
           choice: { ko: '글은 ChatGPT에서 쓰고, 사이트는 초안만 받기', en: 'Write in ChatGPT; the site only receives drafts', ja: '記事はChatGPTで書き、サイトは下書きを受け取るだけ' },
           over: { ko: '사이트가 유료 LLM API와 예약 작업으로 직접 생성', en: 'the site calling a paid LLM API on a schedule', ja: 'サイトが有料LLM APIと定期実行で直接生成' },
-          why: { ko: '유료 API 호출과 예약 생성 코드를 없애 비용이 들지 않습니다. 연결 도구는 초안 생성만 할 수 있고 승인·발행 권한이 없어서, 사람이 검토하기 전에는 아무것도 공개되지 않습니다.', en: 'Removing paid API calls and scheduled generation removes that cost. The connected tool can only create drafts, with no approve or publish permission, so nothing goes public before a person reviews it.', ja: '有料APIの呼び出しと定期生成のコードをなくしたため、費用がかかりません。連携ツールは下書きの作成しかできず承認・公開の権限がないので、人が確認する前には何も公開されません。' },
+          why: { ko: '유료 API 호출과 예약 생성 코드를 없애 비용이 들지 않습니다. 연결 도구에는 승인·발행 도구가 없고, 발행 여부는 서버의 자동 검사가 정합니다.', en: 'Removing paid API calls and scheduled generation removes that cost. The connected tool has no approve or publish tools; the server’s automated checks decide what gets published.', ja: '有料APIの呼び出しと定期生成のコードをなくしたため、費用がかかりません。連携ツールには承認・公開のツールがなく、公開するかどうかはサーバーの自動検査が決めます。' },
           cost: { ko: 'ChatGPT 연결을 위해 OAuth 서버 설정이 필요하고, 사용한 Supabase 기능은 아직 베타입니다.', en: 'The ChatGPT connection needs an OAuth server setup, and the Supabase feature it uses is still in beta.', ja: 'ChatGPT連携のためにOAuthサーバーの設定が必要で、使っているSupabaseの機能はまだベータです。' },
+        },
+        {
+          choice: { ko: '자동 검사를 통과하면 즉시 발행', en: 'Publish immediately when automated checks pass', ja: '自動検査を通過すれば即時公開' },
+          over: { ko: '모든 글을 관리자가 승인', en: 'administrator approval for every article', ja: 'すべての記事を管理者が承認' },
+          why: { ko: '운영해 보니 글마다 수정, 출처 재검사, 저장, 발행 네 단계를 거쳐야 해서 발행이 계속 밀렸습니다. 사람이 하던 확인 중 기계가 판단할 수 있는 출처 접근·문단 근거·분량만 남기고, 통과한 글은 바로 발행합니다.', en: 'In practice every article needed four steps — edit, re-check sources, save, publish — and issues kept slipping. I kept only the checks a machine can decide (source access, citations, length) and publish whatever passes.', ja: '運用してみると、記事ごとに修正・出典の再検査・保存・公開の4段階が必要で、公開が遅れ続けました。人が行っていた確認のうち機械で判断できる出典へのアクセス・段落の根拠・分量だけを残し、通過した記事はすぐに公開します。' },
+          cost: { ko: '사실·맥락·이용 조건을 사람이 보지 않은 글이 공개될 수 있습니다. 그래서 자동 발행에서는 이미지·표를 쓰지 않고 인용을 최소로 하도록 작성 지침을 바꿨고, 문제가 있는 글은 관리 화면에서 반려해 내립니다.', en: 'Articles can go live without a person checking facts, context or usage terms. To limit that, the writing instructions now forbid images and tables and keep quotes minimal, and problem articles are rejected from the admin screen.', ja: '事実・文脈・利用条件を人が確認していない記事が公開され得ます。そのため自動公開では画像や表を使わず引用を最小限にするよう執筆指示を変え、問題のある記事は管理画面で差し戻して取り下げます。' },
         },
         {
           choice: { ko: 'Supabase Auth + 관리자 이메일 허용 목록', en: 'Supabase Auth with an admin email allowlist', ja: 'Supabase Auth＋管理者メールの許可リスト' },
@@ -59,19 +68,18 @@ export function WeeklyBlogPage() {
     <Section title={{ ko: '설계에서 중요하게 본 것', en: 'Key design decisions', ja: '設計で重視したこと' }}>
       <Decisions items={[
         {
-          title: { ko: '자동 생성 글도 사람이 승인한다', en: 'Generated drafts still need a human', ja: '自動生成の記事も人が承認する' },
-          body: { ko: '초안은 바로 공개되지 않고 검토 대기로 들어갑니다. 관리자는 내용을 고치거나 반려할 수 있고, 승인한 글만 공개 API에 나타납니다.', en: 'Drafts never go live directly. Administrators can edit or reject them, and only approved articles appear in the public API.', ja: '下書きはすぐには公開されず、レビュー待ちになります。管理者は編集や差し戻しができ、承認した記事だけが公開APIに表示されます。' },
+          title: { ko: '검사를 통과하지 못한 글은 공개하지 않는다', en: 'Nothing that fails the checks goes live', ja: '検査を通過しない記事は公開しない' },
+          body: { ko: '출처 링크에 접근할 수 없거나 문단에 출처 표시가 빠졌으면 검토 대기로 남기고, 어떤 검사에서 보류됐는지 기록합니다. 출처로 쓸 수 있는 도메인은 관리 화면에서 추가·수정·비활성화합니다.', en: 'If a source link is unreachable or a section has no citation, the article waits for review with the failed check recorded. Allowed source domains are managed in the admin screen.', ja: '出典リンクにアクセスできない、または段落に出典表示がない場合はレビュー待ちとし、どの検査で保留になったかを記録します。出典に使えるドメインは管理画面で追加・更新・無効化します。' },
+        },
+        {
+          title: { ko: '자동 발행은 켜고 끌 수 있게', en: 'Auto-publish can be switched off', ja: '自動公開はオン・オフできるように' },
+          body: { ko: '자동 발행은 환경변수로 켜고 끕니다. 꺼 두면 모든 글이 예전처럼 검토 대기로 들어가고, 초안을 저장하는 DB 함수는 발행 외의 상태를 모두 검토 대기로 저장합니다.', en: 'Auto-publish is controlled by an environment variable. When it is off, every article goes to review as before, and the database ingest function stores any status other than published as review.', ja: '自動公開は環境変数でオン・オフします。オフにするとすべての記事が以前のようにレビュー待ちとなり、下書きを保存するDB関数は公開以外のステータスをすべてレビュー待ちとして保存します。' },
         },
         {
           title: { ko: '재시도해도 중복되지 않는다', en: 'Retries never duplicate', ja: '再送しても重複しない' },
           body: { ko: '주간 실행 키를 멱등 키로 써서, 같은 주의 초안이 다시 들어와도 한 번만 저장됩니다.', en: 'A weekly run key acts as an idempotency key, so a retried submission for the same week is stored once.', ja: '週単位の実行キーを冪等キーとして使い、同じ週の下書きが再送されても一度だけ保存されます。' },
         },
-        {
-          title: { ko: '자동 확인과 사람의 확인을 나눈다', en: 'Automated checks and human review are separate', ja: '自動確認と人の確認を分ける' },
-          body: { ko: '출처 도메인은 관리자 화면에서 추가·수정·비활성화합니다. 출처에 접근되는지는 자동으로, 원문 내용은 사람이 확인합니다.', en: 'Source domains are managed in the admin screen. Reachability is checked automatically; the original content is checked by a person.', ja: '出典ドメインは管理画面で追加・更新・無効化します。到達性は自動で、原文の内容は人が確認します。' },
-        },
       ]}/>
-      <Prose>{{ ko: '쓰기 기능은 Supabase Auth와 관리자 이메일 허용 목록으로 보호하고, 비공개 배포에는 사이트 접근 비밀번호를 둡니다.', en: 'Writes are protected by Supabase Auth and an admin email allowlist, and the private deployment sits behind an access password.', ja: '書き込みはSupabase Authと管理者メールの許可リストで保護し、非公開環境にはアクセスパスワードを設定しています。' }}</Prose>
     </Section>
 
   </CaseStudy>;
