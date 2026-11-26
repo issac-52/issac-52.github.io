@@ -72,6 +72,7 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
       </Section>
 
       <Section title={{ ko: '왜 이렇게 선택했나', en: 'Why these choices', ja: 'なぜこの選択をしたか' }}>
+        <Prose>{{ ko: '수도관리자는 야장관리자를 바탕으로 한글 검침카드와 정산을 더한 확장판으로, 지역별로 따로 운영하고 있습니다. 저장소와 지도는 야장관리자에서 내린 판단을 이어받았습니다.', en: 'This system extends the Field Survey Manager with HWPX reading cards and settlement, and each region runs its own deployment. Storage and map choices carry over from that project.', ja: 'この水道管理システムは、現地調査管理システムをもとにHWPX検針カードと精算を加えた拡張版で、地域ごとに別々に運用しています。ストレージと地図の選択は現地調査管理システムでの判断を引き継いでいます。' }}</Prose>
         <Choices items={[
           {
             choice: { ko: '모바일 웹 (React / Vite)', en: 'Mobile web (React / Vite)', ja: 'モバイルWeb（React / Vite）' },
@@ -92,9 +93,14 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
           },
           {
             choice: { ko: '비공개 Cloudflare R2에 사진·문서 저장', en: 'Photos and documents in a private Cloudflare R2 bucket', ja: '写真・文書を非公開のCloudflare R2に保存' },
-            over: { ko: 'DB나 서버 디스크에 저장', en: 'the database or server disk', ja: 'DBやサーバーのディスクに保存' },
-            why: { ko: '사진과 생성된 검침카드는 업무 데이터와 크기와 수명이 다릅니다. DB에는 참조만 두고 파일은 분리해 서버 디스크와 DB를 가볍게 유지하며, 공개 주소 없이 권한을 확인한 뒤에만 내려줍니다.', en: 'Photos and generated reading cards differ from business records in size and lifetime. The database keeps only references, which keeps the server disk and DB small, and files are served only after an authorization check, never through public URLs.', ja: '写真や生成した検針カードは、業務データとサイズも寿命も異なります。DBには参照だけを置いてファイルを分離し、サーバーのディスクとDBを軽く保ち、公開URLなしで権限を確認した後にだけ返します。' },
+            over: { ko: 'S3, Supabase Storage', en: 'S3 or Supabase Storage', ja: 'S3、Supabase Storage' },
+            why: { ko: '야장관리자에서 비용을 비교했을 때 R2가 S3나 Supabase Storage보다 훨씬 가볍고 쌌습니다. DB에는 사진 참조만 두고, 파일은 공개 주소 없이 권한을 확인한 뒤에만 내려줍니다.', en: 'When I compared costs for the Field Survey Manager, R2 was much lighter and cheaper than S3 or Supabase Storage. The database keeps only references, and files are served after an authorization check, never through public URLs.', ja: '現地調査管理システムで費用を比較した際、R2はS3やSupabase Storageよりはるかに軽くて安価でした。DBには写真の参照だけを置き、ファイルは公開URLなしで権限を確認した後にだけ返します。' },
             cost: { ko: 'DB와 저장소가 한 트랜잭션이 아니어서, 삭제는 대기열에 넣고 실패하면 다시 시도하게 했습니다.', en: 'The database and the bucket are not one transaction, so deletions go through a queue with retries.', ja: 'DBとストレージが一つのトランザクションではないため、削除は待ち行列に入れ、失敗したら再試行するようにしました。' },
+          },
+          {
+            choice: { ko: 'NAVER 지도와 좌표 변환', en: 'NAVER Maps and geocoding', ja: 'NAVER地図と座標変換' },
+            over: { ko: 'Google 지도', en: 'Google Maps', ja: 'Google マップ' },
+            why: { ko: '집 주소로 계량기를 찾아야 해서 국내 주소 검색 정확도가 중요했고, 현장 작업자들이 모두 NAVER 지도로 길을 찾고 있었습니다.', en: 'Meters are found from home addresses, so Korean address accuracy mattered, and field staff already navigated with NAVER Maps.', ja: '自宅の住所からメーターを探すため国内の住所検索の精度が重要で、現場の作業者も皆NAVER地図で道を調べていました。' },
           },
           {
             choice: { ko: '서버 세션과 관리자 발급 계정', en: 'Server sessions and admin-issued accounts', ja: 'サーバーセッションと管理者発行アカウント' },

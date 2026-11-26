@@ -90,3 +90,4 @@
 .cs-cost { margin-top: 8px; }
 .cs-cost b { color: var(--ink); font-weight: 600; margin-right: 6px; }
 @media (max-width: 640px) { .cs-choices > div { grid-template-columns: 1fr; gap: 8px; } }
+.cs-prose + .cs-choices { margin-top: 20px; }
