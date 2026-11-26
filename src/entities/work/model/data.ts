@@ -32,6 +32,32 @@ const works: Work[] = [
     tags: ['MySQL 5.7', 'EXPLAIN', 'SQL'],
   },
   {
+    id: 'mg-transactions', experienceId: 'exp-0',
+    title: { ko: 'Spring 트랜잭션과 Sybase 트랜잭션 모드 검증 테스트', en: 'Tests for Spring transactions on Sybase' },
+    context: { ko: 'MySQL과 Sybase를 함께 쓰는 환경에서, 전환한 컨트롤러·서비스가 롤백과 데이터 정리까지 의도대로 동작하는지 테스트로 확인해야 했습니다.', en: 'In an environment that uses both MySQL and Sybase, the migrated controllers and services had to be proven, through tests, to roll back and clean up as intended.' },
+    actions: [
+      { ko: '컨트롤러와 서비스 계층 테스트를 작성해 @Transactional 롤백이 실제로 일어나는지 검증했습니다.', en: 'Wrote controller and service-layer tests that verify @Transactional rollback actually happens.' },
+      { ko: '테스트 데이터 정리는 REQUIRES_NEW로 별도 트랜잭션에서 실행해, 본 트랜잭션의 롤백과 섞이지 않게 했습니다.', en: 'Ran test-data teardown in a separate REQUIRES_NEW transaction so it never mixes with the main transaction’s rollback.' },
+      { ko: 'Sybase의 chained·unchained 트랜잭션 모드가 Spring 트랜잭션과 충돌하는 지점을 확인하고 테스트에 반영했습니다.', en: 'Identified where Sybase chained and unchained transaction modes conflict with Spring transactions and reflected that in the tests.' },
+      { ko: '같은 메서드가 여러 곳에서 호출되는 경우 Mockito verify로 호출 지점을 구분해 검증했습니다.', en: 'Used Mockito verify to tell apart calls to the same method from multiple call sites.' },
+    ],
+    result: { ko: '롤백, 전파, 트랜잭션 모드가 의도대로 동작하는지 코드 변경 때마다 테스트로 확인할 수 있게 했습니다.', en: 'Rollback, propagation and transaction-mode behaviour can now be checked by tests on every change.' },
+    tags: ['Spring', '@Transactional', 'Sybase', 'JUnit', 'Mockito'],
+  },
+  {
+    id: 'mg-ai-env', experienceId: 'exp-0',
+    title: { ko: '폐쇄망에서 AI 코딩 도구와 개발 환경 구성', en: 'AI coding tools and dev environment on an air-gapped network' },
+    context: { ko: '회사 개발망은 외부 인터넷이 차단된 폐쇄망이라, 외부 서비스형 AI 도구와 일반적인 패키지 설치를 그대로 쓸 수 없었습니다.', en: 'The company development network is air-gapped, so hosted AI tools and ordinary package installs were not available.' },
+    actions: [
+      { ko: 'Qwen Code CLI에 QWEN.md로 프로젝트 규칙과 맥락을 주입했습니다.', en: 'Configured Qwen Code CLI with a QWEN.md that injects project rules and context.' },
+      { ko: '반복 작업을 위한 커스텀 슬래시 커맨드 4개를 만들었습니다.', en: 'Built four custom slash commands for recurring tasks.' },
+      { ko: 'Gradle 테스트를 실행하는 로컬 MCP 서버를 만들어, AI가 테스트를 직접 돌리고 결과를 확인하게 했습니다.', en: 'Wrote a local MCP server that runs Gradle tests, so the assistant can run tests and read the results itself.' },
+      { ko: '폐쇄망에서 쓸 수 있는 오프라인 React·shadcn/ui 개발 환경을 구성했습니다.', en: 'Set up an offline React and shadcn/ui development environment for the air-gapped network.' },
+    ],
+    result: { ko: '외부 연결 없이도 AI 도구가 프로젝트 규칙을 읽고, 코드를 고친 뒤 테스트로 확인하는 흐름을 만들었습니다.', en: 'Without any external connection, the assistant reads project rules, edits code and verifies it with tests.' },
+    tags: ['Qwen Code', 'MCP', 'Gradle', 'React', 'shadcn/ui'],
+  },
+  {
     id: 'consistency',
     experienceId: 'exp-1',
     title: { ko: '상품 링크·미링크 데이터 정합성 복구', en: 'Recovering product data consistency' },
@@ -125,6 +151,8 @@ const works: Work[] = [
 ];
 const japaneseWork: Record<string, { title: string; context: string }> = {
   'mg-modernization': { title: 'PowerBuilder業務画面のJava・Vue移行', context: '照会・入力のルールがPowerBuilderのイベントとDataWindowに分散していました。' },
+  'mg-transactions': { title: 'SpringトランザクションとSybaseのトランザクションモードの検証テスト', context: 'MySQLとSybaseを併用する環境で、移行したコントローラー・サービスがロールバックやデータの後片付けまで意図どおりに動くかをテストで確認する必要がありました。' },
+  'mg-ai-env': { title: '閉域網でのAIコーディングツールと開発環境の構築', context: '会社の開発網は外部インターネットから遮断された閉域網のため、外部のAIサービスや通常のパッケージインストールをそのまま使えませんでした。' },
   'mg-query': { title: 'レガシーSQLのフルスキャン改善', context: '類似する照会SQLが3本並列で実行され、そのうち1本のSELECTは単独実行で約55秒かかっていました。' },
   'consistency': { title: '商品データの整合性回復', context: '複数ノードのAPIとバッチ処理で商品を連携・解除する際、ElasticsearchとAltibase間で部分的な書き込み失敗や重複が発生していました。' },
   'catalog': { title: '認証・保証情報と変更履歴の管理', context: '商品の連携状態によって認証・保証情報の保存先と取得方法が異なり、未連携商品にも対応する必要がありました。' },
