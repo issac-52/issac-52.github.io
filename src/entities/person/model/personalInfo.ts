@@ -12,7 +12,7 @@ export const personalInfo: PersonalInfo = {
   skills: {
     BACKEND: ['Java', 'Spring', 'MyBatis', 'PHP / Cron'],
     FRONTEND: ['Vue.js', 'React', 'Next.js', 'TypeScript'],
-    'DATA & MESSAGING': ['MySQL', 'Sybase', 'PostgreSQL', 'Altibase', 'Elasticsearch', 'RabbitMQ'],
+    'DATA & MESSAGING': ['MySQL', 'Sybase', 'PostgreSQL', 'Altibase (Oracle 쿼리 기반)', 'Elasticsearch', 'RabbitMQ'],
     'UI & API': ['GraphQL / Apollo Client', 'Storybook', 'Swagger', 'Zustand'],
     DELIVERY: ['GitLab CI/CD', 'Docker', 'Harbor', 'ArgoCD', 'Kubernetes', 'Nginx'],
     CLOUD: ['AWS EC2', 'Supabase', 'Cloudflare R2', 'Vercel'],

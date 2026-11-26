@@ -16,6 +16,6 @@ export const experiences: Experience[] = [
     period: '2022.08 – 2026.03',
     role: '백오피스 개발 · 통합 관리자 플랫폼 TF',
     desc: 'Java/Spring과 PHP로 카탈로그·상품 등을 관리하는 핵심 비즈니스 로직을 유지보수했습니다. 전체 상품 약 10억 건, 하루 3만~10만 건의 상품 링크를 처리하는 환경입니다. 운영 요청에 맞춰 관리 API와 DB 테이블, PHP·Cron 배치를 개발하고 개선했습니다.\n\n2025.01부터 2026.01까지는 4인 TF에서 Next.js 기반 에누리·다나와 통합 관리자 플랫폼의 프론트엔드 구조와 회원·권한·카테고리 화면, 공통 컴포넌트를 개발했습니다. GitLab CI/CD·Harbor·ArgoCD 배포 연동과 Blue-Green 배포 구성에도 참여했습니다.',
-    tags: ['Java / Spring', 'Altibase', 'Elasticsearch', 'RabbitMQ', 'PHP / Cron', 'Next.js', 'GraphQL', 'GitLab CI/CD'],
+    tags: ['Java / Spring', 'Altibase (Oracle 쿼리 기반)', 'Elasticsearch', 'RabbitMQ', 'PHP / Cron', 'Next.js', 'GraphQL', 'GitLab CI/CD'],
   },
 ];
