@@ -44,9 +44,9 @@ const englishProjects = {
   },
   'weekly-blog': {
     name: 'Browinfo · Weekly Magazine',
-    period: 'Privately deployed · Editorial review in use',
+    period: 'Live at browinfo.com',
     role: 'Side project',
-    desc: 'A weekly magazine where incoming drafts are checked against sources and published after administrator approval. Migrated weekly-blog to Next.js and Supabase, with duplicate-submission protection, source checks and an approval history.',
+    desc: 'A weekly magazine that checks the sources of articles written in ChatGPT automatically and publishes the ones that pass. Live at browinfo.com; I replaced approve-every-article with auto-publishing based on how it ran in practice, and built retry de-duplication and source management.',
   },
   'field-work': {
     name: 'Water Operations Manager',
@@ -65,8 +65,8 @@ const japaneseProjects = {
     desc: '約2万件の需要家を対象に、Excel登録、地図・位置情報、検針、写真、精算、HWPX出力をつなぐ現場業務システムです。本番運用中で、約30名が日々の業務で利用しています。Codexと開発し、一覧1ページのSQL実行回数を62回から4回に減らしました。',
   },
   'weekly-blog': {
-    name: 'Browinfo · 週刊マガジン', period: '非公開デプロイ・承認フロー運用', role: '個人開発',
-    desc: '週刊記事の下書きについて出典を確認し、管理者が承認した記事のみを公開するマガジンです。Next.jsとSupabaseで構築し、重複投稿防止、出典確認、承認履歴を実装しました。',
+    name: 'Browinfo · 週刊マガジン', period: '公開運用中・browinfo.com', role: '個人開発',
+    desc: 'ChatGPTで書いた週刊記事の出典を自動で検査し、通過した記事をすぐに公開するマガジンです。browinfo.comで公開運用中で、すべての記事を承認していた流れを運用経験に合わせて自動公開に変え、再送時の重複防止と出典管理を実装しました。',
   },
 };
 export const getProjects = (language: Language) => language === 'ja'
