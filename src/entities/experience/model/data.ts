@@ -7,7 +7,7 @@ export const experiences: Experience[] = [
     period: '2026.07 – 현재',
     ongoing: true,
     role: 'Java API · Vue 업무 화면 개발',
-    desc: 'PowerBuilder 기반 업무 시스템을 Java/Vue 웹 환경으로 전환하는 TF에 합류했습니다. 기존 소스와 화면 처리 순서를 분석하고, PM·현업 요구사항을 담당 기능의 API와 화면에 반영합니다.\n\nMySQL 5.7의 실행 계획에서 대용량 테이블 전체 스캔을 확인하고 인덱스와 조회 조건을 조정했습니다. 단일 SELECT 재측정에서 실행 시간이 55초에서 0.041초로 줄었습니다.',
+    desc: 'PowerBuilder 기반 업무 시스템을 Java/Vue 웹 환경으로 전환하는 TF에 합류했습니다. 기존 소스와 화면 처리 순서를 분석하고, PM·현업 요구사항을 담당 기능의 API와 화면에 반영합니다.\n\nMySQL 5.7의 실행 계획에서 대용량 테이블 전체 스캔을 확인하고 인덱스와 조회 조건을 조정했습니다. 단일 SELECT 재측정에서 실행 시간이 55초에서 0.041초로 줄었습니다.\n\nMySQL과 Sybase를 함께 쓰는 환경에서 트랜잭션 롤백·전파와 Sybase 트랜잭션 모드를 검증하는 테스트를 작성했고, 폐쇄망 안에서 AI 코딩 도구가 테스트까지 직접 실행하도록 개발 환경을 구성했습니다.',
     tags: ['Java', 'Vue.js', 'SQL', 'PowerBuilder'],
   },
   {

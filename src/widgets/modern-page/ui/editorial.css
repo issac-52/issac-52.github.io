@@ -88,10 +88,6 @@
 .hp-thumb.field-work { background: #1c3449; }
 .hp-thumb.field-work img { height: 110%; top: -6%; }
 .hp-thumb.weekly-blog { background: #483f39; }
-/* Six equal columns: one order API, six structures. */
-.hp-thumb.ai-native-architecture { background: #23282e; grid-template-columns: repeat(6, 1fr); gap: 5px; padding: 18% 14%; place-items: stretch; }
-.hp-thumb.ai-native-architecture i { border-radius: 2px; background: #3a434d; }
-.hp-thumb.ai-native-architecture i:nth-child(6) { background: var(--marker); }
 .hp-thumb.weekly-blog span { background: #efe8da; color: #272521; font: italic 1.05rem/1 Georgia, serif; padding: .3em .45em .5em; transform: rotate(-6deg); }
 
 /* Toolkit / education */

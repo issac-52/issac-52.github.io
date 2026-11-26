@@ -91,7 +91,6 @@ export function ModernPage() {
             <div className={'hp-thumb ' + p.id} aria-hidden="true">{p.id === 'meter-admin'
               ? <img src="/notebook/cover.svg" alt=""/>
               : p.id === 'weekly-blog' ? <span>Browinfo</span>
-              : p.id === 'ai-native-architecture' ? <>{Array.from({ length: 6 }, (_, i) => <i key={i}/>)}</>
               : <img src="/water-study.webp" alt=""/>}</div>
             <div>
               <p className="hp-status">{p.period}</p>

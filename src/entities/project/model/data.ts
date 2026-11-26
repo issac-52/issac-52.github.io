@@ -23,16 +23,6 @@ export const projects: Project[] = [
     caseStudyHref: '#/projects/field-work',
   },
   {
-    id: 'ai-native-architecture',
-    name: 'AI-Native Architecture Lab',
-    period: '연구 프로토타입 · AI 에이전트 실험은 진행 전',
-    role: '개인 연구',
-    desc: '같은 주문 API를 계층형·DDD·헥사고날·Vertical Slice·모듈러 모놀리스·도메인 중심 구조의 6가지로 구현하고, 공통 HTTP 계약 테스트로 동작이 같은지 CI에서 검증합니다. 코드 구조가 AI 코딩 에이전트의 작업에 어떤 차이를 만드는지 비교하려는 실험 기반이며, 지금까지는 파일 탐색 벤치마크만 측정했습니다.',
-    tags: ['Java 21 / Spring Boot', 'React / Vite', 'JUnit', 'Python', 'GitHub Actions'],
-    repo: { owner: 'issac-52', name: 'AI-Native-Architecture' },
-    caseStudyHref: 'https://github.com/issac-52/AI-Native-Architecture',
-  },
-  {
     id: 'weekly-blog',
     name: 'Browinfo · 주간 매거진',
     period: '비공개 배포 · 관리자 검토 흐름 운영',
