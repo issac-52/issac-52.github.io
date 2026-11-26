@@ -80,3 +80,4 @@
   .cs-metrics { grid-template-columns: 1fr; }
 }
 .cs-decisions + .cs-prose, .cs-prose + .cs-bullets, .cs-prose + .cs-flow { margin-top: 16px; }
+.cs-prose + .cs-decisions, .cs-decisions + .cs-flow { margin-top: 20px; }

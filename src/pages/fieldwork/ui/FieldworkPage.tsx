@@ -89,6 +89,10 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
             title: { ko: '무거운 문서 작업은 뒤에서', en: 'Heavy documents run in the background', ja: '重い文書処理はバックグラウンドで' },
             body: { ko: '사진이 들어간 HWPX 검침카드는 백그라운드에서 만들고 캐시합니다. 전체 ZIP 다운로드, 작업 취소와 생성물 정리를 지원합니다.', en: 'HWPX reading cards with photos are generated in the background and cached, with full ZIP downloads, cancellation and cleanup.', ja: '写真入りのHWPX検針カードはバックグラウンドで生成してキャッシュします。全体ZIPのダウンロード、処理のキャンセルと生成物の整理に対応しています。' },
           },
+          {
+            title: { ko: '같은 요청이 여러 번 와도 한 번만 반영', en: 'Repeated requests apply once', ja: '同じ要求が何度来ても反映は一度だけ' },
+            body: { ko: '저장 버튼은 요청이 끝날 때까지 다시 실행되지 않습니다. 서버는 이미 등록된 검침 단계를 409로 거절하고, 다른 사람이 먼저 고친 검침은 버전 검사로 막습니다. 주소 변환과 문서 생성은 동시에 두 개가 돌지 않습니다.', en: 'Save buttons ignore repeat clicks until the request finishes. The server rejects an already-recorded reading phase with 409 and blocks edits to a reading someone else changed first through a version check. Address conversion and document generation never run twice at once.', ja: '保存ボタンはリクエストが終わるまで再実行されません。サーバーは登録済みの検針段階を409で拒否し、他の人が先に修正した検針はバージョン検査で防ぎます。住所変換と文書生成は同時に二つ動きません。' },
+          },
         ]}/>
       </Section>
 
@@ -98,8 +102,26 @@ export function FieldworkPage({ section }: { section: FieldworkSection }) {
         <a className="cs-more" href={`${base}/performance`}>{t({ ko: '성능 개선 기록 보기', en: 'Read the performance write-up', ja: '性能改善の記録を見る' })}<Arrow/></a>
       </Section>
 
-      <Section title={{ ko: 'Codex로 개발한 방식', en: 'How I worked with Codex', ja: 'Codexでの開発' }}>
-        <Prose>{{ ko: '구현과 테스트 작성은 Codex와 함께 진행하고, 업무 규칙·데이터 보호 범위·배포와 PR 병합은 제가 결정했습니다. 저장소 규칙은 AGENTS.md에 두고, 고객 Excel·사진·자격 증명은 커밋하지 않습니다.', en: 'Implementation and tests were written with Codex; business rules, data-protection scope, deployments and PR merges were my decisions. Repository rules live in AGENTS.md, and customer spreadsheets, photos and credentials are never committed.', ja: '実装とテスト作成はCodexと進め、業務ルール・データ保護の範囲・デプロイとPRのマージは私が決めました。リポジトリのルールはAGENTS.mdに置き、顧客のExcel・写真・認証情報はコミットしません。' }}</Prose>
+      <Section title={{ ko: 'AI가 만든 코드에서 찾아 고친 문제', en: 'Defects I found in AI-written code', ja: 'AIが書いたコードで見つけて直した問題' }}>
+        <Prose>{{ ko: '구현은 Codex가 맡고, 업무 규칙·데이터 보호 범위·배포와 PR 병합은 제가 결정했습니다. 운영 중 보고된 실패나 점검에서 찾은 문제는 먼저 실패하는 테스트로 재현한 뒤 고쳤습니다.', en: 'Codex wrote the implementation; business rules, data-protection scope, deployments and PR merges were my decisions. Failures reported in production or found in review were first reproduced as failing tests, then fixed.', ja: '実装はCodexが担当し、業務ルール・データ保護の範囲・デプロイとPRのマージは私が決めました。運用中に報告された失敗や点検で見つけた問題は、まず失敗するテストで再現してから修正しました。' }}</Prose>
+        <Decisions items={[
+          {
+            title: { ko: '연결이 끊긴 순간의 중복 전송', en: 'Duplicate sends when the connection drops', ja: '接続が切れた瞬間の重複送信' },
+            body: { ko: '현장에서 연결이 끊기면 전송 요청이 끝나지 않고, 같은 현장이 동시에 두 번 전송될 수 있었습니다. 수용가별 전송 잠금과 15초 제한을 넣고, 응답만 유실된 요청은 서버의 검침·사진과 대조해 다시 보내지 않게 했습니다. 브라우저에서 응답만 끊은 뒤 재연결해 중복 등록이 없는 것을 확인했습니다.', en: 'When the connection dropped on site, sends could hang and the same site could be sent twice at once. I added a per-site send lock and a 15-second timeout, and requests whose response was lost are now checked against the server’s readings and photos instead of being resent. I verified it by cutting only the response in the browser and reconnecting: no duplicate records.', ja: '現場で接続が切れると送信が終わらず、同じ現場が同時に二度送信されることがありました。需要家ごとの送信ロックと15秒の制限を入れ、応答だけが失われた要求はサーバーの検針・写真と照合して再送しないようにしました。ブラウザで応答だけを切って再接続し、重複登録がないことを確認しました。' },
+          },
+          {
+            title: { ko: '외부 API 한 건의 실패가 배치 전체를 날림', en: 'One external API error discarded a whole batch', ja: '外部API一件の失敗がバッチ全体を消す' },
+            body: { ko: 'NAVER 좌표 변환 중 한 건이 실패하면 이미 성공한 결과까지 사라졌습니다. 성공분은 저장하고 다음 묶음만 멈추게 바꿨고, 재시도는 502·503·504에만 최대 두 번으로 제한해 할당량 오류를 반복 호출하지 않게 했습니다.', en: 'During NAVER geocoding, one failed address threw away results that had already succeeded. Successful results are now saved and only the next batch stops; retries are limited to two attempts on 502, 503 and 504 so quota errors are never hammered.', ja: 'NAVERの座標変換中に一件が失敗すると、すでに成功した結果まで消えていました。成功分は保存して次のまとまりだけを止めるように変え、再試行は502・503・504に限り最大2回とし、割り当て超過エラーを繰り返し呼ばないようにしました。' },
+          },
+          {
+            title: { ko: '특수문자 주소의 반복 실패', en: 'Addresses with special characters kept failing', ja: '特殊文字を含む住所の繰り返し失敗' },
+            body: { ko: '특정 현장만 좌표 변환이 계속 실패했고, 주소의 중괄호가 URL 템플릿 변수로 해석되는 것이 원인이었습니다. 가상 주소로 실패를 재현한 뒤 주소를 값으로 인코딩하고, 한 건의 실패는 기록만 남기고 나머지는 계속 진행하게 했습니다.', en: 'Geocoding failed repeatedly for one site because braces in its address were parsed as URL template variables. I reproduced it with a synthetic address, encoded the address as a value, and made single-row failures get recorded while the batch continues.', ja: '特定の現場だけ座標変換が失敗し続け、住所の波括弧がURLテンプレートの変数として解釈されていたのが原因でした。仮の住所で失敗を再現してから住所を値としてエンコードし、一件の失敗は記録だけ残して残りは処理を続けるようにしました。' },
+          },
+          {
+            title: { ko: '대용량 Excel 업로드 실패', en: 'Large Excel uploads failing', ja: '大容量Excelのアップロード失敗' },
+            body: { ko: '28MB 최종본은 압축을 풀면 시트가 약 227MB였고, 파일 전체를 메모리에 읽는 경로에서 실패했습니다. 임시 파일로 열어 시트를 스트리밍하도록 바꿨고, 실제 파일로 1만 8천여 건 등록과 재업로드를 확인했습니다.', en: 'A 28 MB final workbook expands to about 227 MB of sheet XML and failed on a path that read the whole file into memory. It now opens a temporary file and streams the sheet; I confirmed import and re-import of over 18,000 rows with the real file.', ja: '28MBの最終版は展開するとシートが約227MBになり、ファイル全体をメモリに読む経路で失敗していました。一時ファイルで開いてシートをストリーミングするように変え、実ファイルで約1万8千件の登録と再アップロードを確認しました。' },
+          },
+        ]}/>
         <Flow steps={[
           { ko: '조사: 실제 코드와 측정으로 원인 확인', en: 'Inspect: confirm the cause in code and measurements', ja: '調査：実際のコードと測定で原因を確認' },
           { ko: '재현: 실패하는 테스트를 먼저 작성', en: 'Reproduce: write a failing test first', ja: '再現：失敗するテストを先に書く' },
